@@ -1,15 +1,7 @@
 CREATE DATABASE fastcare_db;
 USE fastcare_db;
 
-CREATE TABLE Utilisateur (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
-    email VARCHAR(150) UNIQUE NOT NULL,
-    motDePasse VARCHAR(255) NOT NULL,
-    age INT,
-    poidsInitial FLOAT,
-    dateInscription DATE NOT NULL
-);
+
 CREATE TABLE Utilisateur (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
