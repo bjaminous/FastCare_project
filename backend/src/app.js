@@ -10,4 +10,8 @@ app.get("/", (req, res) => {
   res.send("FastCare API running (MySQL)");
 });
 
+app.use("/journals", require("./routes/journal.routes"));
+app.use("/notifications", require("./routes/notification.routes"));
+app.use("/conseils", require("./routes/conseil.routes"));
+
 module.exports = app;
