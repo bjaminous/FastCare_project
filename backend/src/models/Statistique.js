@@ -1,35 +1,36 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const Notification = sequelize.define(
-    "Notification",
+const Statistique = sequelize.define(
+    "Statistique",
     {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        type: {
-            type: DataTypes.STRING(100),
+        dureeTotaleJeune: {
+            type: DataTypes.INTEGER,
             allowNull: true,
         },
-        message: {
-            type: DataTypes.STRING(255),
+        nombreJeunes: {
+            type: DataTypes.INTEGER,
             allowNull: true,
         },
-        dateEnvoi: {
-            type: DataTypes.DATE,
+        variationPoids: {
+            type: DataTypes.FLOAT,
             allowNull: true,
         },
         utilisateur_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            unique: true,
         },
     },
     {
-        tableName: "Notification",
+        tableName: "Statistique",
         timestamps: false,
     }
 );
 
-module.exports = Notification;
+module.exports = Statistique;
