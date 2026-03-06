@@ -1,6 +1,6 @@
 // routes/journal.routes.js
 const router = require("express").Router();
-const auth = require("../middleware/auth");
+const auth = require("../middlewares/auth.middleware");
 const ctrl = require("../controllers/journal.controller");
 
 router.post("/", auth, ctrl.create);
