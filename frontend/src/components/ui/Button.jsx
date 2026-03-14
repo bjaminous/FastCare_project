@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+ import styled from 'styled-components';
 
 const StyledButton = styled.button`
   padding: ${props => props.size === 'small' ? '0.75rem 1.5rem' : props.size === 'large' ? '1.25rem 2.5rem' : '1rem 2rem'};
@@ -34,49 +34,49 @@ const StyledButton = styled.button`
     switch (props.variant) {
       case 'primary':
         return `
-          background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+          background: #2A7DE1;
           color: white;
-          box-shadow: 0 8px 25px -8px rgba(6, 182, 212, 0.3);
+          box-shadow: 0 8px 25px -8px rgba(42, 125, 225, 0.3);
           
           &:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 35px -10px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 12px 35px -10px rgba(42, 125, 225, 0.4);
           }
         `;
       case 'secondary':
         return `
-          background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+          background: #2ED1A2;
           color: white;
-          box-shadow: 0 8px 25px -8px rgba(15, 23, 42, 0.3);
+          box-shadow: 0 8px 25px -8px rgba(46, 209, 162, 0.3);
           
           &:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 35px -10px rgba(15, 23, 42, 0.4);
+            box-shadow: 0 12px 35px -10px rgba(46, 209, 162, 0.4);
           }
         `;
       case 'outline':
         return `
-          background: rgba(255, 255, 255, 0.95);
-          color: #06B6D4;
-          border: 2px solid #06B6D4;
-          box-shadow: 0 4px 15px -5px rgba(6, 182, 212, 0.2);
+          background: #FFFFFF;
+          color: #2A7DE1;
+          border: 2px solid #2A7DE1;
+          box-shadow: 0 4px 15px -5px rgba(42, 125, 225, 0.2);
           
           &:hover {
-            background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+            background: #2A7DE1;
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px -8px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 8px 25px -8px rgba(42, 125, 225, 0.3);
           }
         `;
       default:
         return `
-          background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+          background: #2A7DE1;
           color: white;
-          box-shadow: 0 8px 25px -8px rgba(6, 182, 212, 0.3);
+          box-shadow: 0 8px 25px -8px rgba(42, 125, 225, 0.3);
           
           &:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 35px -10px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 12px 35px -10px rgba(42, 125, 225, 0.4);
           }
         `;
     }
@@ -86,6 +86,11 @@ const StyledButton = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
     transform: none !important;
+  }
+
+  @media (max-width: 480px) {
+    padding: ${props => props.size === 'small' ? '0.5rem 1rem' : props.size === 'large' ? '0.9rem 1.75rem' : '0.75rem 1.5rem'};
+    font-size: ${props => props.size === 'large' ? '1rem' : '0.9rem'};
   }
 
   ${props => props.fullWidth && `

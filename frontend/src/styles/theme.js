@@ -1,19 +1,21 @@
 export const theme = {
   colors: {
-    primary: '#06B6D4',
-    primaryDark: '#0891B2',
-    primaryLight: '#67E8F9',
-    secondary: '#0F172A',
-    secondaryDark: '#020617',
-    accent: '#06B6D4',
-    background: '#F1F5F9',
+    primary: '#2A7DE1',
+    primaryDark: '#1E5FA8',
+    primaryLight: '#60A5FA',
+    secondary: '#2ED1A2',
+    secondaryDark: '#1FA875',
+    accent: '#60A5FA',
+    background: '#F7FAFC',
     surface: '#FFFFFF',
-    text: '#0F172A',
-    textLight: '#64748B',
-    border: '#E2E8F0',
-    error: '#EF4444',
-    success: '#10B981',
+    backgroundSecondary: '#F1F5F9',
+    text: '#1F2937',
+    textSecondary: '#6B7280',
+    textDisabled: '#9CA3AF',
+    border: '#E5E7EB',
+    success: '#22C55E',
     warning: '#F59E0B',
+    error: '#EF4444',
   },
   
   spacing: {
@@ -34,10 +36,10 @@ export const theme = {
   },
   
   shadows: {
-    sm: '0 1px 2px 0 rgba(15, 23, 42, 0.05)',
-    md: '0 4px 6px -1px rgba(15, 23, 42, 0.1)',
-    lg: '0 10px 15px -3px rgba(15, 23, 42, 0.1)',
-    xl: '0 20px 25px -5px rgba(15, 23, 42, 0.1)',
+    sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+    md: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+    lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+    xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
   },
   
   breakpoints: {
@@ -47,9 +49,11 @@ export const theme = {
   },
   
   gradients: {
-    primary: 'linear-gradient(135deg, #06B6D4 0%, #0891B2 100%)',
-    secondary: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
-    background: 'linear-gradient(135deg, #F1F5F9 0%, #FFFFFF 100%)',
+    primary: 'linear-gradient(135deg, #2A7DE1 0%, #2ED1A2 100%)',
+    primaryButton: '#2A7DE1',
+    secondaryButton: '#2ED1A2',
+    background: 'linear-gradient(135deg, #F7FAFC 0%, #FFFFFF 100%)',
+    timer: 'linear-gradient(135deg, #2A7DE1, #2ED1A2)',
   }
 };
 

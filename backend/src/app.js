@@ -18,13 +18,16 @@ app.get("/", (req, res) => {
   res.json({ message: "FastCare API running (MySQL)" });
 });
 
-app.use("/journals", require("./routes/journal.routes"));
-app.use("/notifications", require("./routes/notification.routes"));
-app.use("/conseils", require("./routes/conseil.routes"));
 // ── Montage des routes ───────────────────────────────────────────────────────
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/statistiques", statistiqueRoutes);
+app.use("/api/jeunes", require("./routes/jeune.routes"));
+app.use("/api/suivis", require("./routes/suivi.routes"));
+app.use("/api/type-jeune", require("./routes/typeJeune.routes"));
+app.use("/api/journals", require("./routes/journal.routes"));
+app.use("/api/notifications", require("./routes/notification.routes"));
+app.use("/api/conseils", require("./routes/conseil.routes"));
 
 // ── Gestion centralisée des erreurs (dernier middleware) ─────────────────────
 app.use(errorHandler);

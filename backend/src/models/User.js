@@ -10,6 +10,13 @@ const User = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    prenom: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      validate: {
+        len: { args: [2, 100], msg: "Le prénom doit contenir au moins 2 caractères" },
+      },
+    },
     nom: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -17,6 +24,14 @@ const User = sequelize.define(
         notEmpty: { msg: "Le nom est requis" },
         len: { args: [2, 100], msg: "Le nom doit contenir au moins 2 caractères" },
       },
+    },
+    telephone: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
+    dateNaissance: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING(150),

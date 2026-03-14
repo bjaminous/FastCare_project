@@ -48,10 +48,13 @@ const updateProfile = async (req, res, next) => {
         }
 
         // 3. Mettre à jour uniquement les champs autorisés
-        const { nom, age, poidsInitial } = req.body;
+        const { prenom, nom, telephone, dateNaissance, age, poidsInitial } = req.body;
         const updateData = {};
-        if (nom !== undefined) updateData.nom = nom;
-        if (age !== undefined) updateData.age = age;
+        if (prenom       !== undefined) updateData.prenom       = prenom;
+        if (nom          !== undefined) updateData.nom          = nom;
+        if (telephone    !== undefined) updateData.telephone    = telephone;
+        if (dateNaissance !== undefined) updateData.dateNaissance = dateNaissance;
+        if (age          !== undefined) updateData.age          = age;
         if (poidsInitial !== undefined) updateData.poidsInitial = poidsInitial;
 
         await user.update(updateData);

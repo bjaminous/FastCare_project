@@ -1,30 +1,53 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Card from '../components/ui/Card';
+import { useAuth } from '../context/AuthContext';
 
 const LoginContainer = styled.div`
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2A7DE1 0%, #2ED1A2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
 `;
 
 const LoginCard = styled(Card)`
   width: 100%;
   max-width: 450px;
   padding: 2.5rem;
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 1.25rem;
+  }
+`;
+
+const Logo = styled.div`
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.6rem, 5vw, 2rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #2A7DE1, #2ED1A2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 `;
 
 const Title = styled.h2`
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 700;
   color: #1e293b;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   text-align: center;
 `;
 
@@ -32,6 +55,7 @@ const Subtitle = styled.p`
   color: #64748b;
   text-align: center;
   margin-bottom: 2rem;
+  font-size: 0.9rem;
 `;
 
 const Form = styled.form`
@@ -66,10 +90,17 @@ const PasswordToggle = styled.button`
   color: #64748b;
   cursor: pointer;
   padding: 0.25rem;
-  
-  &:hover {
-    color: #374151;
-  }
+
+  &:hover { color: #374151; }
+`;
+
+const ErrorBox = styled.div`
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
 `;
 
 const Divider = styled.div`
@@ -77,15 +108,14 @@ const Divider = styled.div`
   align-items: center;
   gap: 1rem;
   margin: 1.5rem 0;
-  
-  &::before,
-  &::after {
+
+  &::before, &::after {
     content: '';
     flex: 1;
     height: 1px;
     background: #e2e8f0;
   }
-  
+
   span {
     color: #64748b;
     font-size: 0.875rem;
@@ -97,49 +127,45 @@ const Footer = styled.div`
   margin-top: 1.5rem;
   color: #64748b;
   font-size: 0.875rem;
-  
-  a {
-    color: #4f46e5;
-    font-weight: 600;
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `;
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const [formData, setFormData] = useState({ email: '', motDePasse: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulation d'une connexion
-    setTimeout(() => {
-      console.log('Tentative de connexion:', formData);
+    setError('');
+    try {
+      await login(formData.email, formData.motDePasse);
+      navigate('/dashboard');
+    } catch (err) {
+      const msg = err.response?.data?.message || 'Email ou mot de passe incorrect';
+      setError(msg);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
     <LoginContainer>
       <LoginCard>
+        <Logo>FastCare</Logo>
         <Title>Connexion</Title>
         <Subtitle>Bon retour sur FastCare</Subtitle>
-        
+
+        {error && <ErrorBox>{error}</ErrorBox>}
+
         <Form onSubmit={handleSubmit}>
           <InputGroup>
             <Label htmlFor="email">Email</Label>
@@ -156,49 +182,40 @@ const Login = () => {
           </InputGroup>
 
           <InputGroup>
-            <Label htmlFor="password">Mot de passe</Label>
+            <Label htmlFor="motDePasse">Mot de passe</Label>
             <PasswordContainer>
               <Input
-                id="password"
-                name="password"
+                id="motDePasse"
+                name="motDePasse"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••"
-                value={formData.password}
+                value={formData.motDePasse}
                 onChange={handleChange}
                 required
                 fullWidth
               />
-              <PasswordToggle
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-              >
+              <PasswordToggle type="button" onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </PasswordToggle>
             </PasswordContainer>
           </InputGroup>
 
-          <Button 
-            type="submit" 
-            variant="primary" 
+          <Button
+            type="submit"
+            variant="primary"
             size="large"
             disabled={isLoading}
             fullWidth
           >
             {isLoading ? 'Connexion...' : 'Se connecter'}
-            <LogIn size={20} />
+            {!isLoading && <LogIn size={20} />}
           </Button>
         </Form>
 
-        <Divider>
-          <span>ou</span>
-        </Divider>
-
-        <Button variant="outline" fullWidth>
-          Continuer avec Google
-        </Button>
+        <Divider><span>ou</span></Divider>
 
         <Footer>
-          Pas encore de compte ? <a href="/register">S'inscrire</a>
+          Pas encore de compte ? <Link to="/register" style={{ color: '#2A7DE1', fontWeight: 600 }}>S'inscrire</Link>
         </Footer>
       </LoginCard>
     </LoginContainer>

@@ -1,335 +1,1180 @@
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { Timer, Heart, TrendingUp, Calendar } from 'lucide-react';
+import styled, { keyframes } from 'styled-components';
+import {
+  Timer, Heart, TrendingUp, BookOpen,
+  ArrowRight, Check, Star, Users, Zap,
+  Moon, Scale, Brain, Bell, Shield
+} from 'lucide-react';
 import Button from '../components/ui/Button';
-import Card from '../components/ui/Card';
+import { useAuth } from '../context/AuthContext';
 
-const HomeContainer = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+// ─── Animations ──────────────────────────────────────────────────────────────
+
+const fadeInUp = keyframes`
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+`;
+
+const floatOrb = keyframes`
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -40px) scale(1.05); }
+  66%       { transform: translate(-20px, 20px) scale(0.97); }
+`;
+
+const rotateSlow = keyframes`
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+`;
+
+
+const pulse = keyframes`
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+`;
+
+const timerAnim = keyframes`
+  from { stroke-dashoffset: 628; }
+  to   { stroke-dashoffset: 188; }
+`;
+
+const badgePop = keyframes`
+  from { opacity: 0; transform: scale(0.8) translateY(-10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+`;
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+
+const Page = styled.div`
+  background: #F8FAFF;
+  overflow-x: hidden;
+`;
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
+
+const Nav = styled.nav`
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(248, 250, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(42, 125, 225, 0.08);
+  padding: 0 2rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+`;
+
+const NavLogo = styled.div`
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #2A7DE1, #2ED1A2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.03em;
+  cursor: pointer;
+`;
+
+const NavLinks = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+
+  @media (max-width: 768px) { display: none; }
+`;
+
+const NavLink = styled.a`
+  color: #4B5563;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+  &:hover { color: #2A7DE1; }
+`;
+
+const NavActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
+const HeroSection = styled.section`
+  min-height: calc(100vh - 70px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+  position: relative;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 3rem;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2rem 1rem 3rem;
+  }
+`;
+
+const HeroOrb = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: ${floatOrb} 12s ease-in-out infinite;
+
+  &.orb1 {
+    width: 500px;
+    height: 500px;
+    background: rgba(42, 125, 225, 0.12);
+    top: -100px;
+    right: -100px;
+    animation-delay: 0s;
+  }
+  &.orb2 {
+    width: 400px;
+    height: 400px;
+    background: rgba(46, 209, 162, 0.10);
+    bottom: -50px;
+    left: -80px;
+    animation-delay: -4s;
+  }
+  &.orb3 {
+    width: 250px;
+    height: 250px;
+    background: rgba(96, 165, 250, 0.08);
+    top: 40%;
+    left: 30%;
+    animation-delay: -8s;
+  }
+`;
+
+const HeroLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  animation: ${fadeInUp} 0.8s ease both;
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: 1024px) { align-items: center; }
+`;
+
+const Badge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(42, 125, 225, 0.08);
+  border: 1px solid rgba(42, 125, 225, 0.2);
+  color: #2A7DE1;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: fit-content;
+  animation: ${badgePop} 0.6s ease 0.2s both;
+
+  span.dot {
+    width: 8px;
+    height: 8px;
+    background: #2ED1A2;
+    border-radius: 50%;
+    animation: ${pulse} 2s ease-in-out infinite;
+  }
+`;
+
+const HeroTitle = styled.h1`
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #0F172A;
+
+  span.gradient {
+    background: linear-gradient(135deg, #2A7DE1 0%, #2ED1A2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+`;
+
+const HeroSubtitle = styled.p`
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: #475569;
+  line-height: 1.75;
+  max-width: 520px;
+
+  @media (max-width: 1024px) { max-width: 600px; }
+`;
+
+const HeroCTA = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 1024px) { justify-content: center; }
+`;
+
+const HeroTrustLine = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #64748b;
+  font-size: 0.85rem;
+
+  @media (max-width: 1024px) { justify-content: center; }
+`;
+
+const TrustDot = styled.span`
+  color: #2ED1A2;
+  font-weight: 700;
+`;
+
+// ─── Hero Visual (Timer Mockup) ───────────────────────────────────────────────
+
+const HeroRight = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ${fadeInUp} 0.8s ease 0.2s both;
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: 1024px) { order: -1; }
+`;
+
+const MockupCard = styled.div`
+  background: white;
+  border-radius: 28px;
+  padding: 2.5rem;
+  box-shadow:
+    0 0 0 1px rgba(42, 125, 225, 0.08),
+    0 30px 80px -20px rgba(42, 125, 225, 0.18),
+    0 10px 30px -10px rgba(0,0,0,0.07);
+  width: 320px;
+  text-align: center;
+  position: relative;
+
+  @media (max-width: 480px) { width: 280px; padding: 2rem; }
+`;
+
+const MockupLabel = styled.div`
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #2ED1A2;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+`;
+
+const MockupRingWrap = styled.div`
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 1.5rem;
+  position: relative;
+
+  svg { transform: rotate(-90deg); }
+
+  .ring-track {
+    stroke: #EFF6FF;
+    stroke-width: 10;
+    fill: none;
+  }
+  .ring-progress {
+    stroke: url(#timerGrad);
+    stroke-width: 10;
+    fill: none;
+    stroke-linecap: round;
+    stroke-dasharray: 439;
+    animation: ${timerAnim} 3s ease-out 1s both;
+  }
+`;
+
+const MockupTime = styled.div`
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-    animation: float 20s ease-in-out infinite;
-    pointer-events: none;
+
+  .time {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0F172A;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.02em;
   }
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33% { transform: translateY(-20px) rotate(1deg); }
-    66% { transform: translateY(10px) rotate(-1deg); }
-  }
-  
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-  }
-  
-  @media (max-width: 480px) {
-    padding: 1rem;
+  .label {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.2rem;
   }
 `;
 
-const Hero = styled.div`
-  margin-bottom: 3rem;
-  padding: 0 2rem;
+const MockupType = styled.div`
+  background: linear-gradient(135deg, rgba(42,125,225,0.08), rgba(46,209,162,0.08));
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  font-weight: 700;
+  color: #2A7DE1;
+  font-size: 0.95rem;
 `;
 
-const Title = styled.h1`
-  font-size: clamp(3.5rem, 8vw, 6rem);
-  font-weight: 800;
-  color: white;
-  margin-bottom: 2rem;
-  line-height: 1.1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  letter-spacing: -0.02em;
-  position: relative;
-  
-  &::after {
-    content: 'FastCare';
-    position: absolute;
-    top: 2px;
-    left: 0;
-    color: rgba(255, 255, 255, 0.3);
-    z-index: -1;
-  }
-`;
-
-const Subtitle = styled.p`
-  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-  color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 3rem;
-  line-height: 1.7;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  font-weight: 300;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const Features = styled.div`
+const MockupStats = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3rem;
-  margin-bottom: 4rem;
-  width: 100%;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    max-width: 600px;
-    gap: 2.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+`;
+
+const MockupStat = styled.div`
+  background: #F8FAFF;
+  border-radius: 10px;
+  padding: 0.6rem;
+  text-align: center;
+
+  .val {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0F172A;
   }
-  
-  @media (max-width: 768px) {
-    gap: 2rem;
+  .key {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-weight: 600;
+    margin-top: 0.1rem;
   }
-  
+`;
+
+const FloatingBadge = styled.div`
+  position: absolute;
+  background: white;
+  border-radius: 14px;
+  padding: 0.6rem 0.9rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  animation: ${floatOrb} 6s ease-in-out infinite;
+
+  &.top-right {
+    top: -20px;
+    right: -30px;
+    animation-delay: -2s;
+    color: #2ED1A2;
+  }
+  &.bottom-left {
+    bottom: 10px;
+    left: -40px;
+    animation-delay: -4s;
+    color: #2A7DE1;
+  }
+
   @media (max-width: 480px) {
+    &.bottom-left { left: -10px; }
+    &.top-right { right: -10px; }
+  }
+`;
+
+// ─── Stats Bar ────────────────────────────────────────────────────────────────
+
+const StatsBar = styled.section`
+  background: white;
+  border-top: 1px solid #EFF6FF;
+  border-bottom: 1px solid #EFF6FF;
+`;
+
+const StatsInner = styled.div`
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 `;
 
-const FeatureCard = styled(Card)`
+const StatItem = styled.div`
   text-align: center;
-  padding: 3rem 2.5rem;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 32px;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid transparent;
+  animation: ${fadeInUp} 0.6s ease both;
+  animation-delay: ${props => props.delay || '0s'};
+
+  .number {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #2A7DE1, #2ED1A2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .desc {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-top: 0.25rem;
+  }
+`;
+
+// ─── Section Shell ────────────────────────────────────────────────────────────
+
+const Section = styled.section`
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+
+  @media (max-width: 768px) { padding: 4rem 1.5rem; }
+  @media (max-width: 480px) { padding: 3rem 1rem; }
+`;
+
+const SectionTag = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(46, 209, 162, 0.1);
+  color: #059669;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+`;
+
+const SectionTitle = styled.h2`
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+
+  span {
+    background: linear-gradient(135deg, #2A7DE1, #2ED1A2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+`;
+
+const SectionSub = styled.p`
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: #64748b;
+  line-height: 1.7;
+  max-width: 600px;
+  margin-bottom: 3.5rem;
+`;
+
+const SectionHeader = styled.div`
+  text-align: ${props => props.center ? 'center' : 'left'};
+  ${props => props.center && 'display:flex; flex-direction:column; align-items:center;'}
+`;
+
+// ─── Features ─────────────────────────────────────────────────────────────────
+
+const FeaturesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+`;
+
+const FeatureCard = styled.div`
+  background: white;
+  border-radius: 20px;
+  padding: 2.25rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  border: 1.5px solid transparent;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+  animation: ${fadeInUp} 0.6s ease both;
+  animation-delay: ${props => props.delay || '0s'};
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  
+
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #06B6D4, #0891B2, #67E8F9);
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+    inset: 0;
+    background: linear-gradient(135deg, rgba(42,125,225,0.03), rgba(46,209,162,0.03));
     opacity: 0;
     transition: opacity 0.3s ease;
-    pointer-events: none;
   }
-  
+
   &:hover {
-    transform: translateY(-15px) rotateX(5deg);
-    box-shadow: 0 40px 80px -20px rgba(6, 182, 212, 0.3);
-    
-    &::before {
-      transform: scaleX(1);
-    }
-    
-    &::after {
-      opacity: 1;
-    }
+    transform: translateY(-6px);
+    border-color: rgba(42,125,225,0.2);
+    box-shadow: 0 20px 50px -15px rgba(42,125,225,0.15);
+    &::before { opacity: 1; }
   }
-  
-  @media (max-width: 768px) {
-    padding: 2.5rem 2rem;
-    
-    &:hover {
-      transform: translateY(-10px);
-    }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem;
+    gap: 1rem;
   }
 `;
 
-const FeatureIcon = styled.div`
-  width: 90px;
-  height: 90px;
-  background: linear-gradient(135deg, #06B6D4 0%, #0891B2 50%, #67E8F9 100%);
-  border-radius: 28px;
+const FeatureIconBox = styled.div`
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  background: ${props => props.bg || 'linear-gradient(135deg, #2A7DE1, #2ED1A2)'};
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 2rem;
   color: white;
-  box-shadow: 0 15px 35px -10px rgba(6, 182, 212, 0.4);
-  position: relative;
-  flex-shrink: 0;
-  animation: pulse 3s ease-in-out infinite;
-  
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+  box-shadow: 0 8px 20px -6px ${props => props.shadow || 'rgba(42,125,225,0.35)'};
+`;
+
+const FeatureText = styled.div`
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
   }
-  
-  &::after {
+  p {
+    font-size: 0.93rem;
+    color: #64748b;
+    line-height: 1.65;
+  }
+`;
+
+// ─── How It Works ─────────────────────────────────────────────────────────────
+
+const StepsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  position: relative;
+
+  &::before {
     content: '';
     position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    background: linear-gradient(135deg, #06B6D4, #0891B2, #67E8F9);
-    border-radius: 28px;
-    z-index: -1;
-    opacity: 0.2;
-    animation: rotate 4s linear infinite;
+    top: 36px;
+    left: calc(16.66% + 24px);
+    right: calc(16.66% + 24px);
+    height: 2px;
+    background: linear-gradient(90deg, #2A7DE1, #2ED1A2);
+    z-index: 0;
   }
-  
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  
+
   @media (max-width: 768px) {
-    width: 80px;
-    height: 80px;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    &::before { display: none; }
   }
 `;
 
-const FeatureTitle = styled.h3`
+const Step = styled.div`
+  text-align: center;
+  animation: ${fadeInUp} 0.6s ease both;
+  animation-delay: ${props => props.delay || '0s'};
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    text-align: left;
+  }
+`;
+
+const StepNumber = styled.div`
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  background: linear-gradient(135deg, #2A7DE1, #2ED1A2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.5rem;
-  font-weight: 800;
-  color: #000000;
-  margin-bottom: 1rem;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
+  font-weight: 900;
+  color: white;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 12px 30px -8px rgba(42,125,225,0.35);
+  border: 4px solid white;
+
+  @media (max-width: 768px) {
+    margin: 0;
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    font-size: 1.2rem;
+  }
 `;
 
-const FeatureDescription = styled.p`
-  color: #1a1a1a;
-  line-height: 1.7;
+const StepContent = styled.div`
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0F172A;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.65;
+  }
+`;
+
+// ─── Goals ────────────────────────────────────────────────────────────────────
+
+const GoalsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 480px)  { grid-template-columns: 1fr; }
+`;
+
+const GoalCard = styled.div`
+  background: white;
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+  animation: ${fadeInUp} 0.6s ease both;
+  animation-delay: ${props => props.delay || '0s'};
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgba(42,125,225,0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -12px rgba(42,125,225,0.15);
+  }
+`;
+
+const GoalIcon = styled.div`
+  width: 64px;
+  height: 64px;
+  background: ${props => props.bg};
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  color: white;
+  box-shadow: 0 8px 20px -5px ${props => props.shadow};
+`;
+
+const GoalTitle = styled.h3`
   font-size: 1rem;
-  font-weight: 500;
-  flex-grow: 1;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 0.5rem;
 `;
 
-const CTAContainer = styled.div`
+const GoalDesc = styled.p`
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.6;
+`;
+
+// ─── Final CTA ────────────────────────────────────────────────────────────────
+
+const CTASection = styled.section`
+  background: linear-gradient(135deg, #2A7DE1 0%, #1a9e7a 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    top: -200px;
+    right: -200px;
+    animation: ${rotateSlow} 30s linear infinite;
+  }
+`;
+
+const CTAInner = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: 480px) { padding: 4rem 1.5rem; }
+`;
+
+const CTATitle = styled.h2`
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  color: white;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+`;
+
+const CTASub = styled.p`
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+`;
+
+const CTAButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+const CTAButtonPrimary = styled.button`
+  background: white;
+  color: #2A7DE1;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem 2.25rem;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+const CTAButtonSecondary = styled.button`
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 1rem 2.25rem;
+  border-radius: 14px;
+  border: 2px solid rgba(255,255,255,0.35);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+
+  &:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+const CheckList = styled.div`
   display: flex;
   gap: 2rem;
   justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
   margin-top: 2rem;
-  animation: slideUp 1s ease-out 0.5s both;
-  
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @media (max-width: 768px) {
-    gap: 1.5rem;
-    margin-top: 1.5rem;
+
+  span {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
 `;
 
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+const Footer = styled.footer`
+  background: #0F172A;
+  color: #94a3b8;
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.875rem;
+
+  strong { color: white; }
+`;
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
 const Home = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
-  const handleStart = () => {
-    navigate('/goal-selection');
-  };
-
-  const handleLearnMore = () => {
-    navigate('/about');
-  };
+  const handleStart = () => navigate('/register');
+  const handleLogin  = () => navigate('/login');
 
   return (
-    <HomeContainer>
-      <Hero>
-        <Title>FastCare</Title>
-        <Subtitle>
-          Votre compagnon intelligent pour un jeûne sain et équilibré. 
-          Suivez votre progression, recevez des conseils personnalisés et atteignez vos objectifs.
-        </Subtitle>
-      </Hero>
+    <Page>
 
-      <Features>
-        <FeatureCard>
-          <FeatureIcon>
-            <Timer size={28} />
-          </FeatureIcon>
-          <FeatureTitle>Timer Intelligent</FeatureTitle>
-          <FeatureDescription>
-            Suivez vos jeûnes avec un timer personnalisé et des notifications intelligentes
-          </FeatureDescription>
-        </FeatureCard>
+      {/* ── Navbar ── */}
+      <Nav>
+        <NavLogo onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          FastCare
+        </NavLogo>
+        <NavLinks>
+          <NavLink href="#features">Fonctionnalités</NavLink>
+          <NavLink href="#how">Comment ça marche</NavLink>
+          <NavLink href="#goals">Objectifs</NavLink>
+        </NavLinks>
+        <NavActions>
+          {isAuthenticated ? (
+            <Button variant="primary" size="small" onClick={() => navigate('/mon-espace')}>
+              Mon espace
+            </Button>
+          ) : (
+            <>
+              <Button variant="outline" size="small" onClick={handleLogin}>Se connecter</Button>
+              <Button variant="primary" size="small" onClick={handleStart}>S'inscrire</Button>
+            </>
+          )}
+        </NavActions>
+      </Nav>
 
-        <FeatureCard>
-          <FeatureIcon>
-            <Heart size={28} />
-          </FeatureIcon>
-          <FeatureTitle>Suivi Quotidien</FeatureTitle>
-          <FeatureDescription>
-            Enregistrez votre poids, votre énergie et votre humeur pour une analyse complète
-          </FeatureDescription>
-        </FeatureCard>
+      {/* ── Hero ── */}
+      <HeroSection>
+        <HeroOrb className="orb1" />
+        <HeroOrb className="orb2" />
+        <HeroOrb className="orb3" />
 
-        <FeatureCard>
-          <FeatureIcon>
-            <TrendingUp size={28} />
-          </FeatureIcon>
-          <FeatureTitle>Statistiques</FeatureTitle>
-          <FeatureDescription>
-            Visualisez votre progression avec des graphiques détaillés et des insights
-          </FeatureDescription>
-        </FeatureCard>
+        <HeroLeft>
+          <Badge>
+            <span className="dot" />
+            Nouveau · Suivi Ramadan disponible
+          </Badge>
 
-        <FeatureCard>
-          <FeatureIcon>
-            <Calendar size={28} />
-          </FeatureIcon>
-          <FeatureTitle>Journal de Ressenti</FeatureTitle>
-          <FeatureDescription>
-            Notez vos expériences et émotions pour mieux comprendre votre corps
-          </FeatureDescription>
-        </FeatureCard>
-      </Features>
+          <HeroTitle>
+            Jeûnez mieux.<br />
+            <span className="gradient">Vivez mieux.</span>
+          </HeroTitle>
 
-      <CTAContainer>
-        <Button variant="primary" size="large" onClick={handleStart}>
-          Commencer maintenant
-        </Button>
-        <Button variant="outline" size="large" onClick={handleLearnMore}>
-          En savoir plus
-        </Button>
-      </CTAContainer>
-    </HomeContainer>
+          <HeroSubtitle>
+            FastCare vous accompagne pas à pas dans votre pratique du jeûne. Timer intelligent, suivi quotidien, conseils personnalisés — tout ce dont vous avez besoin, au même endroit.
+          </HeroSubtitle>
+
+          <HeroCTA>
+            <Button variant="primary" size="large" onClick={handleStart}>
+              Commencer gratuitement <ArrowRight size={18} />
+            </Button>
+            <Button variant="outline" size="large" onClick={() => navigate('/about')}>
+              En savoir plus
+            </Button>
+          </HeroCTA>
+
+          <HeroTrustLine>
+            <TrustDot>✓</TrustDot> 100% gratuit
+            <TrustDot>·</TrustDot>
+            <TrustDot>✓</TrustDot> Sans carte bancaire
+            <TrustDot>·</TrustDot>
+            <TrustDot>✓</TrustDot> Données sécurisées
+          </HeroTrustLine>
+        </HeroLeft>
+
+        {/* Timer Mockup */}
+        <HeroRight>
+          <MockupCard>
+            <FloatingBadge className="top-right">
+              <Zap size={14} /> +3 jours consécutifs
+            </FloatingBadge>
+            <FloatingBadge className="bottom-left">
+              <Bell size={14} /> Hydratation rappelée
+            </FloatingBadge>
+
+            <MockupLabel>
+              <span className="dot" style={{ width: 8, height: 8, background: '#2ED1A2', borderRadius: '50%', animation: 'none' }} />
+              Jeûne en cours
+            </MockupLabel>
+
+            <MockupRingWrap>
+              <svg width="160" height="160" viewBox="0 0 160 160">
+                <defs>
+                  <linearGradient id="timerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#2A7DE1" />
+                    <stop offset="100%" stopColor="#2ED1A2" />
+                  </linearGradient>
+                </defs>
+                <circle className="ring-track" cx="80" cy="80" r="70" />
+                <circle className="ring-progress" cx="80" cy="80" r="70" />
+              </svg>
+              <MockupTime>
+                <span className="time">14:32:07</span>
+                <span className="label">restant</span>
+              </MockupTime>
+            </MockupRingWrap>
+
+            <MockupType>Intermittent 16/8</MockupType>
+
+            <MockupStats>
+              <MockupStat>
+                <div className="val">62 kg</div>
+                <div className="key">Poids</div>
+              </MockupStat>
+              <MockupStat>
+                <div className="val">⚡ 8/10</div>
+                <div className="key">Énergie</div>
+              </MockupStat>
+              <MockupStat>
+                <div className="val">12</div>
+                <div className="key">Jours</div>
+              </MockupStat>
+              <MockupStat>
+                <div className="val">😊</div>
+                <div className="key">Humeur</div>
+              </MockupStat>
+            </MockupStats>
+          </MockupCard>
+        </HeroRight>
+      </HeroSection>
+
+      {/* ── Stats Bar ── */}
+      <StatsBar>
+        <StatsInner>
+          <StatItem delay="0s">
+            <div className="number">50K+</div>
+            <div className="desc">Utilisateurs actifs</div>
+          </StatItem>
+          <StatItem delay="0.1s">
+            <div className="number">1M+</div>
+            <div className="desc">Jeûnes complétés</div>
+          </StatItem>
+          <StatItem delay="0.2s">
+            <div className="number">4.8 ★</div>
+            <div className="desc">Note moyenne</div>
+          </StatItem>
+          <StatItem delay="0.3s">
+            <div className="number">24/7</div>
+            <div className="desc">Support disponible</div>
+          </StatItem>
+        </StatsInner>
+      </StatsBar>
+
+      {/* ── Features ── */}
+      <Section id="features">
+        <SectionHeader>
+          <SectionTag><Zap size={12} /> Fonctionnalités</SectionTag>
+          <SectionTitle>Tout ce qu'il vous faut<br /><span>pour réussir</span></SectionTitle>
+          <SectionSub>
+            Des outils conçus pour vous accompagner à chaque étape — du premier jeûne à l'expert confirmé.
+          </SectionSub>
+        </SectionHeader>
+        <FeaturesGrid>
+          <FeatureCard delay="0s">
+            <FeatureIconBox bg="linear-gradient(135deg, #2A7DE1, #60A5FA)" shadow="rgba(42,125,225,0.35)">
+              <Timer size={26} />
+            </FeatureIconBox>
+            <FeatureText>
+              <h3>Timer Intelligent</h3>
+              <p>Choisissez votre protocole (16/8, 24h, personnalisé) et suivez votre jeûne en temps réel avec une interface épurée.</p>
+            </FeatureText>
+          </FeatureCard>
+
+          <FeatureCard delay="0.1s">
+            <FeatureIconBox bg="linear-gradient(135deg, #2ED1A2, #059669)" shadow="rgba(46,209,162,0.35)">
+              <Heart size={26} />
+            </FeatureIconBox>
+            <FeatureText>
+              <h3>Suivi Quotidien</h3>
+              <p>Enregistrez votre poids, niveau d'énergie et humeur chaque jour. Comprenez l'impact du jeûne sur votre corps.</p>
+            </FeatureText>
+          </FeatureCard>
+
+          <FeatureCard delay="0.2s">
+            <FeatureIconBox bg="linear-gradient(135deg, #F59E0B, #EF4444)" shadow="rgba(245,158,11,0.35)">
+              <TrendingUp size={26} />
+            </FeatureIconBox>
+            <FeatureText>
+              <h3>Statistiques & Graphiques</h3>
+              <p>Visualisez vos progrès avec des graphiques clairs. Identifiez vos tendances et célébrez chaque victoire.</p>
+            </FeatureText>
+          </FeatureCard>
+
+          <FeatureCard delay="0.3s">
+            <FeatureIconBox bg="linear-gradient(135deg, #8B5CF6, #EC4899)" shadow="rgba(139,92,246,0.35)">
+              <BookOpen size={26} />
+            </FeatureIconBox>
+            <FeatureText>
+              <h3>Journal de Ressenti</h3>
+              <p>Notez vos expériences, émotions et observations. Un journal intime de votre parcours bien-être.</p>
+            </FeatureText>
+          </FeatureCard>
+
+          <FeatureCard delay="0.1s">
+            <FeatureIconBox bg="linear-gradient(135deg, #06B6D4, #3B82F6)" shadow="rgba(6,182,212,0.35)">
+              <Bell size={26} />
+            </FeatureIconBox>
+            <FeatureText>
+              <h3>Notifications Intelligentes</h3>
+              <p>Rappels d'hydratation, alertes de fin de jeûne et encouragements personnalisés pour rester motivé.</p>
+            </FeatureText>
+          </FeatureCard>
+
+          <FeatureCard delay="0.2s">
+            <FeatureIconBox bg="linear-gradient(135deg, #10B981, #2A7DE1)" shadow="rgba(16,185,129,0.35)">
+              <Shield size={26} />
+            </FeatureIconBox>
+            <FeatureText>
+              <h3>Conseils Santé Fiables</h3>
+              <p>Des conseils basés sur les bonnes pratiques médicales. FastCare vous informe et vous protège.</p>
+            </FeatureText>
+          </FeatureCard>
+        </FeaturesGrid>
+      </Section>
+
+      {/* ── How It Works ── */}
+      <section id="how" style={{ background: 'white', padding: '0' }}>
+        <Section style={{ padding: '6rem 2rem' }}>
+          <SectionHeader center>
+            <SectionTag><Star size={12} /> Parcours utilisateur</SectionTag>
+            <SectionTitle>Démarrez en <span>3 étapes</span></SectionTitle>
+            <SectionSub>
+              De l'inscription à votre premier jeûne, en moins de 2 minutes.
+            </SectionSub>
+          </SectionHeader>
+          <StepsGrid>
+            <Step delay="0s">
+              <StepNumber>1</StepNumber>
+              <StepContent>
+                <h3>Créez votre compte</h3>
+                <p>Inscription rapide avec votre email. Renseignez quelques informations pour personnaliser votre expérience.</p>
+              </StepContent>
+            </Step>
+            <Step delay="0.15s">
+              <StepNumber>2</StepNumber>
+              <StepContent>
+                <h3>Choisissez votre objectif</h3>
+                <p>Santé, perte de poids, pratique spirituelle ou apprentissage — FastCare s'adapte à votre motivation.</p>
+              </StepContent>
+            </Step>
+            <Step delay="0.3s">
+              <StepNumber>3</StepNumber>
+              <StepContent>
+                <h3>Suivez vos progrès</h3>
+                <p>Lancez votre timer, notez votre ressenti et consultez vos statistiques pour rester motivé sur la durée.</p>
+              </StepContent>
+            </Step>
+          </StepsGrid>
+        </Section>
+      </section>
+
+      {/* ── Goals ── */}
+      <Section id="goals">
+        <SectionHeader center>
+          <SectionTag><Users size={12} /> Pour tout le monde</SectionTag>
+          <SectionTitle>Quel est <span>votre objectif</span> ?</SectionTitle>
+          <SectionSub>
+            FastCare accompagne chaque type de jeûneur, quelle que soit sa motivation.
+          </SectionSub>
+        </SectionHeader>
+        <GoalsGrid>
+          <GoalCard delay="0s" onClick={handleStart}>
+            <GoalIcon bg="linear-gradient(135deg, #EF4444, #F97316)" shadow="rgba(239,68,68,0.3)">
+              <Heart size={28} />
+            </GoalIcon>
+            <GoalTitle>Santé & Vitalité</GoalTitle>
+            <GoalDesc>Améliorez votre bien-être général et votre énergie grâce au jeûne régulier et encadré.</GoalDesc>
+          </GoalCard>
+
+          <GoalCard delay="0.1s" onClick={handleStart}>
+            <GoalIcon bg="linear-gradient(135deg, #3B82F6, #8B5CF6)" shadow="rgba(59,130,246,0.3)">
+              <Scale size={28} />
+            </GoalIcon>
+            <GoalTitle>Perte de Poids</GoalTitle>
+            <GoalDesc>Atteignez vos objectifs de poids de façon saine, durable et sans frustration.</GoalDesc>
+          </GoalCard>
+
+          <GoalCard delay="0.2s" onClick={handleStart}>
+            <GoalIcon bg="linear-gradient(135deg, #F59E0B, #EF4444)" shadow="rgba(245,158,11,0.3)">
+              <Moon size={28} />
+            </GoalIcon>
+            <GoalTitle>Spirituel · Ramadan</GoalTitle>
+            <GoalDesc>Pratiquez le jeûne pour des raisons religieuses avec un suivi adapté au rythme du Ramadan.</GoalDesc>
+          </GoalCard>
+
+          <GoalCard delay="0.3s" onClick={handleStart}>
+            <GoalIcon bg="linear-gradient(135deg, #2ED1A2, #06B6D4)" shadow="rgba(46,209,162,0.3)">
+              <Brain size={28} />
+            </GoalIcon>
+            <GoalTitle>Apprentissage</GoalTitle>
+            <GoalDesc>Découvrez le jeûne progressivement dans un cadre sécurisé, idéal pour les débutants.</GoalDesc>
+          </GoalCard>
+        </GoalsGrid>
+      </Section>
+
+      {/* ── Final CTA ── */}
+      <CTASection>
+        <CTAInner>
+          <CTATitle>Prêt à transformer<br />votre santé ?</CTATitle>
+          <CTASub>
+            Rejoignez plus de 50 000 personnes qui font confiance à FastCare pour accompagner leur jeûne au quotidien.
+          </CTASub>
+          <CTAButtons>
+            <CTAButtonPrimary onClick={handleStart}>
+              Commencer gratuitement <ArrowRight size={18} />
+            </CTAButtonPrimary>
+            <CTAButtonSecondary onClick={() => navigate('/about')}>
+              En savoir plus
+            </CTAButtonSecondary>
+          </CTAButtons>
+          <CheckList>
+            <span><Check size={14} /> Gratuit pour toujours</span>
+            <span><Check size={14} /> Aucune carte requise</span>
+            <span><Check size={14} /> Données protégées</span>
+          </CheckList>
+        </CTAInner>
+      </CTASection>
+
+      {/* ── Footer ── */}
+      <Footer>
+        © 2025 <strong>FastCare</strong> — Votre compagnon de jeûne intelligent · Projet universitaire
+      </Footer>
+
+    </Page>
   );
 };
 

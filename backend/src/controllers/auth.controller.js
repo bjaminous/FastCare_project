@@ -25,7 +25,7 @@ const register = async (req, res, next) => {
             return res.status(400).json({ success: false, message: "Données invalides", errors });
         }
 
-        const { nom, email, motDePasse, age, poidsInitial } = req.body;
+        const { prenom, nom, email, motDePasse, telephone, dateNaissance, age, poidsInitial } = req.body;
 
         // 2. Vérification email existant
         const existingUser = await User.scope("withPassword").findOne({ where: { email } });
@@ -37,7 +37,7 @@ const register = async (req, res, next) => {
         }
 
         // 3. Création utilisateur (le hook hashera le mot de passe)
-        const newUser = await User.create({ nom, email, motDePasse, age, poidsInitial });
+        const newUser = await User.create({ prenom, nom, email, motDePasse, telephone, dateNaissance, age, poidsInitial });
 
         // 4. Générer JWT
         const token = generateToken(newUser);
