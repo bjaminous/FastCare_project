@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import NotificationBell from './NotificationBell';
 import styled, { keyframes, css } from 'styled-components';
-import { Timer, LayoutDashboard, User, LogOut, ChevronDown, TrendingUp, BookOpen, Lightbulb } from 'lucide-react';
+import { Timer, LayoutDashboard, User, LogOut, ChevronDown, TrendingUp, BookOpen, Lightbulb, BarChart2, GraduationCap } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
@@ -33,7 +34,7 @@ const Links = styled.div`
 const NavLink = styled.button`
   display: flex; align-items: center; gap: 0.5rem;
   background: none; border: none; cursor: pointer;
-  font-size: 0.88rem; font-weight: 700; padding: 0.5rem 0.9rem; border-radius: 10px;
+  font-size: 0.82rem; font-weight: 700; padding: 0.45rem 0.65rem; border-radius: 10px;
   color: ${p => p.active ? '#2A7DE1' : '#475569'};
   background: ${p => p.active ? 'rgba(42,125,225,0.08)' : 'transparent'};
   transition: all 0.18s;
@@ -99,20 +100,22 @@ const MobileTab = styled.button`
 `;
 
 const LINKS = [
-  { path: '/dashboard',  label: 'Dashboard', icon: LayoutDashboard },
-  { path: '/timer',      label: 'Mon jeûne', icon: Timer },
-  { path: '/suivi',      label: 'Suivi',     icon: TrendingUp },
-  { path: '/journal',    label: 'Journal',   icon: BookOpen },
-  { path: '/conseils',   label: 'Conseils',  icon: Lightbulb },
-  { path: '/mon-espace', label: 'Mon espace',icon: User },
+  { path: '/dashboard',    label: 'Dashboard',   icon: LayoutDashboard },
+  { path: '/timer',        label: 'Mon jeûne',   icon: Timer },
+  { path: '/suivi',        label: 'Suivi',       icon: TrendingUp },
+  { path: '/statistiques', label: 'Statistiques',icon: BarChart2 },
+  { path: '/journal',      label: 'Journal',     icon: BookOpen },
+  { path: '/conseils',     label: 'Conseils',    icon: Lightbulb },
+  { path: '/apprendre',   label: 'Apprendre',   icon: GraduationCap },
+  { path: '/mon-espace',   label: 'Mon espace',  icon: User },
 ];
 
-// Seulement les 4 liens principaux dans la barre mobile
+// 4 liens principaux dans la barre mobile
 const MOBILE_LINKS = [
-  { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { path: '/timer',     label: 'Jeûne',     icon: Timer },
-  { path: '/suivi',     label: 'Suivi',     icon: TrendingUp },
-  { path: '/journal',   label: 'Journal',   icon: BookOpen },
+  { path: '/dashboard',    label: 'Dashboard',  icon: LayoutDashboard },
+  { path: '/timer',        label: 'Jeûne',      icon: Timer },
+  { path: '/suivi',        label: 'Suivi',      icon: TrendingUp },
+  { path: '/statistiques', label: 'Stats',      icon: BarChart2 },
 ];
 
 const AppNav = () => {
@@ -148,6 +151,7 @@ const AppNav = () => {
         </Links>
 
         <Right>
+          <NotificationBell />
           <div style={{ position: 'relative' }} ref={dropRef}>
             <Avatar onClick={() => setOpen(v => !v)}>
               <AvatarCircle>{initials}</AvatarCircle>
@@ -156,6 +160,9 @@ const AppNav = () => {
             </Avatar>
             {open && (
               <Dropdown>
+                <DropItem onClick={() => { navigate('/statistiques'); setOpen(false); }}>
+                  <BarChart2 size={15} /> Statistiques
+                </DropItem>
                 <DropItem onClick={() => { navigate('/suivi'); setOpen(false); }}>
                   <TrendingUp size={15} /> Suivi quotidien
                 </DropItem>
@@ -164,6 +171,9 @@ const AppNav = () => {
                 </DropItem>
                 <DropItem onClick={() => { navigate('/conseils'); setOpen(false); }}>
                   <Lightbulb size={15} /> Conseils santé
+                </DropItem>
+                <DropItem onClick={() => { navigate('/apprendre'); setOpen(false); }}>
+                  <GraduationCap size={15} /> Apprendre
                 </DropItem>
                 <DropItem onClick={() => { navigate('/mon-espace'); setOpen(false); }}>
                   <User size={15} /> Mon espace
@@ -180,7 +190,7 @@ const AppNav = () => {
 
       {/* Barre de navigation mobile en bas */}
       <MobileBar>
-        {LINKS.map(({ path, label, icon: Icon }) => (
+        {MOBILE_LINKS.map(({ path, label, icon: Icon }) => (
           <MobileTab key={path} active={pathname === path} onClick={() => navigate(path)}>
             <Icon size={22} />
             {label}

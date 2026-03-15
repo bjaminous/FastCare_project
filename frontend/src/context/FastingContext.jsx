@@ -1,18 +1,31 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from './AuthContext';
+
+const API = 'http://localhost:5000/api';
+const authHeader = () => {
+  const token = localStorage.getItem('fc_token');
+  return token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+};
 
 const FastingContext = createContext(null);
 
-const LS_KEY = 'fc_fasting';
+const getKey = () => {
+  try {
+    const u = JSON.parse(localStorage.getItem('fc_user'));
+    return u?.id ? `fc_fasting_${u.id}` : 'fc_fasting';
+  } catch { return 'fc_fasting'; }
+};
 
 const load = () => {
   try {
-    const raw = localStorage.getItem(LS_KEY);
+    const raw = localStorage.getItem(getKey());
     return raw ? JSON.parse(raw) : null;
   } catch { return null; }
 };
 
-const save = (data) => localStorage.setItem(LS_KEY, JSON.stringify(data));
-const clear = () => localStorage.removeItem(LS_KEY);
+const save = (data) => localStorage.setItem(getKey(), JSON.stringify(data));
+const clear = () => localStorage.removeItem(getKey());
 
 // ─── Durées cibles ───────────────────────────────────────────────────────────
 // Types affichés comme boutons principaux
@@ -34,12 +47,21 @@ export const CUSTOM_OPTIONS = [
 ];
 
 export const FastingProvider = ({ children }) => {
+  const { user } = useAuth();
+
   const [session, setSession] = useState(() => {
     const s = load();
-    // migration : si l'ancien type 'custom' ou '24' est stocké mais plus valide, reset
     if (s && !FASTING_TYPES[s.fastingType]) return null;
     return s;
   });
+
+  // Recharge la session lors d'une connexion (pas à la déconnexion — le jeûne doit persister)
+  useEffect(() => {
+    if (!user?.id) return;
+    const s = load();
+    if (s && !FASTING_TYPES[s.fastingType]) { setSession(null); return; }
+    setSession(s);
+  }, [user?.id]);
 
   // Calcule l'élapsé en secondes à l'instant T
   const getElapsed = useCallback((s = null) => {
@@ -51,10 +73,29 @@ export const FastingProvider = ({ children }) => {
     return data.elapsedWhenPaused || 0;
   }, []);
 
-  const start = useCallback((type = '16/8', customHours = null) => {
+  const start = useCallback(async (type = '16/8', customHours = null) => {
     const data = { startTime: Date.now(), fastingType: type, isRunning: true, elapsedWhenPaused: 0, ...(customHours ? { customHours } : {}) };
     save(data);
     setSession(data);
+    // Sync backend
+    try {
+      const res = await axios.post(`${API}/jeunes/start`, {}, authHeader());
+      const jeuneId = res.data?.id;
+      if (jeuneId) {
+        const updated = { ...data, jeuneId };
+        save(updated);
+        setSession(updated);
+      }
+    } catch (err) {
+      // Si un jeûne orphelin existe déjà en DB, on récupère son ID pour pouvoir le stopper proprement
+      const existing = err?.response?.data?.jeune;
+      if (existing?.id) {
+        const updated = { ...data, jeuneId: existing.id };
+        save(updated);
+        setSession(updated);
+      }
+      // Sinon on continue en local sans jeuneId
+    }
   }, []);
 
   const pause = useCallback(() => {
@@ -73,7 +114,69 @@ export const FastingProvider = ({ children }) => {
     setSession(data);
   }, []);
 
-  const reset = useCallback(() => {
+  // finalize : jeûne complété naturellement → sauvegarde backend + marque terminé localement
+  const finalize = useCallback(async () => {
+    const current = load();
+    if (!current) return;
+    const elapsed = (current.elapsedWhenPaused || 0) + (current.isRunning ? Math.floor((Date.now() - current.startTime) / 1000) : 0);
+    const data = { ...current, isRunning: false, elapsedWhenPaused: elapsed, completed: true };
+    save(data);
+    setSession(data);
+
+    let jeuneId = current.jeuneId;
+
+    // Si pas de jeuneId (start backend avait échoué), on tente un start immédiat + stop
+    if (!jeuneId) {
+      try {
+        const res = await axios.post(`${API}/jeunes/start`, {}, authHeader());
+        jeuneId = res.data?.id;
+      } catch { /* déjà en cours ou hors ligne */ }
+    }
+
+    if (jeuneId) {
+      try {
+        const res = await axios.patch(`${API}/jeunes/${jeuneId}/stop`, {}, authHeader());
+        const duree = res.data?.dureeHeures;
+        // Notification de complétion
+        await axios.post(`${API}/notifications`, {
+          type: 'JEUNE_COMPLETE',
+          message: `Bravo ! Vous avez complété un jeûne${duree ? ` de ${duree.toFixed(1)}h` : ''} 🎉`,
+          dateEnvoi: new Date(),
+        }, authHeader());
+        // Notification de streak
+        try {
+          const jeunes = await axios.get(`${API}/jeunes`, authHeader());
+          const days = new Set(
+            (jeunes.data || [])
+              .filter(j => j.statut === 'TERMINE')
+              .map(j => new Date(j.dateDebut).toDateString())
+          );
+          let streak = 0;
+          const d = new Date();
+          while (days.has(new Date(d).toDateString())) {
+            streak++;
+            d.setDate(d.getDate() - 1);
+          }
+          if (streak >= 2) {
+            await axios.post(`${API}/notifications`, {
+              type: 'STREAK',
+              message: `🔥 Série de ${streak} jour${streak > 1 ? 's' : ''} consécutif${streak > 1 ? 's' : ''} ! Continuez comme ça !`,
+              dateEnvoi: new Date(),
+            }, authHeader());
+          }
+        } catch { /* silencieux */ }
+      } catch { /* silencieux */ }
+    }
+  }, []);
+
+  // reset : abandon ou réinitialisation manuelle → sauvegarde backend + efface local
+  const reset = useCallback(async () => {
+    const current = load();
+    if (current?.jeuneId) {
+      try {
+        await axios.patch(`${API}/jeunes/${current.jeuneId}/stop`, {}, authHeader());
+      } catch { /* silencieux */ }
+    }
     clear();
     setSession(null);
   }, []);
@@ -90,14 +193,16 @@ export const FastingProvider = ({ children }) => {
     ? (session?.customHours ?? 16)
     : (FASTING_TYPES[session?.fastingType]?.hours ?? 16);
   const targetSeconds = targetHours * 3600;
-  const isRunning = session?.isRunning ?? false;
+  const isRunning   = session?.isRunning ?? false;
+  const isCompleted = session?.completed ?? false;
   const fastingType = (session?.fastingType && FASTING_TYPES[session.fastingType]) ? session.fastingType : '16/8';
-  const hasSession = !!session;
+  const hasSession  = !!session && !session.completed; // une session complétée n'est plus "active"
 
   return (
     <FastingContext.Provider value={{
       session, isRunning, fastingType, targetSeconds, targetHours, hasSession,
-      getElapsed, start, pause, resume, reset, changeType,
+      getElapsed, start, pause, resume, reset, finalize, changeType,
+      isCompleted,
     }}>
       {children}
     </FastingContext.Provider>

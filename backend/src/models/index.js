@@ -10,7 +10,7 @@ const SuiviQuotidien = require("./SuiviQuotidien")(sequelize, DataTypes);
 const Utilisateur = require("./User");
 const User = require("./User");
 const Statistique = require("./Statistique");
-const Notification = require("./Notification");
+const Notification = require("./Notification")(sequelize, DataTypes);
 const Journal = require("./Journal")(sequelize, DataTypes);
 const ConseilSante = require("./ConseilSante")(sequelize, DataTypes);
 
@@ -20,9 +20,9 @@ const ConseilSante = require("./ConseilSante")(sequelize, DataTypes);
 TypeJeune.hasMany(Jeune);
 Jeune.belongsTo(TypeJeune);
 
-// Utilisateur ↔ Jeune
-Utilisateur.hasMany(Jeune);
-Jeune.belongsTo(Utilisateur);
+// Utilisateur ↔ Jeune (foreignKey explicite pour matcher le controller)
+Utilisateur.hasMany(Jeune, { foreignKey: 'utilisateur_id' });
+Jeune.belongsTo(Utilisateur, { foreignKey: 'utilisateur_id' });
 
 // Jeune ↔ SuiviQuotidien
 Jeune.hasMany(SuiviQuotidien);

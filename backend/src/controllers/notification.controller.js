@@ -17,10 +17,27 @@ exports.getHistory = async (req, res) => {
   res.json(list);
 };
 
+exports.getUnread = async (req, res) => {
+  const list = await Notification.findAll({
+    where: { utilisateur_id: req.user.id, lue: false },
+    order: [['dateEnvoi', 'DESC']],
+    limit: 20,
+  });
+  res.json(list);
+};
+
 exports.markAsRead = async (req, res) => {
   await Notification.update(
     { lue: true },
     { where: { id: req.params.id, utilisateur_id: req.user.id } }
+  );
+  res.sendStatus(200);
+};
+
+exports.markAllRead = async (req, res) => {
+  await Notification.update(
+    { lue: true },
+    { where: { utilisateur_id: req.user.id, lue: false } }
   );
   res.sendStatus(200);
 };

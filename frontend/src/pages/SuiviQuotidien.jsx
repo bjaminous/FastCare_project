@@ -6,6 +6,7 @@ import {
   TrendingUp, TrendingDown, Minus,
 } from 'lucide-react';
 import AppNav from '../components/AppNav';
+import { useAuth } from '../context/AuthContext';
 
 const API = 'http://localhost:5000/api';
 const auth = () => ({ headers: { Authorization: `Bearer ${localStorage.getItem('fc_token')}` } });
@@ -193,6 +194,7 @@ const poidsTrend = (suivis) => {
 };
 
 export default function SuiviQuotidien() {
+  const { user } = useAuth();
   const [date, setDate] = useState(toInputDate(new Date()));
   const [poids, setPoids] = useState('');
   const [energie, setEnergie] = useState(7);
@@ -252,6 +254,22 @@ export default function SuiviQuotidien() {
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
       loadHistory();
+      // Notif objectif de poids atteint (si poids < poidsInitial et jamais envoyé)
+      if (poids && user?.poidsInitial) {
+        const current = parseFloat(poids);
+        const initial = parseFloat(user.poidsInitial);
+        const key = `fc_poids_notif_${user.id}`;
+        const lastNotifPoids = parseFloat(localStorage.getItem(key) || '9999');
+        if (current < initial && current < lastNotifPoids) {
+          localStorage.setItem(key, current);
+          const perte = (initial - current).toFixed(1);
+          axios.post(`${API}/notifications`, {
+            type: 'OBJECTIF_POIDS',
+            message: `⚖️ Bravo ! Vous avez perdu ${perte} kg depuis le début. Continuez ! 💪`,
+            dateEnvoi: new Date(),
+          }, auth()).catch(() => {});
+        }
+      }
     } catch { /* erreur gérée silencieusement */ }
     setLoading(false);
   };

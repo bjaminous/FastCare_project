@@ -21,11 +21,14 @@ const errorHandler = (err, req, res, next) => {
 
     // Contrainte d'unicité Sequelize
     if (err.name === "SequelizeUniqueConstraintError") {
-        const messages = err.errors.map((e) => e.message);
+        const field = err.errors?.[0]?.path;
+        const message = field === 'email'
+            ? "Cet email est déjà utilisé. Connectez-vous ou utilisez un autre email."
+            : "Une valeur est déjà utilisée : " + (field || "champ inconnu");
         return res.status(400).json({
             success: false,
-            message: "Donnée en doublon",
-            errors: messages,
+            message,
+            errors: [message],
         });
     }
 

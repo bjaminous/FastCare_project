@@ -38,6 +38,14 @@ export const AuthProvider = ({ children }) => {
     if (poidsInitial)  body.poidsInitial  = Number(poidsInitial);
     const res = await axios.post(`${API}/auth/register`, body);
     saveSession(res.data.user, res.data.token);
+    // Notification de bienvenue
+    try {
+      await axios.post(`${API}/notifications`, {
+        type: 'BIENVENUE',
+        message: `Bienvenue sur FastCare${prenom ? `, ${prenom}` : ''} ! 👋 Commencez par choisir votre objectif.`,
+        dateEnvoi: new Date(),
+      }, { headers: { Authorization: `Bearer ${res.data.token}` } });
+    } catch { /* silencieux */ }
     return res.data;
   }, []);
 
@@ -53,6 +61,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const logout = useCallback(() => {
+    // On NE supprime PAS le jeûne — il doit persister après reconnexion
     setUser(null);
     setToken(null);
     localStorage.removeItem('fc_user');

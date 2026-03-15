@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, UserPlus } from 'lucide-react';
 import Button from '../components/ui/Button';
@@ -162,6 +162,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const submittingRef = useRef(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -170,16 +171,19 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setIsLoading(true);
     setError('');
     try {
       await register(form);
-      navigate('/goal-selection');
+      navigate('/welcome');
     } catch (err) {
       const msg = err.response?.data?.message || err.response?.data?.errors?.[0] || 'Une erreur est survenue';
       setError(msg);
     } finally {
       setIsLoading(false);
+      submittingRef.current = false;
     }
   };
 

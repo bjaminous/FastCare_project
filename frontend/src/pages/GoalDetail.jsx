@@ -458,7 +458,11 @@ const GoalDetail = () => {
 
   const handleChoose = () => {
     localStorage.setItem('fastingGoal', id);
-    navigate('/timer');
+    if (id === 'learning') {
+      navigate('/apprendre');
+    } else {
+      navigate('/timer');
+    }
   };
 
   return (

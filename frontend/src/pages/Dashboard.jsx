@@ -1,10 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
+
+const API = 'http://localhost:5000/api';
+const auth = () => ({ headers: { Authorization: `Bearer ${localStorage.getItem('fc_token')}` } });
 import { useFasting, FASTING_TYPES } from '../context/FastingContext';
 import {
   Timer, Flame, Droplets, TrendingUp, Zap, Moon, Heart,
   Scale, Brain, ArrowRight, Play, Trophy, Calendar,
+  PenLine, BarChart2, Lightbulb, Plus,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import AppNav from '../components/AppNav';
@@ -130,6 +135,30 @@ const StatTrend = styled.div`
   font-size:0.72rem;font-weight:700;margin-top:0.4rem;
   color:${p=>p.up?'#059669':'#94a3b8'};
 `;
+
+/* ── Raccourcis rapides ── */
+const QuickGrid = styled.div`
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0.85rem;margin-bottom:2rem;
+  animation:${fadeInUp} 0.5s ease 0.08s both;
+  @media(max-width:768px){grid-template-columns:repeat(2,1fr);}
+`;
+const QuickBtn = styled.button`
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  background:white;border:1.5px solid rgba(42,125,225,0.08);
+  border-radius:16px;padding:1.1rem 0.75rem;cursor:pointer;
+  transition:all 0.2s;text-align:center;
+  &:hover{
+    border-color:${p=>p.$color||'#2A7DE1'};
+    transform:translateY(-3px);
+    box-shadow:0 8px 24px -6px ${p=>p.$shadow||'rgba(42,125,225,0.2)'};
+  }
+`;
+const QuickIcon = styled.div`
+  width:42px;height:42px;border-radius:13px;
+  background:${p=>p.$bg};color:${p=>p.$color};
+  display:flex;align-items:center;justify-content:center;
+`;
+const QuickLabel = styled.div`font-size:0.78rem;font-weight:700;color:#475569;`;
 
 /* ── Two columns ── */
 const TwoCol = styled.div`
@@ -293,7 +322,7 @@ const formatDate = (d) => new Date(d).toLocaleDateString('fr-FR', { day:'numeric
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { isRunning, fastingType, targetSeconds, hasSession, getElapsed } = useFasting();
+  const { isRunning, isCompleted, fastingType, targetSeconds, hasSession, getElapsed } = useFasting();
   const [elapsed, setElapsed] = useState(() => getElapsed());
   const rafRef = useRef(null);
 
@@ -312,14 +341,80 @@ const Dashboard = () => {
   const GoalIcon = goalMeta?.icon;
   const tips = goal ? (TIPS_BY_GOAL[goal] || DEFAULT_TIPS) : DEFAULT_TIPS;
 
-  // Données simulées — seront remplacées par de vraies données API
-  const hasFastingData = hasSession;
-  const streak = 0;
-  const totalFasts = 0;
-  const totalHours = 0;
-  const avgDuration = '—';
+  const [history, setHistory]       = useState([]);
+  const [statsLoaded, setStatsLoaded] = useState(false);
+  const [apiError, setApiError]     = useState(null);
 
-  const MOCK_HISTORY = []; // Vide pour l'instant — sera rempli par l'API
+  const loadHistory = useCallback(async () => {
+    setApiError(null);
+    try {
+      const res = await axios.get(`${API}/jeunes`, auth());
+      setHistory(res.data || []);
+    } catch (err) {
+      const msg = err?.response?.data?.message || err?.message || 'Erreur inconnue';
+      const status = err?.response?.status;
+      setApiError(`${status ? `[${status}] ` : ''}${msg}`);
+    }
+    setStatsLoaded(true);
+  }, []);
+
+  useEffect(() => { loadHistory(); }, [loadHistory]);
+
+  // Rappel de commencer le jeûne (après 20h, une fois par jour, si pas de session active)
+  useEffect(() => {
+    if (!user || hasSession) return;
+    const hour = new Date().getHours();
+    if (hour < 20) return;
+    const today = new Date().toDateString();
+    const key = `fc_fast_reminder_${user.id}`;
+    if (localStorage.getItem(key) === today) return;
+    localStorage.setItem(key, today);
+    axios.post(`${API}/notifications`, {
+      type: 'RAPPEL_JEUNE',
+      message: '🌙 Il est l\'heure de commencer votre jeûne ! Démarrez votre timer pour ce soir.',
+      dateEnvoi: new Date(),
+    }, auth()).catch(() => {});
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification('FastCare 🌙', { body: 'Il est l\'heure de commencer votre jeûne !', icon: '/favicon.ico' });
+    }
+  }, [user, hasSession]);
+
+  // Rafraîchit les stats quand la fenêtre reprend le focus (retour depuis Timer)
+  useEffect(() => {
+    const onFocus = () => loadHistory();
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
+  }, [loadHistory]);
+
+  const hasFastingData = hasSession;
+  const termines = history.filter(j => j.statut === 'TERMINE');
+  const totalFasts = termines.length;
+  const totalHours = Math.round(
+    termines.reduce((acc, j) => {
+      if (!j.dateFin) return acc;
+      return acc + (new Date(j.dateFin) - new Date(j.dateDebut)) / 3600000;
+    }, 0)
+  );
+  const avgDuration = termines.length > 0
+    ? `${(totalHours / termines.length).toFixed(1)}h`
+    : '—';
+
+  // Streak : compter les jours consécutifs avec au moins 1 jeûne terminé
+  const streak = (() => {
+    if (!termines.length) return 0;
+    const days = [...new Set(termines.map(j =>
+      new Date(j.dateDebut).toISOString().split('T')[0]
+    ))].sort().reverse();
+    let count = 0;
+    let cursor = new Date(); cursor.setHours(0,0,0,0);
+    for (const d of days) {
+      const day = new Date(d + 'T00:00:00');
+      const diff = Math.round((cursor - day) / 86400000);
+      if (diff <= 1) { count++; cursor = day; }
+      else break;
+    }
+    return count;
+  })();
 
   return (
     <Page>
@@ -356,28 +451,51 @@ const Dashboard = () => {
           <HeroOrb className="a" /><HeroOrb className="b" />
           <HeroTop>
             <div>
-              <HeroLabel>{hasSession ? 'Jeûne en cours' : 'Aucun jeûne actif'}</HeroLabel>
-              <HeroTime>{hasSession ? formatTime(timeLeft) : '00:00:00'}</HeroTime>
+              <HeroLabel>
+                {isCompleted ? 'Jeûne accompli ✓' : hasSession ? 'Jeûne en cours' : 'Aucun jeûne actif'}
+              </HeroLabel>
+              <HeroTime>{hasSession || isCompleted ? formatTime(timeLeft) : '00:00:00'}</HeroTime>
               <HeroSub>
-                {hasSession
-                  ? `${fastingTypeName} · ${Math.round(progress)}% accompli`
-                  : 'Appuyez sur le bouton pour démarrer'}
+                {isCompleted
+                  ? `${fastingTypeName} · 100% accompli 🎉`
+                  : hasSession
+                    ? `${fastingTypeName} · ${Math.round(progress)}% accompli`
+                    : 'Appuyez sur le bouton pour démarrer'}
               </HeroSub>
             </div>
             <StatusBadge>
-              <Dot style={{ background: isRunning ? '#2ED1A2' : '#F59E0B' }} />
-              {isRunning ? 'En cours' : hasSession ? 'En pause' : 'Prêt'}
+              <Dot style={{ background: isCompleted ? '#059669' : isRunning ? '#2ED1A2' : '#F59E0B' }} />
+              {isCompleted ? 'Terminé' : isRunning ? 'En cours' : hasSession ? 'En pause' : 'Prêt'}
             </StatusBadge>
           </HeroTop>
-          <ProgressBar><ProgressFill pct={progress} /></ProgressBar>
+          <ProgressBar><ProgressFill pct={isCompleted ? 100 : progress} /></ProgressBar>
           <ProgressRow>
             <span>{formatTime(elapsed)} écoulé</span>
             <span>Objectif {FASTING_TYPES[fastingType]?.hours}h</span>
           </ProgressRow>
           <StartBtn onClick={() => navigate('/timer')}>
-            <Play size={16} /> {isRunning ? 'Voir mon jeûne' : hasSession ? 'Reprendre' : 'Démarrer mon jeûne'}
+            <Play size={16} />
+            {isCompleted ? 'Démarrer un nouveau jeûne' : isRunning ? 'Voir mon jeûne' : hasSession ? 'Reprendre' : 'Démarrer mon jeûne'}
           </StartBtn>
         </HeroCard>
+
+        {/* ── Raccourcis rapides ── */}
+        <QuickGrid>
+          {[
+            { label:'Ajouter un suivi', icon:Plus,      path:'/suivi',        bg:'rgba(42,125,225,0.1)',  color:'#2A7DE1', shadow:'rgba(42,125,225,0.2)' },
+            { label:'Mon journal',      icon:PenLine,   path:'/journal',      bg:'rgba(46,209,162,0.1)',  color:'#059669', shadow:'rgba(46,209,162,0.2)' },
+            { label:'Statistiques',     icon:BarChart2, path:'/statistiques', bg:'rgba(139,92,246,0.1)',  color:'#7C3AED', shadow:'rgba(139,92,246,0.2)' },
+            { label:'Conseils santé',   icon:Lightbulb, path:'/conseils',     bg:'rgba(245,158,11,0.1)',  color:'#D97706', shadow:'rgba(245,158,11,0.2)' },
+          ].map(q => {
+            const Icon = q.icon;
+            return (
+              <QuickBtn key={q.path} $color={q.color} $shadow={q.shadow} onClick={() => navigate(q.path)}>
+                <QuickIcon $bg={q.bg} $color={q.color}><Icon size={20}/></QuickIcon>
+                <QuickLabel>{q.label}</QuickLabel>
+              </QuickBtn>
+            );
+          })}
+        </QuickGrid>
 
         {/* ── Stats ── */}
         <StatsGrid>
@@ -406,25 +524,41 @@ const Dashboard = () => {
           <div>
             <SectionHead>
               <SectionTitle>Derniers jeûnes</SectionTitle>
-              <SeeAll onClick={() => navigate('/timer')}>Voir tout <ArrowRight size={13}/></SeeAll>
+              <SeeAll onClick={loadHistory}>↺ Actualiser</SeeAll>
             </SectionHead>
+            {apiError && (
+              <div style={{
+                background:'rgba(239,68,68,0.06)', border:'1.5px solid rgba(239,68,68,0.2)',
+                borderRadius:'12px', padding:'0.75rem 1rem', marginBottom:'0.75rem',
+                fontSize:'0.8rem', color:'#DC2626', fontWeight:600,
+              }}>
+                ⚠️ Erreur API : {apiError}
+              </div>
+            )}
             <HistoryCard>
-              {MOCK_HISTORY.length === 0 ? (
+              {!statsLoaded ? (
+                <EmptyState><div style={{ color:'#94a3b8', fontSize:'0.85rem' }}>Chargement…</div></EmptyState>
+              ) : termines.length === 0 ? (
                 <EmptyState>
                   <div className="emoji">🌱</div>
                   <div>Votre historique apparaîtra ici après votre premier jeûne.</div>
                 </EmptyState>
               ) : (
-                MOCK_HISTORY.map((item, i) => (
-                  <HistoryRow key={i}>
-                    <HistoryDot bg={item.bg} color={item.color}>{item.icon}</HistoryDot>
-                    <HistoryInfo>
-                      <HistoryTitle>{item.title}</HistoryTitle>
-                      <HistoryDate>{formatDate(item.date)}</HistoryDate>
-                    </HistoryInfo>
-                    <HistoryDur>{item.duration}</HistoryDur>
-                  </HistoryRow>
-                ))
+                termines.slice(0, 5).map((j, i) => {
+                  const dur = j.dateFin
+                    ? ((new Date(j.dateFin) - new Date(j.dateDebut)) / 3600000).toFixed(1) + 'h'
+                    : '—';
+                  return (
+                    <HistoryRow key={j.id}>
+                      <HistoryDot bg="rgba(42,125,225,0.1)" color="#2A7DE1">⏱</HistoryDot>
+                      <HistoryInfo>
+                        <HistoryTitle>Jeûne #{termines.length - i}</HistoryTitle>
+                        <HistoryDate>{formatDate(j.dateDebut)}</HistoryDate>
+                      </HistoryInfo>
+                      <HistoryDur>{dur}</HistoryDur>
+                    </HistoryRow>
+                  );
+                })
               )}
             </HistoryCard>
           </div>

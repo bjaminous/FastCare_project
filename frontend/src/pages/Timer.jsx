@@ -1,6 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import axios from 'axios';
+const API = 'http://localhost:5000/api';
+const authHeader = () => ({ headers: { Authorization: `Bearer ${localStorage.getItem('fc_token')}` } });
 import styled, { keyframes } from 'styled-components';
-import { Play, Pause, RotateCcw, Droplets, X, Check } from 'lucide-react';
+import { Play, Pause, RotateCcw, Droplets, X, Check, PartyPopper } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import AppNav from '../components/AppNav';
@@ -39,6 +42,46 @@ const fadeInUp = keyframes`
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 `;
+const confettiFall = keyframes`
+  0%   { transform: translateY(-20px) rotate(0deg);   opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+`;
+const scaleIn = keyframes`
+  from { opacity:0; transform:scale(0.7); }
+  to   { opacity:1; transform:scale(1);   }
+`;
+
+const ConfettiPiece = styled.div`
+  position: fixed; top: -20px; width: ${p => p.$w}px; height: ${p => p.$h}px;
+  left: ${p => p.$left}%;
+  background: ${p => p.$color};
+  border-radius: ${p => p.$round ? '50%' : '2px'};
+  animation: ${confettiFall} ${p => p.$dur}s ease-in ${p => p.$delay}s both;
+  z-index: 9999; pointer-events: none;
+`;
+const CelebrationBanner = styled.div`
+  background: linear-gradient(135deg, rgba(46,209,162,0.12), rgba(42,125,225,0.1));
+  border: 2px solid rgba(46,209,162,0.35);
+  border-radius: 18px; padding: 1.25rem 1.5rem;
+  text-align: center; margin-bottom: 1.5rem;
+  animation: ${scaleIn} 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+`;
+const CelebTitle = styled.div`
+  font-size: 1.2rem; font-weight: 900; color: #059669; margin-bottom: 0.3rem;
+`;
+const CelebSub = styled.div`font-size: 0.85rem; color: #64748b; font-weight: 600;`;
+
+const CONFETTI_COLORS = ['#2A7DE1','#2ED1A2','#F59E0B','#EF4444','#8B5CF6','#EC4899','#06B6D4'];
+const confettiPieces = Array.from({ length: 60 }, (_, i) => ({
+  id: i,
+  left:  Math.random() * 100,
+  w:     6 + Math.random() * 8,
+  h:     10 + Math.random() * 14,
+  color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+  dur:   2.5 + Math.random() * 2,
+  delay: Math.random() * 1.2,
+  round: Math.random() > 0.6,
+}));
 
 const TimerType = styled.div`
   display: flex; gap: 1rem; justify-content: center;
@@ -134,11 +177,25 @@ const formatTime = (seconds) => {
 };
 
 const Timer = () => {
-  const { isRunning, fastingType, targetSeconds, hasSession, getElapsed, start, pause, resume, reset, changeType } = useFasting();
+  const { isRunning, isCompleted, fastingType, targetSeconds, hasSession, getElapsed, start, pause, resume, reset, finalize, changeType } = useFasting();
   const [elapsed, setElapsed] = useState(() => getElapsed());
   const rafRef = useRef(null);
   const [showCustomModal, setShowCustomModal] = useState(false);
   const [selectedCustom, setSelectedCustom] = useState(null);
+  const lastHydraHour = useRef(0);
+
+  const sendHydraNotif = useCallback(async (hour) => {
+    try {
+      await axios.post(`${API}/notifications`, {
+        type: 'HYDRATATION',
+        message: `💧 ${hour}h de jeûne — Pensez à boire de l'eau pour rester hydraté(e) !`,
+        dateEnvoi: new Date(),
+      }, authHeader());
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('FastCare 💧', { body: `${hour}h de jeûne — Pensez à boire de l'eau !`, icon: '/favicon.ico' });
+      }
+    } catch { /* silencieux */ }
+  }, []);
 
   // Tick via requestAnimationFrame — continue même si on revient sur la page
   useEffect(() => {
@@ -150,15 +207,25 @@ const Timer = () => {
     return () => cancelAnimationFrame(rafRef.current);
   }, [getElapsed]);
 
-  // Notification fin de jeûne
+  // Rappel hydratation toutes les 2h de jeûne actif
   useEffect(() => {
-    if (elapsed >= targetSeconds && isRunning) {
-      if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('FastCare', { body: 'Votre jeûne est terminé !', icon: '/favicon.ico' });
-      }
-      pause();
+    if (!isRunning) return;
+    const currentHour = Math.floor(elapsed / 3600);
+    if (currentHour >= 2 && currentHour % 2 === 0 && currentHour !== lastHydraHour.current) {
+      lastHydraHour.current = currentHour;
+      sendHydraNotif(currentHour);
     }
-  }, [elapsed, targetSeconds, isRunning, pause]);
+  }, [elapsed, isRunning, sendHydraNotif]);
+
+  // Fin de jeûne naturelle → sauvegarde backend + notification
+  useEffect(() => {
+    if (elapsed >= targetSeconds && targetSeconds > 0 && isRunning) {
+      finalize();
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('FastCare', { body: 'Bravo ! Votre jeûne est terminé 🎉', icon: '/favicon.ico' });
+      }
+    }
+  }, [elapsed, targetSeconds, isRunning, finalize]);
 
   useEffect(() => {
     if ('Notification' in window && Notification.permission === 'default') {
@@ -221,13 +288,31 @@ const Timer = () => {
 
           <TimerDisplay>{formatTime(timeLeft)}</TimerDisplay>
 
+          {isCompleted && (
+            <>
+              {/* Confettis */}
+              {confettiPieces.map(p => (
+                <ConfettiPiece key={p.id}
+                  $left={p.left} $w={p.w} $h={p.h}
+                  $color={p.color} $dur={p.dur} $delay={p.delay} $round={p.round}
+                />
+              ))}
+              <CelebrationBanner>
+                <CelebTitle><PartyPopper size={20} style={{ marginRight:6, verticalAlign:'middle' }}/>Jeûne accompli !</CelebTitle>
+                <CelebSub>Votre jeûne a été enregistré. Félicitations pour votre discipline 💪</CelebSub>
+              </CelebrationBanner>
+            </>
+          )}
+
           <Controls>
-            <Button variant={isRunning ? 'secondary' : 'primary'} size="large" onClick={handleToggle}>
-              {isRunning ? <Pause size={24} /> : <Play size={24} />}
-              {isRunning ? 'Pause' : hasSession ? 'Reprendre' : 'Commencer'}
-            </Button>
+            {!isCompleted && (
+              <Button variant={isRunning ? 'secondary' : 'primary'} size="large" onClick={handleToggle}>
+                {isRunning ? <Pause size={24} /> : <Play size={24} />}
+                {isRunning ? 'Pause' : hasSession ? 'Reprendre' : 'Commencer'}
+              </Button>
+            )}
             <Button variant="outline" size="large" onClick={handleReset}>
-              <RotateCcw size={24} /> Réinitialiser
+              <RotateCcw size={24} /> {isCompleted ? 'Nouveau jeûne' : 'Réinitialiser'}
             </Button>
           </Controls>
 
