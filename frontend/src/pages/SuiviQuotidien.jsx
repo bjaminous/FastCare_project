@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled, { keyframes, css } from 'styled-components';
 import axios from 'axios';
 import {
@@ -23,7 +24,7 @@ const popIn = keyframes`
 /* ── Layout ── */
 const Page = styled.div`min-height:100vh;background:#F8FAFF;padding-bottom:5rem;`;
 const Content = styled.div`
-  max-width:780px;width:100%;margin:0 auto;padding:2.5rem 2rem;
+  max-width:1060px;width:100%;margin:0 auto;padding:2.5rem 2.5rem;
   @media(max-width:768px){padding:1.75rem 1.25rem;}
   @media(max-width:480px){padding:1.25rem 1rem;}
 `;
@@ -130,11 +131,11 @@ const MoodEmoji = styled.div`font-size:1.75rem;line-height:1;`;
 const MoodLabel = styled.div`font-size:0.65rem;font-weight:700;color:${p=>p.selected?'#2A7DE1':'#94a3b8'};`;
 
 const MOODS = [
-  { key:'tres-bien',  emoji:'😄', label:'Très bien' },
-  { key:'bien',       emoji:'🙂', label:'Bien' },
-  { key:'moyen',      emoji:'😐', label:'Moyen' },
-  { key:'fatigue',    emoji:'😴', label:'Fatigué' },
-  { key:'difficile',  emoji:'😣', label:'Difficile' },
+  { key:'tres-bien',  tKey:'great',  emoji:'😄', label:'Très bien' },
+  { key:'bien',       tKey:'good',   emoji:'🙂', label:'Bien' },
+  { key:'moyen',      tKey:'okay',   emoji:'😐', label:'Moyen' },
+  { key:'fatigue',    tKey:'tired',  emoji:'😴', label:'Fatigué' },
+  { key:'difficile',  tKey:'hard',   emoji:'😣', label:'Difficile' },
 ];
 
 /* Save button */
@@ -195,6 +196,7 @@ const poidsTrend = (suivis) => {
 
 export default function SuiviQuotidien() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [date, setDate] = useState(toInputDate(new Date()));
   const [poids, setPoids] = useState('');
   const [energie, setEnergie] = useState(7);
@@ -280,15 +282,15 @@ export default function SuiviQuotidien() {
     <Page>
       <AppNav />
       <Content>
-        <PageTitle>Suivi quotidien</PageTitle>
-        <PageSub>Loggez votre poids, énergie et humeur pour suivre votre progression.</PageSub>
+        <PageTitle>{t('tracking.title')}</PageTitle>
+        <PageSub>{t('tracking.subtitle')}</PageSub>
 
         {/* ── Navigation date ── */}
         <DateNav>
           <NavBtn onClick={() => shiftDate(-1)}><ChevronLeft size={20}/></NavBtn>
           <DateLabel>
             {capitalize(formatDisplay(date))}
-            {isToday && <TodayBadge>Aujourd'hui</TodayBadge>}
+            {isToday && <TodayBadge>{t('common.today')}</TodayBadge>}
           </DateLabel>
           <NavBtn onClick={() => shiftDate(1)} disabled={isToday}
             style={{ opacity: isToday ? 0.3 : 1 }}>
@@ -324,7 +326,7 @@ export default function SuiviQuotidien() {
           <FormSection>
             <Label>
               <LabelIcon bg="rgba(245,158,11,0.1)" color="#D97706"><Zap size={16}/></LabelIcon>
-              Niveau d'énergie
+              {t('tracking.energy')}
               <EnergyValue>{energie}/10</EnergyValue>
               <span style={{ fontSize:'0.78rem', color: energyColor(energie), fontWeight:700, marginLeft:'0.25rem' }}>
                 {EnergyDesc[energie]}
@@ -341,13 +343,13 @@ export default function SuiviQuotidien() {
           <FormSection>
             <Label>
               <LabelIcon bg="rgba(46,209,162,0.1)" color="#059669"><Smile size={16}/></LabelIcon>
-              Comment vous sentez-vous ?
+              {t('tracking.mood')}
             </Label>
             <MoodGrid>
               {MOODS.map(m => (
                 <MoodBtn key={m.key} selected={humeur === m.key} onClick={() => setHumeur(m.key)}>
                   <MoodEmoji>{m.emoji}</MoodEmoji>
-                  <MoodLabel selected={humeur === m.key}>{m.label}</MoodLabel>
+                  <MoodLabel selected={humeur === m.key}>{t('tracking.moods.' + m.tKey)}</MoodLabel>
                 </MoodBtn>
               ))}
             </MoodGrid>
@@ -364,7 +366,7 @@ export default function SuiviQuotidien() {
         </FormCard>
 
         {/* ── Historique ── */}
-        <HistTitle>Historique récent</HistTitle>
+        <HistTitle>{t('tracking.history')}</HistTitle>
         {history.length === 0 ? (
           <EmptyHist>
             <div className="emoji">📊</div>
@@ -380,7 +382,7 @@ export default function SuiviQuotidien() {
                   {s.poids && <HistChip bg="rgba(59,130,246,0.08)" color="#3B82F6">⚖️ {s.poids} kg</HistChip>}
                   {s.energie && <HistChip bg={`rgba(${s.energie>=8?'5,150,105':s.energie>=5?'217,119,6':'239,68,68'},0.1)`}
                     color={energyColor(s.energie)}>⚡ {s.energie}/10</HistChip>}
-                  {mood && <HistChip bg="rgba(46,209,162,0.08)" color="#059669">{mood.emoji} {mood.label}</HistChip>}
+                  {mood && <HistChip bg="rgba(46,209,162,0.08)" color="#059669">{mood.emoji} {t('tracking.moods.' + mood.tKey)}</HistChip>}
                 </HistRow>
               );
             })}

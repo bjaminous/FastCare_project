@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 import {
@@ -34,7 +35,7 @@ const RefreshBtn = styled.button`
   transition:background 0.15s;&:hover{background:rgba(42,125,225,0.05);}
 `;
 const Content = styled.div`
-  max-width:1100px;width:100%;margin:0 auto;padding:2.5rem 2rem;
+  max-width:1280px;width:100%;margin:0 auto;padding:2.5rem 2.5rem;
   @media(max-width:768px){padding:1.75rem 1.25rem;}
   @media(max-width:480px){padding:1.25rem 1rem;}
 `;
@@ -176,6 +177,7 @@ const CustomTooltip = ({ active, payload, label, unit }) => {
 };
 
 export default function Statistiques() {
+  const { t } = useTranslation();
   const [jeunes,  setJeunes]  = useState([]);
   const [suivis,  setSuivis]  = useState([]);
   const [loading, setLoading] = useState(true);
@@ -247,7 +249,7 @@ export default function Statistiques() {
         <PageHeader>
           <div>
             <PageTitle>Mes statistiques</PageTitle>
-            <PageSub>Visualisez votre progression et vos tendances sur la durée.</PageSub>
+            <PageSub>{t('stats.subtitle')}</PageSub>
           </div>
           <RefreshBtn onClick={loadData}>
             <RefreshCw size={14}/> Actualiser
@@ -262,7 +264,7 @@ export default function Statistiques() {
           <ChartCard style={{ textAlign:'center', padding:'4rem 2rem' }}>
             <div style={{ fontSize:'3rem', marginBottom:'1rem' }}>📊</div>
             <div style={{ fontSize:'1.1rem', fontWeight:800, color:'#0F172A', marginBottom:'0.5rem' }}>
-              Pas encore de données
+              {t('stats.noData')}
             </div>
             <div style={{ fontSize:'0.88rem', color:'#64748b' }}>
               Complétez votre premier jeûne et votre premier suivi pour voir vos statistiques ici.
@@ -291,22 +293,22 @@ export default function Statistiques() {
               {[
                 {
                   icon: Timer, bg:'rgba(42,125,225,0.1)', color:'#2A7DE1',
-                  value: totalFasts, label:'Jeûnes complétés',
+                  value: totalFasts, label: t('stats.totalFasts'),
                   trend: null,
                 },
                 {
                   icon: Flame, bg:'rgba(239,68,68,0.1)', color:'#EF4444',
-                  value: `${Math.round(totalHours)}h`, label:'Total jeûné',
+                  value: `${Math.round(totalHours)}${t('common.hours')}`, label: t('stats.totalHours'),
                   trend: null,
                 },
                 {
                   icon: BarChart2, bg:'rgba(139,92,246,0.1)', color:'#7C3AED',
-                  value: `${avgHours.toFixed(1)}h`, label:'Durée moyenne',
+                  value: `${avgHours.toFixed(1)}${t('common.hours')}`, label: t('stats.avgDuration'),
                   trend: null,
                 },
                 {
                   icon: Trophy, bg:'rgba(245,158,11,0.1)', color:'#D97706',
-                  value: `${bestFast.toFixed(1)}h`, label:'Meilleur jeûne',
+                  value: `${bestFast.toFixed(1)}h`, label: t('stats.bestFast'),
                   trend: null,
                 },
               ].map((k, i) => {
@@ -326,7 +328,7 @@ export default function Statistiques() {
               <ChartCard delay="0.08s">
                 <ChartTitle>
                   <ChartIcon bg="rgba(42,125,225,0.1)" color="#2A7DE1"><Timer size={14}/></ChartIcon>
-                  Durée des jeûnes
+                  {t('stats.fastingHistory')}
                 </ChartTitle>
                 {fastChartData.length === 0 ? (
                   <EmptyChart><div className="emoji">⏱</div><p>Aucun jeûne terminé</p></EmptyChart>
@@ -359,7 +361,7 @@ export default function Statistiques() {
               <ChartCard delay="0.12s">
                 <ChartTitle>
                   <ChartIcon bg="rgba(46,209,162,0.1)" color="#059669"><Smile size={14}/></ChartIcon>
-                  Humeur du jeûne
+                  {t('stats.moodDistribution')}
                 </ChartTitle>
                 {Object.keys(moodCounts).length === 0 ? (
                   <EmptyChart><div className="emoji">😊</div><p>Aucun suivi d'humeur</p></EmptyChart>
@@ -388,7 +390,7 @@ export default function Statistiques() {
               <ChartCard delay="0.14s">
                 <ChartTitle>
                   <ChartIcon bg="rgba(59,130,246,0.1)" color="#3B82F6"><Scale size={14}/></ChartIcon>
-                  Évolution du poids
+                  {t('stats.weightEvolution')}
                   {poidsTrend !== null && (
                     <span style={{
                       marginLeft:'auto', fontSize:'0.78rem', fontWeight:700,
@@ -429,7 +431,7 @@ export default function Statistiques() {
               <ChartCard delay="0.18s">
                 <ChartTitle>
                   <ChartIcon bg="rgba(245,158,11,0.1)" color="#D97706"><Zap size={14}/></ChartIcon>
-                  Niveau d'énergie
+                  {t('stats.energyLevel')}
                 </ChartTitle>
                 {energieData.length < 2 ? (
                   <EmptyChart><div className="emoji">⚡</div><p>2 entrées minimum pour voir la courbe</p></EmptyChart>
@@ -460,7 +462,7 @@ export default function Statistiques() {
             <ChartCard delay="0.2s">
               <ChartTitle>
                 <ChartIcon bg="rgba(42,125,225,0.1)" color="#2A7DE1"><Calendar size={14}/></ChartIcon>
-                Activité des 30 derniers jours
+                {t('stats.activityHeatmap')}
               </ChartTitle>
               <ActivityHeatmap jeunes={termines} />
             </ChartCard>

@@ -10,6 +10,8 @@ const SC_CUSTOM_PROPS = new Set([
   'variant','selected','size','light','positive','gradient',
 ]);
 const shouldForwardProp = (prop) => !SC_CUSTOM_PROPS.has(prop);
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n/index.js';
 import { AuthProvider } from './context/AuthContext';
 import { FastingProvider } from './context/FastingContext';
 import PrivateRoute from './components/PrivateRoute';
@@ -32,6 +34,7 @@ import Welcome from './pages/Welcome';
 
 function App() {
   return (
+    <I18nextProvider i18n={i18n}>
     <StyleSheetManager shouldForwardProp={shouldForwardProp}>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
@@ -88,6 +91,7 @@ function App() {
       </AuthProvider>
     </ThemeProvider>
     </StyleSheetManager>
+    </I18nextProvider>
   );
 }
 

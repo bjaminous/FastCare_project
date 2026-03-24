@@ -1,5 +1,8 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import NotificationBell from './NotificationBell';
+import LanguageSwitcher from './LanguageSwitcher';
+import FastCareLogo from './Logo';
 import styled, { keyframes, css } from 'styled-components';
 import { Timer, LayoutDashboard, User, LogOut, ChevronDown, TrendingUp, BookOpen, Lightbulb, BarChart2, GraduationCap } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
@@ -14,16 +17,15 @@ const Nav = styled.nav`
   position: sticky; top: 0; z-index: 200;
   background: rgba(255,255,255,0.96); backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(42,125,225,0.09);
-  height: 64px; padding: 0 2rem;
+  height: 76px; padding: 0 2rem;
   display: flex; align-items: center; justify-content: space-between;
+  overflow: visible;
   @media(max-width:480px){ padding: 0 1rem; }
 `;
 
-const Logo = styled.div`
-  font-size: 1.4rem; font-weight: 900; cursor: pointer;
-  background: linear-gradient(135deg,#2A7DE1,#2ED1A2);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  letter-spacing: -0.03em; flex-shrink: 0;
+const LogoWrap = styled.div`
+  cursor: pointer; flex-shrink: 0;
+  position: relative; z-index: 201;
 `;
 
 const Links = styled.div`
@@ -99,33 +101,32 @@ const MobileTab = styled.button`
   `}
 `;
 
-const LINKS = [
-  { path: '/dashboard',    label: 'Dashboard',   icon: LayoutDashboard },
-  { path: '/timer',        label: 'Mon jeûne',   icon: Timer },
-  { path: '/suivi',        label: 'Suivi',       icon: TrendingUp },
-  { path: '/statistiques', label: 'Statistiques',icon: BarChart2 },
-  { path: '/journal',      label: 'Journal',     icon: BookOpen },
-  { path: '/conseils',     label: 'Conseils',    icon: Lightbulb },
-  { path: '/apprendre',   label: 'Apprendre',   icon: GraduationCap },
-  { path: '/mon-espace',   label: 'Mon espace',  icon: User },
-];
-
-// 4 liens principaux dans la barre mobile
-const MOBILE_LINKS = [
-  { path: '/dashboard',    label: 'Dashboard',  icon: LayoutDashboard },
-  { path: '/timer',        label: 'Jeûne',      icon: Timer },
-  { path: '/suivi',        label: 'Suivi',      icon: TrendingUp },
-  { path: '/statistiques', label: 'Stats',      icon: BarChart2 },
-];
-
 const AppNav = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { user, logout } = useAuth();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const dropRef = useRef(null);
 
-  // ferme le dropdown au clic extérieur
+  const LINKS = [
+    { path: '/dashboard',    label: t('nav.dashboard'), icon: LayoutDashboard },
+    { path: '/timer',        label: t('nav.fasting'),   icon: Timer },
+    { path: '/suivi',        label: t('nav.tracking'),  icon: TrendingUp },
+    { path: '/statistiques', label: t('nav.stats'),     icon: BarChart2 },
+    { path: '/journal',      label: t('nav.journal'),   icon: BookOpen },
+    { path: '/conseils',     label: t('nav.tips'),      icon: Lightbulb },
+    { path: '/apprendre',    label: t('nav.learn'),     icon: GraduationCap },
+    { path: '/mon-espace',   label: t('nav.mySpace'),   icon: User },
+  ];
+
+  const MOBILE_LINKS = [
+    { path: '/dashboard',    label: t('nav.dashboard'), icon: LayoutDashboard },
+    { path: '/timer',        label: t('nav.fasting'),   icon: Timer },
+    { path: '/suivi',        label: t('nav.tracking'),  icon: TrendingUp },
+    { path: '/statistiques', label: t('nav.stats'),     icon: BarChart2 },
+  ];
+
   useEffect(() => {
     const handler = (e) => { if (dropRef.current && !dropRef.current.contains(e.target)) setOpen(false); };
     document.addEventListener('mousedown', handler);
@@ -134,13 +135,12 @@ const AppNav = () => {
 
   const initials = [user?.prenom, user?.nom].filter(Boolean).map(s => s[0].toUpperCase()).join('') || '?';
   const displayName = user?.prenom || user?.nom || user?.email?.split('@')[0] || 'Moi';
-
   const handleLogout = () => { logout(); navigate('/'); };
 
   return (
     <>
       <Nav>
-        <Logo onClick={() => navigate('/dashboard')}>FastCare</Logo>
+        <LogoWrap onClick={() => navigate('/dashboard')}><FastCareLogo visibleWidth={160} /></LogoWrap>
 
         <Links>
           {LINKS.map(({ path, label, icon: Icon }) => (
@@ -151,6 +151,7 @@ const AppNav = () => {
         </Links>
 
         <Right>
+          <LanguageSwitcher />
           <NotificationBell />
           <div style={{ position: 'relative' }} ref={dropRef}>
             <Avatar onClick={() => setOpen(v => !v)}>
@@ -161,26 +162,26 @@ const AppNav = () => {
             {open && (
               <Dropdown>
                 <DropItem onClick={() => { navigate('/statistiques'); setOpen(false); }}>
-                  <BarChart2 size={15} /> Statistiques
+                  <BarChart2 size={15} /> {t('nav.stats')}
                 </DropItem>
                 <DropItem onClick={() => { navigate('/suivi'); setOpen(false); }}>
-                  <TrendingUp size={15} /> Suivi quotidien
+                  <TrendingUp size={15} /> {t('nav.tracking')}
                 </DropItem>
                 <DropItem onClick={() => { navigate('/journal'); setOpen(false); }}>
-                  <BookOpen size={15} /> Journal
+                  <BookOpen size={15} /> {t('nav.journal')}
                 </DropItem>
                 <DropItem onClick={() => { navigate('/conseils'); setOpen(false); }}>
-                  <Lightbulb size={15} /> Conseils santé
+                  <Lightbulb size={15} /> {t('nav.tips')}
                 </DropItem>
                 <DropItem onClick={() => { navigate('/apprendre'); setOpen(false); }}>
-                  <GraduationCap size={15} /> Apprendre
+                  <GraduationCap size={15} /> {t('nav.learn')}
                 </DropItem>
                 <DropItem onClick={() => { navigate('/mon-espace'); setOpen(false); }}>
-                  <User size={15} /> Mon espace
+                  <User size={15} /> {t('nav.mySpace')}
                 </DropItem>
                 <DropDivider />
                 <DropItem danger onClick={handleLogout}>
-                  <LogOut size={15} /> Se déconnecter
+                  <LogOut size={15} /> {t('nav.logout')}
                 </DropItem>
               </Dropdown>
             )}
@@ -188,7 +189,6 @@ const AppNav = () => {
         </Right>
       </Nav>
 
-      {/* Barre de navigation mobile en bas */}
       <MobileBar>
         {MOBILE_LINKS.map(({ path, label, icon: Icon }) => (
           <MobileTab key={path} active={pathname === path} onClick={() => navigate(path)}>

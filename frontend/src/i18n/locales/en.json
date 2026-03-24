@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "fasting": "My Fast",
+    "tracking": "Tracking",
+    "stats": "Statistics",
+    "journal": "Journal",
+    "tips": "Tips",
+    "mySpace": "My Space",
+    "learn": "Learn",
+    "logout": "Logout",
+    "notifications": "Notifications"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Saved successfully!",
+    "today": "Today",
+    "start": "Start",
+    "stop": "Stop",
+    "reset": "Reset",
+    "confirm": "Confirm",
+    "close": "Close",
+    "noData": "No data available",
+    "optional": "opt.",
+    "hours": "h",
+    "days": "d"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Welcome back to FastCare",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign In",
+      "noAccount": "Don't have an account?",
+      "register": "Sign Up"
+    },
+    "register": {
+      "title": "Create my account",
+      "subtitle": "Join thousands of people who take care of themselves",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "phone": "Phone",
+      "birthDate": "Date of Birth",
+      "initialWeight": "Initial Weight (kg)",
+      "submit": "Create my account",
+      "hasAccount": "Already have an account?",
+      "login": "Sign In",
+      "optionalSection": "Optional Information"
+    }
+  },
+  "dashboard": {
+    "greetingMorning": "Good morning",
+    "greetingAfternoon": "Good afternoon",
+    "greetingEvening": "Good evening",
+    "subtitle": "Here is your FastCare dashboard",
+    "noFast": "No active fast",
+    "fastInProgress": "Fast in progress",
+    "fastCompleted": "Fast completed ✓",
+    "startFast": "Start my fast",
+    "resumeFast": "Resume",
+    "newFast": "Start a new fast",
+    "seeFast": "View my fast",
+    "active": "Active",
+    "paused": "Paused",
+    "ready": "Ready",
+    "done": "Done",
+    "stats": {
+      "title": "My Statistics",
+      "completed": "Completed Fasts",
+      "totalHours": "Total Hours",
+      "avgDuration": "Avg Duration",
+      "streak": "Current Streak"
+    },
+    "shortcuts": {
+      "title": "Quick Access",
+      "addTracking": "Add Tracking",
+      "myJournal": "My Journal",
+      "stats": "Statistics",
+      "tips": "Health Tips"
+    },
+    "history": {
+      "title": "Recent History",
+      "noHistory": "No completed fasts yet",
+      "completed": "Completed",
+      "duration": "Duration"
+    },
+    "tip": "Tip of the Day",
+    "refresh": "↺ Refresh"
+  },
+  "timer": {
+    "title": "My Fast",
+    "timeLeft": "Time Remaining",
+    "elapsed": "Elapsed",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "reset": "Reset",
+    "newFast": "New Fast",
+    "customTitle": "Choose my protocol",
+    "customSubtitle": "Select the duration that suits you",
+    "confirmCustom": "Confirm this protocol",
+    "celebration": {
+      "title": "🎉 Fast Completed!",
+      "subtitle": "Congratulations, you completed your fast!"
+    },
+    "infoTitle": "During your fast",
+    "infos": {
+      "water": "Drink water regularly",
+      "rest": "Rest if needed",
+      "avoid": "Avoid intense exercise",
+      "listen": "Listen to your body"
+    }
+  },
+  "tracking": {
+    "title": "Daily Tracking",
+    "subtitle": "Log your weight, energy and mood to track your progress.",
+    "weight": "Weight",
+    "weightUnit": "kg",
+    "energy": "Energy Level",
+    "mood": "Mood",
+    "save": "Save",
+    "saved": "Saved!",
+    "history": "History",
+    "noHistory": "No entries yet",
+    "moods": {
+      "great": "Very Good",
+      "good": "Good",
+      "okay": "Okay",
+      "tired": "Tired",
+      "hard": "Difficult"
+    }
+  },
+  "journal": {
+    "title": "My Journal",
+    "subtitle": "Write down your feelings and observations during your fast.",
+    "newEntry": "New Entry",
+    "placeholder": "How are you feeling today? Write your thoughts...",
+    "date": "Date",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "noEntries": "No entries yet. Start writing!",
+    "deleteConfirm": "Delete this entry?"
+  },
+  "stats": {
+    "title": "Statistics",
+    "subtitle": "Visualize your progress over time.",
+    "totalFasts": "Completed Fasts",
+    "totalHours": "Total Hours",
+    "avgDuration": "Avg Duration",
+    "bestFast": "Best Fast",
+    "fastingHistory": "Fasting History",
+    "weightEvolution": "Weight Evolution",
+    "energyLevel": "Energy Level",
+    "moodDistribution": "Mood Distribution",
+    "activityHeatmap": "Last 30 Days Activity",
+    "streakBanner": "🔥 {{count}} consecutive days streak!",
+    "noData": "No data yet"
+  },
+  "tips": {
+    "title": "Health Tips",
+    "subtitle": "Practical tips to support your fast.",
+    "disclaimer": "These tips are informational and do not replace medical advice.",
+    "filters": {
+      "all": "All",
+      "health": "Health",
+      "weight": "Weight",
+      "spiritual": "Spiritual",
+      "beginner": "Beginner"
+    }
+  },
+  "mySpace": {
+    "title": "My Space",
+    "subtitle": "Manage your profile and preferences.",
+    "profileSection": "Personal Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "birthDate": "Date of Birth",
+    "initialWeight": "Initial Weight (kg)",
+    "goal": "My Goal",
+    "changeGoal": "Change Goal",
+    "save": "Save Changes",
+    "saved": "Profile updated!",
+    "member": "FastCare Member",
+    "memberSince": "Member since",
+    "deleteAccount": "Delete my account"
+  },
+  "goalSelection": {
+    "title": "What is your goal?",
+    "subtitle": "Choose the goal that matches your approach",
+    "continue": "Continue",
+    "goals": {
+      "health": { "name": "Health & Wellness", "desc": "Improve your overall health" },
+      "weight": { "name": "Weight Loss", "desc": "Reach your ideal weight" },
+      "spiritual": { "name": "Ramadan / Lent", "desc": "Spiritual and religious fasting" },
+      "learning": { "name": "Discovery", "desc": "Learn fasting gently" }
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "noNotifications": "No notifications",
+    "markAllRead": "Mark all as read",
+    "new": "New"
+  },
+  "learn": {
+    "title": "Learn Fasting",
+    "subtitle": "Video tutorials and quizzes to learn how to fast",
+    "videos": "Videos",
+    "articles": "Articles",
+    "quiz": "Quiz",
+    "startQuiz": "Start Quiz",
+    "nextQuestion": "Next Question",
+    "seeResult": "See my result",
+    "score": "Your Score",
+    "tryAgain": "Try Again"
+  },
+  "home": {
+    "nav": { "features": "Features", "how": "How it works", "goals": "Goals", "mySpace": "My Space", "login": "Sign In", "register": "Sign Up" },
+    "hero": {
+      "badge": "New · Ramadan Tracking available",
+      "title1": "Fast better.",
+      "title2": "Live better.",
+      "subtitle": "FastCare guides you step by step in your fasting practice. Smart timer, daily tracking, personalized tips — everything you need, in one place.",
+      "start": "Start for free",
+      "learn": "Learn more",
+      "trust1": "100% free", "trust2": "No credit card", "trust3": "Secure data",
+      "remaining": "remaining", "fastStatus": "Fast in progress", "hydration": "Hydration reminder", "streak": "+3 consecutive days",
+      "weight": "Weight", "energy": "Energy", "days": "Days", "mood": "Mood"
+    },
+    "stats": { "users": "Active users", "fasts": "Completed fasts", "rating": "Average rating", "support": "Support available" },
+    "features": {
+      "tag": "Features", "title1": "Everything you need", "title2": "to succeed",
+      "subtitle": "Tools designed to accompany you at every step — from your first fast to expert level.",
+      "timer": { "title": "Smart Timer", "desc": "Choose your protocol (16/8, 24h, custom) and track your fast in real time." },
+      "tracking": { "title": "Daily Tracking", "desc": "Log your weight, energy and mood every day. Understand fasting's impact on your body." },
+      "stats": { "title": "Statistics & Charts", "desc": "Visualize your progress with clear charts. Spot your trends and celebrate every win." },
+      "journal": { "title": "Feeling Journal", "desc": "Note your experiences, emotions and observations. A personal diary of your wellness journey." },
+      "notifs": { "title": "Smart Notifications", "desc": "Hydration reminders, end-of-fast alerts and personalized encouragements to stay motivated." },
+      "tips": { "title": "Reliable Health Tips", "desc": "Tips based on best medical practices. FastCare informs and protects you." }
+    },
+    "how": {
+      "tag": "User journey", "title1": "Get started in", "title2": "3 steps",
+      "subtitle": "From sign-up to your first fast, in under 2 minutes.",
+      "step1": { "title": "Create your account", "desc": "Quick sign-up with your email. Fill in a few details to personalize your experience." },
+      "step2": { "title": "Choose your goal", "desc": "Health, weight loss, spiritual practice or learning — FastCare adapts to your motivation." },
+      "step3": { "title": "Track your progress", "desc": "Start your timer, note your feelings and check your stats to stay motivated long-term." }
+    },
+    "goalsSection": {
+      "tag": "For everyone", "title1": "What is", "title2": "your goal",
+      "subtitle": "FastCare supports every type of faster, whatever their motivation.",
+      "health": { "title": "Health & Vitality", "desc": "Improve your overall well-being and energy through regular guided fasting." },
+      "weight": { "title": "Weight Loss", "desc": "Reach your weight goals in a healthy, sustainable and frustration-free way." },
+      "spiritual": { "title": "Spiritual · Ramadan", "desc": "Practice fasting for religious reasons with tracking adapted to Ramadan." },
+      "learning": { "title": "Learning", "desc": "Discover fasting progressively in a safe environment, ideal for beginners." }
+    },
+    "cta": {
+      "title1": "Ready to transform", "title2": "your health?",
+      "subtitle": "Join over 50,000 people who trust FastCare to support their daily fasting.",
+      "start": "Start for free", "learn": "Learn more",
+      "check1": "Free forever", "check2": "No card required", "check3": "Protected data"
+    },
+    "footer": "© 2025 FastCare — Your smart fasting companion · University project"
+  }
+}

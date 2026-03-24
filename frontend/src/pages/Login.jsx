@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
+import FastCareLogo from '../components/Logo';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Card from '../components/ui/Card';
@@ -132,6 +134,7 @@ const Footer = styled.div`
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({ email: '', motDePasse: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -160,15 +163,15 @@ const Login = () => {
   return (
     <LoginContainer>
       <LoginCard>
-        <Logo>FastCare</Logo>
-        <Title>Connexion</Title>
-        <Subtitle>Bon retour sur FastCare</Subtitle>
+        <Logo><FastCareLogo visibleWidth={180} /></Logo>
+        <Title>{t('auth.login.title')}</Title>
+        <Subtitle>{t('auth.login.subtitle')}</Subtitle>
 
         {error && <ErrorBox>{error}</ErrorBox>}
 
         <Form onSubmit={handleSubmit}>
           <InputGroup>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('auth.login.email')}</Label>
             <Input
               id="email"
               name="email"
@@ -182,7 +185,7 @@ const Login = () => {
           </InputGroup>
 
           <InputGroup>
-            <Label htmlFor="motDePasse">Mot de passe</Label>
+            <Label htmlFor="motDePasse">{t('auth.login.password')}</Label>
             <PasswordContainer>
               <Input
                 id="motDePasse"
@@ -207,7 +210,7 @@ const Login = () => {
             disabled={isLoading}
             fullWidth
           >
-            {isLoading ? 'Connexion...' : 'Se connecter'}
+            {isLoading ? t('common.loading') : t('auth.login.submit')}
             {!isLoading && <LogIn size={20} />}
           </Button>
         </Form>
@@ -215,7 +218,7 @@ const Login = () => {
         <Divider><span>ou</span></Divider>
 
         <Footer>
-          Pas encore de compte ? <Link to="/register" style={{ color: '#2A7DE1', fontWeight: 600 }}>S'inscrire</Link>
+          {t('auth.login.noAccount')} <Link to="/register" style={{ color: '#2A7DE1', fontWeight: 600 }}>{t('auth.login.register')}</Link>
         </Footer>
       </LoginCard>
     </LoginContainer>

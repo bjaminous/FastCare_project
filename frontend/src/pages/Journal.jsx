@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 import { BookOpen, Plus, Trash2, Edit3, Save, X, Calendar } from 'lucide-react';
@@ -14,7 +15,7 @@ const fadeInUp = keyframes`
 
 const Page = styled.div`min-height:100vh;background:#F8FAFF;padding-bottom:5rem;`;
 const Content = styled.div`
-  max-width:780px;width:100%;margin:0 auto;padding:2.5rem 2rem;
+  max-width:1060px;width:100%;margin:0 auto;padding:2.5rem 2.5rem;
   @media(max-width:768px){padding:1.75rem 1.25rem;}
   @media(max-width:480px){padding:1.25rem 1rem;}
 `;
@@ -120,6 +121,7 @@ const toInputDate = (d) => d.toISOString().split('T')[0];
 const capitalize = (s) => s ? s[0].toUpperCase() + s.slice(1) : '';
 
 export default function Journal() {
+  const { t } = useTranslation();
   const [entries, setEntries] = useState([]);
   const [composing, setComposing] = useState(false);
   const [newDate, setNewDate] = useState(toInputDate(new Date()));
@@ -158,7 +160,7 @@ export default function Journal() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Supprimer cette entrée ?')) return;
+    if (!window.confirm(t('journal.deleteConfirm'))) return;
     try {
       await axios.delete(`${API}/journals/${id}`, auth());
       load();
@@ -171,12 +173,12 @@ export default function Journal() {
       <Content>
         <Header>
           <div>
-            <PageTitle>Journal de ressenti</PageTitle>
-            <PageSub>Notez vos ressentis, observations et pensées au fil de votre parcours.</PageSub>
+            <PageTitle>{t('journal.title')}</PageTitle>
+            <PageSub>{t('journal.subtitle')}</PageSub>
           </div>
           {!composing && (
             <NewBtn onClick={() => { setComposing(true); setNewDate(toInputDate(new Date())); setNewText(''); }}>
-              <Plus size={16}/> Nouvelle entrée
+              <Plus size={16}/> {t('journal.newEntry')}
             </NewBtn>
           )}
         </Header>
@@ -186,15 +188,15 @@ export default function Journal() {
           <ComposeCard>
             <ComposeTop>
               <BookOpen size={18} color="#2A7DE1"/>
-              <ComposeLabel>Date de l'entrée</ComposeLabel>
+              <ComposeLabel>{t('journal.date')}</ComposeLabel>
               <ComposeDateInput type="date" value={newDate}
                 max={toInputDate(new Date())}
                 onChange={e => setNewDate(e.target.value)}/>
             </ComposeTop>
-            <Textarea placeholder="Comment s'est passé votre jeûne aujourd'hui ? Vos ressentis, difficultés, victoires…"
+            <Textarea placeholder={t('journal.placeholder')}
               value={newText} onChange={e => setNewText(e.target.value)} autoFocus/>
             <ComposeActions>
-              <CancelBtn onClick={() => setComposing(false)}><X size={14}/> Annuler</CancelBtn>
+              <CancelBtn onClick={() => setComposing(false)}><X size={14}/> {t('journal.cancel')}</CancelBtn>
               <SaveBtn disabled={!newText.trim() || saving} onClick={handleCreate}>
                 <Save size={14}/> {saving ? 'Enregistrement…' : 'Enregistrer'}
               </SaveBtn>
@@ -206,9 +208,9 @@ export default function Journal() {
         {entries.length === 0 && !composing ? (
           <EmptyState>
             <div className="emoji">📖</div>
-            <p>Votre journal est vide. Commencez à noter vos ressentis !</p>
+            <p>{t('journal.noEntries')}</p>
             <NewBtn onClick={() => setComposing(true)} style={{ display:'inline-flex' }}>
-              <Plus size={16}/> Première entrée
+              <Plus size={16}/> {t('journal.newEntry')}
             </NewBtn>
           </EmptyState>
         ) : (
@@ -232,9 +234,9 @@ export default function Journal() {
                 <>
                   <EditTextarea value={editText} onChange={ev => setEditText(ev.target.value)} autoFocus/>
                   <EditActions>
-                    <CancelBtn onClick={() => setEditingId(null)}><X size={13}/> Annuler</CancelBtn>
+                    <CancelBtn onClick={() => setEditingId(null)}><X size={13}/> {t('journal.cancel')}</CancelBtn>
                     <SaveBtn onClick={() => handleUpdate(e.id)}>
-                      <Save size={13}/> Sauvegarder
+                      <Save size={13}/> {t('journal.save')}
                     </SaveBtn>
                   </EditActions>
                 </>

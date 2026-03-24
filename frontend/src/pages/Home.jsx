@@ -7,6 +7,9 @@ import {
 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import { useAuth } from '../context/AuthContext';
+import LanguageSwitcher from '../components/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
+import FastCareLogo from '../components/Logo';
 
 // ─── Animations ──────────────────────────────────────────────────────────────
 
@@ -846,6 +849,7 @@ const Footer = styled.footer`
 const Home = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation();
 
   const handleStart = () => navigate('/register');
   const handleLogin  = () => navigate('/login');
@@ -856,22 +860,23 @@ const Home = () => {
       {/* ── Navbar ── */}
       <Nav>
         <NavLogo onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          FastCare
+          <FastCareLogo visibleWidth={160} />
         </NavLogo>
         <NavLinks>
-          <NavLink href="#features">Fonctionnalités</NavLink>
-          <NavLink href="#how">Comment ça marche</NavLink>
-          <NavLink href="#goals">Objectifs</NavLink>
+          <NavLink href="#features">{t('home.nav.features')}</NavLink>
+          <NavLink href="#how">{t('home.nav.how')}</NavLink>
+          <NavLink href="#goals">{t('home.nav.goals')}</NavLink>
         </NavLinks>
         <NavActions>
+          <LanguageSwitcher />
           {isAuthenticated ? (
             <Button variant="primary" size="small" onClick={() => navigate('/mon-espace')}>
-              Mon espace
+              {t('home.nav.mySpace')}
             </Button>
           ) : (
             <>
-              <Button variant="outline" size="small" onClick={handleLogin}>Se connecter</Button>
-              <Button variant="primary" size="small" onClick={handleStart}>S'inscrire</Button>
+              <Button variant="outline" size="small" onClick={handleLogin}>{t('home.nav.login')}</Button>
+              <Button variant="primary" size="small" onClick={handleStart}>{t('home.nav.register')}</Button>
             </>
           )}
         </NavActions>
@@ -886,33 +891,33 @@ const Home = () => {
         <HeroLeft>
           <Badge>
             <span className="dot" />
-            Nouveau · Suivi Ramadan disponible
+            {t('home.hero.badge')}
           </Badge>
 
           <HeroTitle>
-            Jeûnez mieux.<br />
-            <span className="gradient">Vivez mieux.</span>
+            {t('home.hero.title1')}<br />
+            <span className="gradient">{t('home.hero.title2')}</span>
           </HeroTitle>
 
           <HeroSubtitle>
-            FastCare vous accompagne pas à pas dans votre pratique du jeûne. Timer intelligent, suivi quotidien, conseils personnalisés — tout ce dont vous avez besoin, au même endroit.
+            {t('home.hero.subtitle')}
           </HeroSubtitle>
 
           <HeroCTA>
             <Button variant="primary" size="large" onClick={handleStart}>
-              Commencer gratuitement <ArrowRight size={18} />
+              {t('home.hero.start')} <ArrowRight size={18} />
             </Button>
             <Button variant="outline" size="large" onClick={() => navigate('/about')}>
-              En savoir plus
+              {t('home.hero.learn')}
             </Button>
           </HeroCTA>
 
           <HeroTrustLine>
-            <TrustDot>✓</TrustDot> 100% gratuit
+            <TrustDot>✓</TrustDot> {t('home.hero.trust1')}
             <TrustDot>·</TrustDot>
-            <TrustDot>✓</TrustDot> Sans carte bancaire
+            <TrustDot>✓</TrustDot> {t('home.hero.trust2')}
             <TrustDot>·</TrustDot>
-            <TrustDot>✓</TrustDot> Données sécurisées
+            <TrustDot>✓</TrustDot> {t('home.hero.trust3')}
           </HeroTrustLine>
         </HeroLeft>
 
@@ -920,15 +925,15 @@ const Home = () => {
         <HeroRight>
           <MockupCard>
             <FloatingBadge className="top-right">
-              <Zap size={14} /> +3 jours consécutifs
+              <Zap size={14} /> {t('home.hero.streak')}
             </FloatingBadge>
             <FloatingBadge className="bottom-left">
-              <Bell size={14} /> Hydratation rappelée
+              <Bell size={14} /> {t('home.hero.hydration')}
             </FloatingBadge>
 
             <MockupLabel>
               <span className="dot" style={{ width: 8, height: 8, background: '#2ED1A2', borderRadius: '50%', animation: 'none' }} />
-              Jeûne en cours
+              {t('home.hero.fastStatus')}
             </MockupLabel>
 
             <MockupRingWrap>
@@ -944,7 +949,7 @@ const Home = () => {
               </svg>
               <MockupTime>
                 <span className="time">14:32:07</span>
-                <span className="label">restant</span>
+                <span className="label">{t('home.hero.remaining')}</span>
               </MockupTime>
             </MockupRingWrap>
 
@@ -953,19 +958,19 @@ const Home = () => {
             <MockupStats>
               <MockupStat>
                 <div className="val">62 kg</div>
-                <div className="key">Poids</div>
+                <div className="key">{t('home.hero.weight')}</div>
               </MockupStat>
               <MockupStat>
                 <div className="val">⚡ 8/10</div>
-                <div className="key">Énergie</div>
+                <div className="key">{t('home.hero.energy')}</div>
               </MockupStat>
               <MockupStat>
                 <div className="val">12</div>
-                <div className="key">Jours</div>
+                <div className="key">{t('home.hero.days')}</div>
               </MockupStat>
               <MockupStat>
                 <div className="val">😊</div>
-                <div className="key">Humeur</div>
+                <div className="key">{t('home.hero.mood')}</div>
               </MockupStat>
             </MockupStats>
           </MockupCard>
@@ -977,19 +982,19 @@ const Home = () => {
         <StatsInner>
           <StatItem delay="0s">
             <div className="number">50K+</div>
-            <div className="desc">Utilisateurs actifs</div>
+            <div className="desc">{t('home.stats.users')}</div>
           </StatItem>
           <StatItem delay="0.1s">
             <div className="number">1M+</div>
-            <div className="desc">Jeûnes complétés</div>
+            <div className="desc">{t('home.stats.fasts')}</div>
           </StatItem>
           <StatItem delay="0.2s">
             <div className="number">4.8 ★</div>
-            <div className="desc">Note moyenne</div>
+            <div className="desc">{t('home.stats.rating')}</div>
           </StatItem>
           <StatItem delay="0.3s">
             <div className="number">24/7</div>
-            <div className="desc">Support disponible</div>
+            <div className="desc">{t('home.stats.support')}</div>
           </StatItem>
         </StatsInner>
       </StatsBar>
@@ -997,11 +1002,9 @@ const Home = () => {
       {/* ── Features ── */}
       <Section id="features">
         <SectionHeader>
-          <SectionTag><Zap size={12} /> Fonctionnalités</SectionTag>
-          <SectionTitle>Tout ce qu'il vous faut<br /><span>pour réussir</span></SectionTitle>
-          <SectionSub>
-            Des outils conçus pour vous accompagner à chaque étape — du premier jeûne à l'expert confirmé.
-          </SectionSub>
+          <SectionTag><Zap size={12} /> {t('home.features.tag')}</SectionTag>
+          <SectionTitle>{t('home.features.title1')}<br /><span>{t('home.features.title2')}</span></SectionTitle>
+          <SectionSub>{t('home.features.subtitle')}</SectionSub>
         </SectionHeader>
         <FeaturesGrid>
           <FeatureCard delay="0s">
@@ -1009,8 +1012,8 @@ const Home = () => {
               <Timer size={26} />
             </FeatureIconBox>
             <FeatureText>
-              <h3>Timer Intelligent</h3>
-              <p>Choisissez votre protocole (16/8, 24h, personnalisé) et suivez votre jeûne en temps réel avec une interface épurée.</p>
+              <h3>{t('home.features.timer.title')}</h3>
+              <p>{t('home.features.timer.desc')}</p>
             </FeatureText>
           </FeatureCard>
 
@@ -1019,8 +1022,8 @@ const Home = () => {
               <Heart size={26} />
             </FeatureIconBox>
             <FeatureText>
-              <h3>Suivi Quotidien</h3>
-              <p>Enregistrez votre poids, niveau d'énergie et humeur chaque jour. Comprenez l'impact du jeûne sur votre corps.</p>
+              <h3>{t('home.features.tracking.title')}</h3>
+              <p>{t('home.features.tracking.desc')}</p>
             </FeatureText>
           </FeatureCard>
 
@@ -1029,8 +1032,8 @@ const Home = () => {
               <TrendingUp size={26} />
             </FeatureIconBox>
             <FeatureText>
-              <h3>Statistiques & Graphiques</h3>
-              <p>Visualisez vos progrès avec des graphiques clairs. Identifiez vos tendances et célébrez chaque victoire.</p>
+              <h3>{t('home.features.stats.title')}</h3>
+              <p>{t('home.features.stats.desc')}</p>
             </FeatureText>
           </FeatureCard>
 
@@ -1039,8 +1042,8 @@ const Home = () => {
               <BookOpen size={26} />
             </FeatureIconBox>
             <FeatureText>
-              <h3>Journal de Ressenti</h3>
-              <p>Notez vos expériences, émotions et observations. Un journal intime de votre parcours bien-être.</p>
+              <h3>{t('home.features.journal.title')}</h3>
+              <p>{t('home.features.journal.desc')}</p>
             </FeatureText>
           </FeatureCard>
 
@@ -1049,8 +1052,8 @@ const Home = () => {
               <Bell size={26} />
             </FeatureIconBox>
             <FeatureText>
-              <h3>Notifications Intelligentes</h3>
-              <p>Rappels d'hydratation, alertes de fin de jeûne et encouragements personnalisés pour rester motivé.</p>
+              <h3>{t('home.features.notifs.title')}</h3>
+              <p>{t('home.features.notifs.desc')}</p>
             </FeatureText>
           </FeatureCard>
 
@@ -1059,8 +1062,8 @@ const Home = () => {
               <Shield size={26} />
             </FeatureIconBox>
             <FeatureText>
-              <h3>Conseils Santé Fiables</h3>
-              <p>Des conseils basés sur les bonnes pratiques médicales. FastCare vous informe et vous protège.</p>
+              <h3>{t('home.features.tips.title')}</h3>
+              <p>{t('home.features.tips.desc')}</p>
             </FeatureText>
           </FeatureCard>
         </FeaturesGrid>
@@ -1070,32 +1073,30 @@ const Home = () => {
       <section id="how" style={{ background: 'white', padding: '0' }}>
         <Section style={{ padding: '6rem 2rem' }}>
           <SectionHeader center>
-            <SectionTag><Star size={12} /> Parcours utilisateur</SectionTag>
-            <SectionTitle>Démarrez en <span>3 étapes</span></SectionTitle>
-            <SectionSub>
-              De l'inscription à votre premier jeûne, en moins de 2 minutes.
-            </SectionSub>
+            <SectionTag><Star size={12} /> {t('home.how.tag')}</SectionTag>
+            <SectionTitle>{t('home.how.title1')} <span>{t('home.how.title2')}</span></SectionTitle>
+            <SectionSub>{t('home.how.subtitle')}</SectionSub>
           </SectionHeader>
           <StepsGrid>
             <Step delay="0s">
               <StepNumber>1</StepNumber>
               <StepContent>
-                <h3>Créez votre compte</h3>
-                <p>Inscription rapide avec votre email. Renseignez quelques informations pour personnaliser votre expérience.</p>
+                <h3>{t('home.how.step1.title')}</h3>
+                <p>{t('home.how.step1.desc')}</p>
               </StepContent>
             </Step>
             <Step delay="0.15s">
               <StepNumber>2</StepNumber>
               <StepContent>
-                <h3>Choisissez votre objectif</h3>
-                <p>Santé, perte de poids, pratique spirituelle ou apprentissage — FastCare s'adapte à votre motivation.</p>
+                <h3>{t('home.how.step2.title')}</h3>
+                <p>{t('home.how.step2.desc')}</p>
               </StepContent>
             </Step>
             <Step delay="0.3s">
               <StepNumber>3</StepNumber>
               <StepContent>
-                <h3>Suivez vos progrès</h3>
-                <p>Lancez votre timer, notez votre ressenti et consultez vos statistiques pour rester motivé sur la durée.</p>
+                <h3>{t('home.how.step3.title')}</h3>
+                <p>{t('home.how.step3.desc')}</p>
               </StepContent>
             </Step>
           </StepsGrid>
@@ -1105,43 +1106,41 @@ const Home = () => {
       {/* ── Goals ── */}
       <Section id="goals">
         <SectionHeader center>
-          <SectionTag><Users size={12} /> Pour tout le monde</SectionTag>
-          <SectionTitle>Quel est <span>votre objectif</span> ?</SectionTitle>
-          <SectionSub>
-            FastCare accompagne chaque type de jeûneur, quelle que soit sa motivation.
-          </SectionSub>
+          <SectionTag><Users size={12} /> {t('home.goalsSection.tag')}</SectionTag>
+          <SectionTitle>{t('home.goalsSection.title1')} <span>{t('home.goalsSection.title2')}</span> ?</SectionTitle>
+          <SectionSub>{t('home.goalsSection.subtitle')}</SectionSub>
         </SectionHeader>
         <GoalsGrid>
           <GoalCard delay="0s" onClick={handleStart}>
             <GoalIcon bg="linear-gradient(135deg, #EF4444, #F97316)" shadow="rgba(239,68,68,0.3)">
               <Heart size={28} />
             </GoalIcon>
-            <GoalTitle>Santé & Vitalité</GoalTitle>
-            <GoalDesc>Améliorez votre bien-être général et votre énergie grâce au jeûne régulier et encadré.</GoalDesc>
+            <GoalTitle>{t('home.goalsSection.health.title')}</GoalTitle>
+            <GoalDesc>{t('home.goalsSection.health.desc')}</GoalDesc>
           </GoalCard>
 
           <GoalCard delay="0.1s" onClick={handleStart}>
             <GoalIcon bg="linear-gradient(135deg, #3B82F6, #8B5CF6)" shadow="rgba(59,130,246,0.3)">
               <Scale size={28} />
             </GoalIcon>
-            <GoalTitle>Perte de Poids</GoalTitle>
-            <GoalDesc>Atteignez vos objectifs de poids de façon saine, durable et sans frustration.</GoalDesc>
+            <GoalTitle>{t('home.goalsSection.weight.title')}</GoalTitle>
+            <GoalDesc>{t('home.goalsSection.weight.desc')}</GoalDesc>
           </GoalCard>
 
           <GoalCard delay="0.2s" onClick={handleStart}>
             <GoalIcon bg="linear-gradient(135deg, #F59E0B, #EF4444)" shadow="rgba(245,158,11,0.3)">
               <Moon size={28} />
             </GoalIcon>
-            <GoalTitle>Spirituel · Ramadan</GoalTitle>
-            <GoalDesc>Pratiquez le jeûne pour des raisons religieuses avec un suivi adapté au rythme du Ramadan.</GoalDesc>
+            <GoalTitle>{t('home.goalsSection.spiritual.title')}</GoalTitle>
+            <GoalDesc>{t('home.goalsSection.spiritual.desc')}</GoalDesc>
           </GoalCard>
 
           <GoalCard delay="0.3s" onClick={handleStart}>
             <GoalIcon bg="linear-gradient(135deg, #2ED1A2, #06B6D4)" shadow="rgba(46,209,162,0.3)">
               <Brain size={28} />
             </GoalIcon>
-            <GoalTitle>Apprentissage</GoalTitle>
-            <GoalDesc>Découvrez le jeûne progressivement dans un cadre sécurisé, idéal pour les débutants.</GoalDesc>
+            <GoalTitle>{t('home.goalsSection.learning.title')}</GoalTitle>
+            <GoalDesc>{t('home.goalsSection.learning.desc')}</GoalDesc>
           </GoalCard>
         </GoalsGrid>
       </Section>
@@ -1149,29 +1148,27 @@ const Home = () => {
       {/* ── Final CTA ── */}
       <CTASection>
         <CTAInner>
-          <CTATitle>Prêt à transformer<br />votre santé ?</CTATitle>
-          <CTASub>
-            Rejoignez plus de 50 000 personnes qui font confiance à FastCare pour accompagner leur jeûne au quotidien.
-          </CTASub>
+          <CTATitle>{t('home.cta.title1')}<br />{t('home.cta.title2')}</CTATitle>
+          <CTASub>{t('home.cta.subtitle')}</CTASub>
           <CTAButtons>
             <CTAButtonPrimary onClick={handleStart}>
-              Commencer gratuitement <ArrowRight size={18} />
+              {t('home.cta.start')} <ArrowRight size={18} />
             </CTAButtonPrimary>
             <CTAButtonSecondary onClick={() => navigate('/about')}>
-              En savoir plus
+              {t('home.cta.learn')}
             </CTAButtonSecondary>
           </CTAButtons>
           <CheckList>
-            <span><Check size={14} /> Gratuit pour toujours</span>
-            <span><Check size={14} /> Aucune carte requise</span>
-            <span><Check size={14} /> Données protégées</span>
+            <span><Check size={14} /> {t('home.cta.check1')}</span>
+            <span><Check size={14} /> {t('home.cta.check2')}</span>
+            <span><Check size={14} /> {t('home.cta.check3')}</span>
           </CheckList>
         </CTAInner>
       </CTASection>
 
       {/* ── Footer ── */}
       <Footer>
-        © 2025 <strong>FastCare</strong> — Votre compagnon de jeûne intelligent · Projet universitaire
+        {t('home.footer')}
       </Footer>
 
     </Page>

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import FastCareLogo from '../components/Logo';
 import styled, { keyframes } from 'styled-components';
 import {
   ArrowLeft, Heart, Shield, Zap, Users, Timer,
@@ -756,7 +757,7 @@ const About = () => {
         <BackBtn onClick={() => navigate('/')}>
           <ArrowLeft size={16} /> Accueil
         </BackBtn>
-        <NavLogo onClick={() => navigate('/')}>FastCare</NavLogo>
+        <NavLogo onClick={() => navigate('/')}><FastCareLogo visibleWidth={160} /></NavLogo>
         <StartBtn onClick={() => navigate('/register')}>
           Commencer <ArrowRight size={15} />
         </StartBtn>

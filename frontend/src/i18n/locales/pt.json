@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "dashboard": "Painel",
+    "fasting": "Meu jejum",
+    "tracking": "Monitoramento",
+    "stats": "Estatísticas",
+    "journal": "Diário",
+    "tips": "Dicas",
+    "mySpace": "Meu espaço",
+    "learn": "Aprender",
+    "logout": "Sair",
+    "notifications": "Notificações"
+  },
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "back": "Voltar",
+    "loading": "Carregando...",
+    "error": "Ocorreu um erro",
+    "success": "Salvo com sucesso!",
+    "today": "Hoje",
+    "start": "Iniciar",
+    "stop": "Parar",
+    "reset": "Redefinir",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "noData": "Nenhum dado disponível",
+    "optional": "opc.",
+    "hours": "h",
+    "days": "d"
+  },
+  "auth": {
+    "login": {
+      "title": "Entrar",
+      "subtitle": "Bem-vindo de volta ao FastCare",
+      "email": "E-mail",
+      "password": "Senha",
+      "submit": "Entrar",
+      "noAccount": "Ainda não tem uma conta?",
+      "register": "Cadastrar-se"
+    },
+    "register": {
+      "title": "Criar minha conta",
+      "subtitle": "Junte-se a milhares de pessoas que cuidam de si mesmas",
+      "firstName": "Nome",
+      "lastName": "Sobrenome",
+      "email": "E-mail",
+      "password": "Senha",
+      "phone": "Telefone",
+      "birthDate": "Data de nascimento",
+      "initialWeight": "Peso inicial (kg)",
+      "submit": "Criar minha conta",
+      "hasAccount": "Já tem uma conta?",
+      "login": "Entrar",
+      "optionalSection": "Informações opcionais"
+    }
+  },
+  "dashboard": {
+    "greetingMorning": "Bom dia",
+    "greetingAfternoon": "Boa tarde",
+    "greetingEvening": "Boa noite",
+    "subtitle": "Aqui está o seu painel FastCare",
+    "noFast": "Nenhum jejum ativo",
+    "fastInProgress": "Jejum em andamento",
+    "fastCompleted": "Jejum concluído ✓",
+    "startFast": "Iniciar meu jejum",
+    "resumeFast": "Retomar",
+    "newFast": "Iniciar um novo jejum",
+    "seeFast": "Ver meu jejum",
+    "active": "Em andamento",
+    "paused": "Pausado",
+    "ready": "Pronto",
+    "done": "Concluído",
+    "stats": {
+      "title": "Minhas estatísticas",
+      "completed": "Jejuns concluídos",
+      "totalHours": "Horas totais",
+      "avgDuration": "Duração média",
+      "streak": "Sequência atual"
+    },
+    "shortcuts": {
+      "title": "Acesso rápido",
+      "addTracking": "Adicionar monitoramento",
+      "myJournal": "Meu diário",
+      "stats": "Estatísticas",
+      "tips": "Dicas de saúde"
+    },
+    "history": {
+      "title": "Histórico recente",
+      "noHistory": "Nenhum jejum concluído ainda",
+      "completed": "Concluído",
+      "duration": "Duração"
+    },
+    "tip": "Dica do dia",
+    "refresh": "↺ Atualizar"
+  },
+  "timer": {
+    "title": "Meu jejum",
+    "timeLeft": "Tempo restante",
+    "elapsed": "Decorrido",
+    "start": "Iniciar",
+    "pause": "Pausar",
+    "resume": "Retomar",
+    "reset": "Redefinir",
+    "newFast": "Novo jejum",
+    "customTitle": "Escolher meu protocolo",
+    "customSubtitle": "Selecione a duração que se adapta a você",
+    "confirmCustom": "Confirmar este protocolo",
+    "celebration": {
+      "title": "🎉 Jejum concluído!",
+      "subtitle": "Parabéns, você completou seu jejum com sucesso!"
+    },
+    "infoTitle": "Durante o seu jejum",
+    "infos": {
+      "water": "Beba água regularmente",
+      "rest": "Descanse se necessário",
+      "avoid": "Evite esforços intensos",
+      "listen": "Ouça o seu corpo"
+    }
+  },
+  "tracking": {
+    "title": "Monitoramento Diário",
+    "subtitle": "Registre seu peso, energia e humor para acompanhar seu progresso.",
+    "weight": "Peso",
+    "weightUnit": "kg",
+    "energy": "Nível de energia",
+    "mood": "Humor",
+    "save": "Salvar",
+    "saved": "Salvo!",
+    "history": "Histórico",
+    "noHistory": "Nenhuma entrada ainda",
+    "moods": {
+      "great": "Ótimo",
+      "good": "Bem",
+      "okay": "Razoável",
+      "tired": "Cansado",
+      "hard": "Difícil"
+    }
+  },
+  "journal": {
+    "title": "Meu Diário",
+    "subtitle": "Anote suas sensações e observações durante o jejum.",
+    "newEntry": "Nova entrada",
+    "placeholder": "Como você está se sentindo hoje? Anote suas sensações...",
+    "date": "Data",
+    "save": "Salvar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "cancel": "Cancelar",
+    "noEntries": "Nenhuma entrada ainda. Comece a escrever!",
+    "deleteConfirm": "Excluir esta entrada?"
+  },
+  "stats": {
+    "title": "Estatísticas",
+    "subtitle": "Visualize seu progresso ao longo do tempo.",
+    "totalFasts": "Jejuns concluídos",
+    "totalHours": "Horas totais",
+    "avgDuration": "Duração média",
+    "bestFast": "Melhor jejum",
+    "fastingHistory": "Durações dos jejuns",
+    "weightEvolution": "Evolução do peso",
+    "energyLevel": "Nível de energia",
+    "moodDistribution": "Distribuição do humor",
+    "activityHeatmap": "Atividade dos últimos 30 dias",
+    "streakBanner": "🔥 Sequência de {{count}} dias consecutivos!",
+    "noData": "Ainda sem dados"
+  },
+  "tips": {
+    "title": "Dicas de Saúde",
+    "subtitle": "Dicas práticas para acompanhar o seu jejum.",
+    "disclaimer": "Estas dicas são informativas e não substituem o aconselhamento médico.",
+    "filters": {
+      "all": "Todos",
+      "health": "Saúde",
+      "weight": "Peso",
+      "spiritual": "Espiritual",
+      "beginner": "Iniciante"
+    }
+  },
+  "mySpace": {
+    "title": "Meu Espaço",
+    "subtitle": "Gerencie seu perfil e preferências.",
+    "profileSection": "Informações pessoais",
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "email": "E-mail",
+    "phone": "Telefone",
+    "birthDate": "Data de nascimento",
+    "initialWeight": "Peso inicial (kg)",
+    "goal": "Meu objetivo",
+    "changeGoal": "Alterar objetivo",
+    "save": "Salvar alterações",
+    "saved": "Perfil atualizado!",
+    "member": "Membro FastCare",
+    "memberSince": "Membro desde",
+    "deleteAccount": "Excluir minha conta"
+  },
+  "goalSelection": {
+    "title": "Qual é o seu objetivo?",
+    "subtitle": "Escolha o objetivo que corresponde à sua abordagem",
+    "continue": "Continuar",
+    "goals": {
+      "health": { "name": "Saúde e Bem-estar", "desc": "Melhorar sua saúde geral" },
+      "weight": { "name": "Perda de peso", "desc": "Atingir seu peso ideal" },
+      "spiritual": { "name": "Ramadã / Quaresma", "desc": "Jejum espiritual e religioso" },
+      "learning": { "name": "Descoberta", "desc": "Aprender o jejum gradualmente" }
+    }
+  },
+  "notifications": {
+    "title": "Notificações",
+    "noNotifications": "Nenhuma notificação",
+    "markAllRead": "Marcar tudo como lido",
+    "new": "Novo"
+  },
+  "learn": {
+    "title": "Aprender sobre o Jejum",
+    "subtitle": "Tutoriais em vídeo e questionários para aprender a jejuar",
+    "videos": "Vídeos",
+    "articles": "Artigos",
+    "quiz": "Questionário",
+    "startQuiz": "Iniciar o questionário",
+    "nextQuestion": "Próxima pergunta",
+    "seeResult": "Ver meu resultado",
+    "score": "Sua pontuação",
+    "tryAgain": "Tentar novamente"
+  },
+  "home": {
+    "nav": { "features": "Funcionalidades", "how": "Como funciona", "goals": "Objetivos", "mySpace": "Meu espaço", "login": "Entrar", "register": "Cadastrar" },
+    "hero": {
+      "badge": "Novo · Acompanhamento do Ramadã disponível",
+      "title1": "Jejue melhor.",
+      "title2": "Viva melhor.",
+      "subtitle": "FastCare te acompanha passo a passo na sua prática de jejum. Timer inteligente, acompanhamento diário, dicas personalizadas — tudo que você precisa, em um só lugar.",
+      "start": "Começar grátis",
+      "learn": "Saiba mais",
+      "trust1": "100% grátis", "trust2": "Sem cartão", "trust3": "Dados seguros",
+      "remaining": "restante", "fastStatus": "Jejum em curso", "hydration": "Hidratação lembrada", "streak": "+3 dias consecutivos",
+      "weight": "Peso", "energy": "Energia", "days": "Dias", "mood": "Humor"
+    },
+    "stats": { "users": "Usuários ativos", "fasts": "Jejuns completados", "rating": "Nota média", "support": "Suporte disponível" },
+    "features": {
+      "tag": "Funcionalidades", "title1": "Tudo que você precisa", "title2": "para ter sucesso",
+      "subtitle": "Ferramentas pensadas para te acompanhar em cada etapa — do primeiro jejum ao nível especialista.",
+      "timer": { "title": "Timer Inteligente", "desc": "Escolha seu protocolo (16/8, 24h, personalizado) e acompanhe seu jejum em tempo real." },
+      "tracking": { "title": "Acompanhamento Diário", "desc": "Registre seu peso, nível de energia e humor todos os dias." },
+      "stats": { "title": "Estatísticas e Gráficos", "desc": "Visualize seu progresso com gráficos claros." },
+      "journal": { "title": "Diário de Sensações", "desc": "Anote suas experiências, emoções e observações." },
+      "notifs": { "title": "Notificações Inteligentes", "desc": "Lembretes de hidratação, alertas de fim de jejum e incentivos personalizados." },
+      "tips": { "title": "Dicas de Saúde Confiáveis", "desc": "Dicas baseadas nas melhores práticas médicas." }
+    },
+    "how": {
+      "tag": "Jornada do usuário", "title1": "Comece em", "title2": "3 etapas",
+      "subtitle": "Do cadastro ao seu primeiro jejum, em menos de 2 minutos.",
+      "step1": { "title": "Crie sua conta", "desc": "Cadastro rápido com seu email. Preencha algumas informações para personalizar sua experiência." },
+      "step2": { "title": "Escolha seu objetivo", "desc": "Saúde, perda de peso, prática espiritual ou aprendizado — FastCare se adapta à sua motivação." },
+      "step3": { "title": "Acompanhe seu progresso", "desc": "Inicie seu timer, anote suas sensações e consulte suas estatísticas." }
+    },
+    "goalsSection": {
+      "tag": "Para todos", "title1": "Qual é", "title2": "o seu objetivo",
+      "subtitle": "FastCare acompanha todo tipo de jejuador, qualquer que seja sua motivação.",
+      "health": { "title": "Saúde e Vitalidade", "desc": "Melhore seu bem-estar geral e sua energia com o jejum regular." },
+      "weight": { "title": "Perda de Peso", "desc": "Alcance seus objetivos de peso de forma saudável e sustentável." },
+      "spiritual": { "title": "Espiritual · Ramadã", "desc": "Pratique o jejum por razões religiosas com acompanhamento adaptado." },
+      "learning": { "title": "Aprendizado", "desc": "Descubra o jejum progressivamente em um ambiente seguro, ideal para iniciantes." }
+    },
+    "cta": {
+      "title1": "Pronto para transformar", "title2": "sua saúde?",
+      "subtitle": "Junte-se a mais de 50.000 pessoas que confiam no FastCare para acompanhar seu jejum.",
+      "start": "Começar grátis", "learn": "Saiba mais",
+      "check1": "Grátis para sempre", "check2": "Sem cartão", "check3": "Dados protegidos"
+    },
+    "footer": "© 2025 FastCare — Seu companheiro inteligente de jejum · Projeto universitário"
+  }
+}
