@@ -1,4 +1,4 @@
-const { User, Jeune, ConseilSante, Notification } = require("../models");
+const { User, Jeune, ConseilSante, Notification, ActivityLog } = require("../models");
 const { Op } = require("sequelize");
 
 // ── Utilisateurs ──────────────────────────────────────────────────────────────
@@ -98,5 +98,35 @@ exports.broadcastNotif = async (req, res, next) => {
     );
 
     res.json({ success: true, message: `Notification envoyée à ${users.length} utilisateurs` });
+  } catch (e) { next(e); }
+};
+
+// ── Logs d'activité ───────────────────────────────────────────────────────────
+
+exports.getLogs = async (req, res, next) => {
+  try {
+    const { type, limit = 100 } = req.query;
+    const where = type ? { type } : {};
+    const logs = await ActivityLog.findAll({
+      where,
+      order: [['createdAt', 'DESC']],
+      limit: Math.min(Number(limit), 500),
+    });
+    res.json({ success: true, logs });
+  } catch (e) { next(e); }
+};
+
+exports.getActivityStats = async (req, res, next) => {
+  try {
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 3600 * 1000);
+
+    const [totalLogins, failedLogins, logouts, recentLogs] = await Promise.all([
+      ActivityLog.count({ where: { type: 'LOGIN',        createdAt: { [Op.gte]: thirtyDaysAgo } } }),
+      ActivityLog.count({ where: { type: 'LOGIN_FAILED', createdAt: { [Op.gte]: thirtyDaysAgo } } }),
+      ActivityLog.count({ where: { type: 'LOGOUT',       createdAt: { [Op.gte]: thirtyDaysAgo } } }),
+      ActivityLog.findAll({ order: [['createdAt', 'DESC']], limit: 20 }),
+    ]);
+
+    res.json({ success: true, activityStats: { totalLogins, failedLogins, logouts }, recentLogs });
   } catch (e) { next(e); }
 };

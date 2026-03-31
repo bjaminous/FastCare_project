@@ -150,8 +150,8 @@ const Login = () => {
     setIsLoading(true);
     setError('');
     try {
-      await login(formData.email, formData.motDePasse);
-      navigate('/dashboard');
+      const data = await login(formData.email, formData.motDePasse);
+      navigate(data.user?.role === 'admin' ? '/admin' : '/dashboard');
     } catch (err) {
       const msg = err.response?.data?.message || 'Email ou mot de passe incorrect';
       setError(msg);

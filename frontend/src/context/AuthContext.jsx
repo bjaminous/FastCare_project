@@ -62,7 +62,10 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const logout = useCallback(() => {
-    // On NE supprime PAS le jeûne — il doit persister après reconnexion
+    const jwt = localStorage.getItem('fc_token');
+    if (jwt) {
+      axios.post(`${API}/auth/logout`, {}, { headers: { Authorization: `Bearer ${jwt}` } }).catch(() => {});
+    }
     setUser(null);
     setToken(null);
     localStorage.removeItem('fc_user');

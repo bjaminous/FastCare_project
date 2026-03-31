@@ -15,6 +15,19 @@ sequelize
     await sequelize.query("DELETE FROM `Utilisateur` WHERE `id` = 0");
     await sequelize.query("ALTER TABLE `Utilisateur` AUTO_INCREMENT = 1000");
 
+    // Crée la table ActivityLog si elle n'existe pas
+    await sequelize.query(`
+      CREATE TABLE IF NOT EXISTS \`ActivityLog\` (
+        \`id\`             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        \`utilisateur_id\` INT NULL,
+        \`email\`          VARCHAR(150) NULL,
+        \`type\`           ENUM('LOGIN','LOGOUT','LOGIN_FAILED','PASSWORD_RESET') NOT NULL,
+        \`ip\`             VARCHAR(60) NULL,
+        \`details\`        VARCHAR(255) NULL,
+        \`createdAt\`      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `).catch(() => {});
+
     // Ajoute les colonnes manquantes si elles n'existent pas encore
     await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `taille` INT NULL").catch(() => {});
     await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `role` ENUM('user','admin') NOT NULL DEFAULT 'user'").catch(() => {});

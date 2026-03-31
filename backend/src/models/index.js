@@ -13,6 +13,7 @@ const Statistique = require("./Statistique");
 const Notification = require("./Notification")(sequelize, DataTypes);
 const Journal = require("./Journal")(sequelize, DataTypes);
 const ConseilSante = require("./ConseilSante")(sequelize, DataTypes);
+const ActivityLog  = require("./ActivityLog");
 
 // ── Associations ─────────────────────────────────────────────────────────────
 
@@ -55,4 +56,5 @@ module.exports = {
   Notification,
   Journal,
   ConseilSante,
+  ActivityLog,
 };

@@ -1,7 +1,11 @@
 const jwt = require("jsonwebtoken");
-const { User, sequelize } = require("../models");
+const { User, ActivityLog, sequelize } = require("../models");
 const { validateRegister } = require("../validators/user.validator");
 const { sendWelcomeEmail } = require("../services/email.service");
+
+const log = (type, { utilisateur_id = null, email = null, ip = null, details = null } = {}) => {
+  ActivityLog.create({ type, utilisateur_id, email, ip, details }).catch(() => {});
+};
 
 /**
  * Génère un JWT pour un utilisateur.
@@ -76,9 +80,12 @@ const login = async (req, res, next) => {
             });
         }
 
+        const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket?.remoteAddress || null;
+
         // 1. Trouver l'utilisateur avec le mot de passe
         const user = await User.scope("withPassword").findOne({ where: { email } });
         if (!user) {
+            log('LOGIN_FAILED', { email, ip, details: 'Email inconnu' });
             return res.status(401).json({
                 success: false,
                 message: "Email ou mot de passe incorrect",
@@ -88,6 +95,7 @@ const login = async (req, res, next) => {
         // 2. Comparer le mot de passe
         const isMatch = await user.comparePassword(motDePasse);
         if (!isMatch) {
+            log('LOGIN_FAILED', { email, ip, utilisateur_id: user.id, details: 'Mot de passe incorrect' });
             return res.status(401).json({
                 success: false,
                 message: "Email ou mot de passe incorrect",
@@ -96,6 +104,7 @@ const login = async (req, res, next) => {
 
         // 2b. Vérifier si le compte est banni
         if (user.banni) {
+            log('LOGIN_FAILED', { email, ip, utilisateur_id: user.id, details: 'Compte banni' });
             return res.status(403).json({
                 success: false,
                 message: "Votre compte a été suspendu. Contactez l'administrateur.",
@@ -108,6 +117,8 @@ const login = async (req, res, next) => {
         // 4. Retourner sans motDePasse
         const userResponse = await User.findByPk(user.id);
 
+        log('LOGIN', { email, ip, utilisateur_id: user.id, details: `Rôle: ${user.role}` });
+
         return res.status(200).json({
             success: true,
             message: "Connexion réussie",
@@ -119,4 +130,10 @@ const login = async (req, res, next) => {
     }
 };
 
-module.exports = { register, login };
+const logout = async (req, res) => {
+    const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket?.remoteAddress || null;
+    log('LOGOUT', { utilisateur_id: req.user?.id, email: req.user?.email, ip });
+    res.json({ success: true });
+};
+
+module.exports = { register, login, logout };

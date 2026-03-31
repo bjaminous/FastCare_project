@@ -15,5 +15,7 @@ router.post("/conseils",                ctrl.createConseil);
 router.put("/conseils/:id",             ctrl.updateConseil);
 router.delete("/conseils/:id",          ctrl.deleteConseil);
 router.post("/notifications/broadcast", ctrl.broadcastNotif);
+router.get("/logs",                     ctrl.getLogs);
+router.get("/logs/stats",               ctrl.getActivityStats);
 
 module.exports = router;
