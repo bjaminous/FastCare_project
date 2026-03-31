@@ -1,6 +1,7 @@
 // models/SuiviQuotidien.js
 module.exports = (sequelize, DataTypes) =>
   sequelize.define("SuiviQuotidien", {
+    id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
     date: { type: DataTypes.DATEONLY, allowNull: false },
     poids: DataTypes.FLOAT,
     energie: {
