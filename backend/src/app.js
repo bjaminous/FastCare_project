@@ -28,6 +28,7 @@ app.use("/api/type-jeune", require("./routes/typeJeune.routes"));
 app.use("/api/journals", require("./routes/journal.routes"));
 app.use("/api/notifications", require("./routes/notification.routes"));
 app.use("/api/conseils", require("./routes/conseil.routes"));
+app.use("/api/admin",   require("./routes/admin.routes"));
 
 // ── Gestion centralisée des erreurs (dernier middleware) ─────────────────────
 app.use(errorHandler);

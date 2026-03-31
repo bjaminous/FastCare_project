@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 const API = 'http://localhost:5000/api';
 const authHeader = () => ({ headers: { Authorization: `Bearer ${localStorage.getItem('fc_token')}` } });
@@ -19,7 +20,7 @@ const TimerContainer = styled.div`
 `;
 
 const TimerCard = styled(Card)`
-  width: 100%; max-width: 600px;
+  width: 100%; max-width: 760px;
   padding: 3rem 2rem; text-align: center;
   background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
   @media (max-width: 768px) { padding: 2rem 1.5rem; }
@@ -178,6 +179,7 @@ const formatTime = (seconds) => {
 
 const Timer = () => {
   const { isRunning, isCompleted, fastingType, targetSeconds, hasSession, getElapsed, start, pause, resume, reset, finalize, changeType } = useFasting();
+  const { t } = useTranslation();
   const [elapsed, setElapsed] = useState(() => getElapsed());
   const rafRef = useRef(null);
   const [showCustomModal, setShowCustomModal] = useState(false);
@@ -186,13 +188,15 @@ const Timer = () => {
 
   const sendHydraNotif = useCallback(async (hour) => {
     try {
-      await axios.post(`${API}/notifications`, {
-        type: 'HYDRATATION',
-        message: `💧 ${hour}h de jeûne — Pensez à boire de l'eau pour rester hydraté(e) !`,
-        dateEnvoi: new Date(),
-      }, authHeader());
+      // Appel au nouvel endpoint dédié : crée la notif in-app ET envoie l'email
+      const res = await axios.post(`${API}/notifications/water-reminder`, { hour }, authHeader());
+      const conseil = res.data?.conseil || "Buvez un grand verre d'eau pour rester bien hydraté(e).";
+      // Notification système navigateur
       if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('FastCare 💧', { body: `${hour}h de jeûne — Pensez à boire de l'eau !`, icon: '/favicon.ico' });
+        new Notification('FastCare 💧', {
+          body: `${hour}h de jeûne — ${conseil}`,
+          icon: '/favicon.ico',
+        });
       }
     } catch { /* silencieux */ }
   }, []);
@@ -298,8 +302,8 @@ const Timer = () => {
                 />
               ))}
               <CelebrationBanner>
-                <CelebTitle><PartyPopper size={20} style={{ marginRight:6, verticalAlign:'middle' }}/>Jeûne accompli !</CelebTitle>
-                <CelebSub>Votre jeûne a été enregistré. Félicitations pour votre discipline 💪</CelebSub>
+                <CelebTitle><PartyPopper size={20} style={{ marginRight:6, verticalAlign:'middle' }}/>{t('timer.celebration.title')}</CelebTitle>
+                <CelebSub>{t('timer.celebration.subtitle')}</CelebSub>
               </CelebrationBanner>
             </>
           )}
@@ -308,21 +312,21 @@ const Timer = () => {
             {!isCompleted && (
               <Button variant={isRunning ? 'secondary' : 'primary'} size="large" onClick={handleToggle}>
                 {isRunning ? <Pause size={24} /> : <Play size={24} />}
-                {isRunning ? 'Pause' : hasSession ? 'Reprendre' : 'Commencer'}
+                {isRunning ? t('timer.pause') : hasSession ? t('timer.resume') : t('timer.start')}
               </Button>
             )}
             <Button variant="outline" size="large" onClick={handleReset}>
-              <RotateCcw size={24} /> {isCompleted ? 'Nouveau jeûne' : 'Réinitialiser'}
+              <RotateCcw size={24} /> {isCompleted ? t('timer.newFast') : t('timer.reset')}
             </Button>
           </Controls>
 
           <InfoSection>
-            <InfoTitle><Droplets size={20} /> Conseils d'hydratation</InfoTitle>
+            <InfoTitle><Droplets size={20} /> {t('timer.infoTitle')}</InfoTitle>
             <InfoList>
-              <li>Buvez de l'eau régulièrement pendant le jeûne</li>
+              <li>{t('timer.infos.water')}</li>
               <li>Ajoutez un peu de sel pour maintenir l'équilibre électrolytique</li>
-              <li>Évitez les boissons sucrées et l'alcool</li>
-              <li>Écoutez votre corps et ajustez selon vos besoins</li>
+              <li>{t('timer.infos.avoid')}</li>
+              <li>{t('timer.infos.listen')}</li>
             </InfoList>
           </InfoSection>
         </TimerCard>

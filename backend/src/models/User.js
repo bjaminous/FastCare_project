@@ -61,6 +61,24 @@ const User = sequelize.define(
       type: DataTypes.FLOAT,
       allowNull: true,
     },
+    taille: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      validate: {
+        min: { args: [50],  msg: "La taille minimum est 50 cm" },
+        max: { args: [250], msg: "La taille maximum est 250 cm" },
+      },
+    },
+    role: {
+      type: DataTypes.ENUM('user', 'admin'),
+      allowNull: false,
+      defaultValue: 'user',
+    },
+    banni: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     dateInscription: {
       type: DataTypes.DATEONLY,
       allowNull: false,

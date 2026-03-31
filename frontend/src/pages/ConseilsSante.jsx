@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled, { keyframes } from 'styled-components';
 import {
   Heart, Scale, Moon, Brain, Zap, Droplets, Shield,
@@ -13,7 +14,7 @@ const fadeInUp = keyframes`
 
 const Page = styled.div`min-height:100vh;background:#F8FAFF;padding-bottom:5rem;`;
 const Content = styled.div`
-  max-width:1060px;width:100%;margin:0 auto;padding:2.5rem 2rem;
+  max-width:1280px;width:100%;margin:0 auto;padding:2.5rem 2.5rem;
   @media(max-width:768px){padding:1.75rem 1.25rem;}
   @media(max-width:480px){padding:1.25rem 1rem;}
 `;
@@ -146,6 +147,7 @@ const SECTIONS = [
 ];
 
 export default function ConseilsSante() {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState('all');
 
   const visibleSections = SECTIONS.map(section => ({
@@ -158,7 +160,7 @@ export default function ConseilsSante() {
       <AppNav />
       <Content>
         <PageTitle>Conseils santé</PageTitle>
-        <PageSub>Des conseils pratiques et scientifiquement fondés pour optimiser votre jeûne.</PageSub>
+        <PageSub>{t('tips.subtitle')}</PageSub>
 
         <FilterRow>
           {FILTERS.map(f => {
@@ -167,7 +169,7 @@ export default function ConseilsSante() {
               <FilterBtn key={f.key} active={activeFilter === f.key}
                 activeBg={f.activeBg} hoverColor={f.hoverColor}
                 onClick={() => setActiveFilter(f.key)}>
-                <Icon size={14}/> {f.label}
+                <Icon size={14}/> {t('tips.filters.' + f.key)}
               </FilterBtn>
             );
           })}
@@ -175,7 +177,7 @@ export default function ConseilsSante() {
 
         <WarningBanner>
           <Shield size={16} style={{ marginTop:2, flexShrink:0 }} />
-          Ces conseils sont à titre informatif et ne remplacent pas un avis médical. En cas de condition de santé particulière, consultez un professionnel avant de jeûner.
+          {t('tips.disclaimer')}
         </WarningBanner>
 
         {visibleSections.map(section => {

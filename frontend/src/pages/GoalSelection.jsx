@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled, { keyframes } from 'styled-components';
 import { ArrowLeft, Heart, Scale, Moon, Brain, ArrowRight, Sparkles, Check, X } from 'lucide-react';
 
@@ -97,7 +98,7 @@ const StepLine = styled.div`
 `;
 
 const Main = styled.main`
-  flex: 1; max-width: 1100px; width: 100%; margin: 0 auto;
+  flex: 1; max-width: 1280px; width: 100%; margin: 0 auto;
   padding: 3rem 2rem 4rem;
   @media (max-width: 768px) { padding: 2rem 1.25rem 3rem; }
   @media (max-width: 480px) { padding: 1.5rem 1rem 2.5rem; }
@@ -181,7 +182,7 @@ const SeeMore = styled.div`
 
 const GOALS = [
   {
-    id: 'health', icon: Heart, title: 'Santé & Vitalité',
+    id: 'health', tKey: 'health', icon: Heart, title: 'Santé & Vitalité',
     desc: 'Réduire l\'inflammation, booster votre énergie et améliorer votre bien-être global.',
     bullets: ['Énergie et concentration accrues', 'Meilleur sommeil et récupération', 'Système immunitaire renforcé'],
     badge: { text: '⭐ Recommandé pour débuter', bg:'rgba(239,68,68,0.08)', color:'#DC2626', border:'rgba(239,68,68,0.18)' },
@@ -191,7 +192,7 @@ const GOALS = [
     seeMoreColor:'#EF4444', dur:'4s',
   },
   {
-    id: 'weight-loss', icon: Scale, title: 'Perte de Poids',
+    id: 'weight-loss', tKey: 'weight', icon: Scale, title: 'Perte de Poids',
     desc: 'Un déficit calorique naturel, sans régime strict, pour des résultats durables.',
     bullets: ['Perte de poids progressive et saine', 'Préservation de la masse musculaire', 'Suivi précis du poids intégré'],
     badge: { text: '🔥 Le plus populaire', bg:'rgba(59,130,246,0.08)', color:'#3B82F6', border:'rgba(59,130,246,0.18)' },
@@ -201,7 +202,7 @@ const GOALS = [
     seeMoreColor:'#3B82F6', dur:'4.5s',
   },
   {
-    id: 'spiritual', icon: Moon, title: 'Ramadan / Carême',
+    id: 'spiritual', tKey: 'spiritual', icon: Moon, title: 'Ramadan / Carême',
     desc: 'Un accompagnement respectueux de votre démarche religieuse ou spirituelle.',
     bullets: ['Mode Ramadan & Carême', 'Suivi de l\'hydratation (Iftar)', 'Conseils santé spécifiques'],
     badge: { text: '🌙 Ramadan / Carême', bg:'rgba(245,158,11,0.08)', color:'#D97706', border:'rgba(245,158,11,0.2)' },
@@ -211,7 +212,7 @@ const GOALS = [
     seeMoreColor:'#D97706', dur:'5s',
   },
   {
-    id: 'learning', icon: Brain, title: 'Découverte & Apprentissage',
+    id: 'learning', tKey: 'learning', icon: Brain, title: 'Découverte & Apprentissage',
     desc: 'Débutez en douceur avec des protocoles progressifs et un accompagnement bienveillant.',
     bullets: ['Protocoles adaptés aux débutants', 'Progression graduelle', 'Zéro pression, 100% bienveillant'],
     badge: { text: '🌱 Idéal pour débuter', bg:'rgba(46,209,162,0.08)', color:'#059669', border:'rgba(46,209,162,0.2)' },
@@ -273,6 +274,7 @@ const ChoiceDesc = styled.div`font-size: 0.78rem; color: #64748b; line-height: 1
 const GoalSelection = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -311,7 +313,7 @@ const GoalSelection = () => {
       <HeroBanner>
         <Orb className="a" /><Orb className="b" />
         <StepBadge><Sparkles size={13} /> Étape 2 sur 3 — Personnalisation</StepBadge>
-        <HeroTitle>Quel est votre<br /><span>objectif principal ?</span></HeroTitle>
+        <HeroTitle>{t('goalSelection.title')}</HeroTitle>
         <HeroSub>
           Cliquez sur un objectif pour en savoir plus et comprendre comment FastCare vous accompagne spécifiquement.
         </HeroSub>
@@ -340,8 +342,8 @@ const GoalSelection = () => {
                   </IconBox>
                   <Pill bg={g.badge.bg} color={g.badge.color} border={g.badge.border}>{g.badge.text}</Pill>
                 </CardTop>
-                <CardTitle>{g.title}</CardTitle>
-                <CardDesc>{g.desc}</CardDesc>
+                <CardTitle>{t(`goalSelection.goals.${g.tKey}.name`, g.title)}</CardTitle>
+                <CardDesc>{t(`goalSelection.goals.${g.tKey}.desc`, g.desc)}</CardDesc>
                 <BulletList>
                   {g.bullets.map((b,j) => (
                     <Bullet key={j} bg={g.bulletBg} color={g.bulletColor}>
@@ -383,14 +385,6 @@ const GoalSelection = () => {
                 <ChoiceText>
                   <ChoiceTitle>Je fais le Carême</ChoiceTitle>
                   <ChoiceDesc>40 jours de jeûne · Mercredi des Cendres au Vendredi Saint · Accompagnement chrétien</ChoiceDesc>
-                </ChoiceText>
-              </ChoiceBtn>
-              <ChoiceBtn accent="#2ED1A2" hoverBg="rgba(46,209,162,0.04)"
-                onClick={() => handleSpiritualChoice('both')}>
-                <ChoiceEmoji>🕊️</ChoiceEmoji>
-                <ChoiceText>
-                  <ChoiceTitle>Je pratique les deux</ChoiceTitle>
-                  <ChoiceDesc>Ou je souhaite voir les deux approches pour choisir la mienne</ChoiceDesc>
                 </ChoiceText>
               </ChoiceBtn>
             </ChoiceGrid>

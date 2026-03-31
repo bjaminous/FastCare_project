@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "fasting": "Mon jeûne",
+    "tracking": "Suivi",
+    "stats": "Statistiques",
+    "journal": "Journal",
+    "tips": "Conseils",
+    "mySpace": "Mon espace",
+    "learn": "Apprendre",
+    "logout": "Déconnexion",
+    "notifications": "Notifications"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "back": "Retour",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "success": "Enregistré avec succès !",
+    "today": "Aujourd'hui",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "reset": "Réinitialiser",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "noData": "Aucune donnée disponible",
+    "optional": "opt.",
+    "hours": "h",
+    "days": "j"
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Bon retour sur FastCare",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "noAccount": "Pas encore de compte ?",
+      "register": "S'inscrire"
+    },
+    "register": {
+      "title": "Créer mon compte",
+      "subtitle": "Rejoignez des milliers de personnes qui prennent soin d'eux",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "password": "Mot de passe",
+      "phone": "Téléphone",
+      "birthDate": "Date de naissance",
+      "initialWeight": "Poids initial (kg)",
+      "submit": "Créer mon compte",
+      "hasAccount": "Déjà un compte ?",
+      "login": "Se connecter",
+      "optionalSection": "Informations optionnelles"
+    }
+  },
+  "dashboard": {
+    "greetingMorning": "Bonjour",
+    "greetingAfternoon": "Bon après-midi",
+    "greetingEvening": "Bonsoir",
+    "subtitle": "Voici votre tableau de bord FastCare",
+    "noFast": "Aucun jeûne actif",
+    "fastInProgress": "Jeûne en cours",
+    "fastCompleted": "Jeûne accompli ✓",
+    "startFast": "Démarrer mon jeûne",
+    "resumeFast": "Reprendre",
+    "newFast": "Démarrer un nouveau jeûne",
+    "seeFast": "Voir mon jeûne",
+    "active": "En cours",
+    "paused": "En pause",
+    "ready": "Prêt",
+    "done": "Terminé",
+    "stats": {
+      "title": "Mes statistiques",
+      "completed": "Jeûnes complétés",
+      "totalHours": "Heures totales",
+      "avgDuration": "Durée moyenne",
+      "streak": "Série en cours"
+    },
+    "shortcuts": {
+      "title": "Accès rapide",
+      "addTracking": "Ajouter un suivi",
+      "myJournal": "Mon journal",
+      "stats": "Statistiques",
+      "tips": "Conseils santé"
+    },
+    "history": {
+      "title": "Historique récent",
+      "noHistory": "Aucun jeûne complété pour l'instant",
+      "completed": "Terminé",
+      "duration": "Durée"
+    },
+    "tip": "Conseil du jour",
+    "refresh": "↺ Actualiser"
+  },
+  "timer": {
+    "title": "Mon jeûne",
+    "timeLeft": "Temps restant",
+    "elapsed": "Écoulé",
+    "start": "Démarrer",
+    "pause": "Pause",
+    "resume": "Reprendre",
+    "reset": "Réinitialiser",
+    "newFast": "Nouveau jeûne",
+    "customTitle": "Choisir mon protocole",
+    "customSubtitle": "Sélectionnez la durée qui vous correspond",
+    "confirmCustom": "Confirmer ce protocole",
+    "celebration": {
+      "title": "🎉 Jeûne complété !",
+      "subtitle": "Félicitations, vous avez réussi votre jeûne !"
+    },
+    "infoTitle": "Pendant votre jeûne",
+    "infos": {
+      "water": "Buvez de l'eau régulièrement",
+      "rest": "Reposez-vous si nécessaire",
+      "avoid": "Évitez les efforts intenses",
+      "listen": "Écoutez votre corps"
+    }
+  },
+  "tracking": {
+    "title": "Suivi Quotidien",
+    "subtitle": "Loggez votre poids, énergie et humeur pour suivre votre progression.",
+    "weight": "Poids",
+    "weightUnit": "kg",
+    "energy": "Niveau d'énergie",
+    "mood": "Humeur",
+    "save": "Enregistrer",
+    "saved": "Enregistré !",
+    "history": "Historique",
+    "noHistory": "Aucune entrée pour l'instant",
+    "moods": {
+      "great": "Très bien",
+      "good": "Bien",
+      "okay": "Moyen",
+      "tired": "Fatigué",
+      "hard": "Difficile"
+    }
+  },
+  "journal": {
+    "title": "Mon Journal",
+    "subtitle": "Notez vos ressentis et observations pendant votre jeûne.",
+    "newEntry": "Nouvelle entrée",
+    "placeholder": "Comment vous sentez-vous aujourd'hui ? Notez vos ressentis...",
+    "date": "Date",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "noEntries": "Aucune entrée pour l'instant. Commencez à écrire !",
+    "deleteConfirm": "Supprimer cette entrée ?"
+  },
+  "stats": {
+    "title": "Statistiques",
+    "subtitle": "Visualisez votre progression dans le temps.",
+    "totalFasts": "Jeûnes complétés",
+    "totalHours": "Heures totales",
+    "avgDuration": "Durée moyenne",
+    "bestFast": "Meilleur jeûne",
+    "fastingHistory": "Durées des jeûnes",
+    "weightEvolution": "Évolution du poids",
+    "energyLevel": "Niveau d'énergie",
+    "moodDistribution": "Distribution des humeurs",
+    "activityHeatmap": "Activité des 30 derniers jours",
+    "streakBanner": "🔥 Série de {{count}} jours consécutifs !",
+    "noData": "Pas encore de données"
+  },
+  "tips": {
+    "title": "Conseils Santé",
+    "subtitle": "Des conseils pratiques pour accompagner votre jeûne.",
+    "disclaimer": "Ces conseils sont informatifs et ne remplacent pas un avis médical.",
+    "filters": {
+      "all": "Tous",
+      "health": "Santé",
+      "weight": "Poids",
+      "spiritual": "Spirituel",
+      "beginner": "Débutant"
+    }
+  },
+  "mySpace": {
+    "title": "Mon Espace",
+    "subtitle": "Gérez votre profil et vos préférences.",
+    "profileSection": "Informations personnelles",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "birthDate": "Date de naissance",
+    "initialWeight": "Poids initial (kg)",
+    "goal": "Mon objectif",
+    "changeGoal": "Changer d'objectif",
+    "save": "Enregistrer les modifications",
+    "saved": "Profil mis à jour !",
+    "member": "Membre FastCare",
+    "memberSince": "Membre depuis",
+    "deleteAccount": "Supprimer mon compte"
+  },
+  "goalSelection": {
+    "title": "Quel est votre objectif ?",
+    "subtitle": "Choisissez l'objectif qui correspond à votre démarche",
+    "continue": "Continuer",
+    "goals": {
+      "health": { "name": "Santé & Bien-être", "desc": "Améliorer votre santé générale" },
+      "weight": { "name": "Perte de poids", "desc": "Atteindre votre poids idéal" },
+      "spiritual": { "name": "Ramadan / Carême", "desc": "Jeûne spirituel et religieux" },
+      "learning": { "name": "Découverte", "desc": "Apprendre le jeûne en douceur" }
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "noNotifications": "Aucune notification",
+    "markAllRead": "Tout marquer lu",
+    "new": "Nouveau"
+  },
+  "learn": {
+    "title": "Apprendre le Jeûne",
+    "subtitle": "Tutoriels vidéo et quiz pour apprendre à jeûner",
+    "videos": "Vidéos",
+    "articles": "Articles",
+    "quiz": "Quiz",
+    "startQuiz": "Commencer le quiz",
+    "nextQuestion": "Question suivante",
+    "seeResult": "Voir mon résultat",
+    "score": "Votre score",
+    "tryAgain": "Réessayer"
+  },
+  "home": {
+    "nav": { "features": "Fonctionnalités", "how": "Comment ça marche", "goals": "Objectifs", "mySpace": "Mon espace", "login": "Se connecter", "register": "S'inscrire" },
+    "hero": {
+      "badge": "Nouveau · Suivi Ramadan disponible",
+      "title1": "Jeûnez mieux.",
+      "title2": "Vivez mieux.",
+      "subtitle": "FastCare vous accompagne pas à pas dans votre pratique du jeûne. Timer intelligent, suivi quotidien, conseils personnalisés — tout ce dont vous avez besoin, au même endroit.",
+      "start": "Commencer gratuitement",
+      "learn": "En savoir plus",
+      "trust1": "100% gratuit", "trust2": "Sans carte bancaire", "trust3": "Données sécurisées",
+      "remaining": "restant", "fastStatus": "Jeûne en cours", "hydration": "Hydratation rappelée", "streak": "+3 jours consécutifs",
+      "weight": "Poids", "energy": "Énergie", "days": "Jours", "mood": "Humeur"
+    },
+    "stats": { "users": "Utilisateurs actifs", "fasts": "Jeûnes complétés", "rating": "Note moyenne", "support": "Support disponible" },
+    "features": {
+      "tag": "Fonctionnalités", "title1": "Tout ce qu'il vous faut", "title2": "pour réussir",
+      "subtitle": "Des outils conçus pour vous accompagner à chaque étape — du premier jeûne à l'expert confirmé.",
+      "timer": { "title": "Timer Intelligent", "desc": "Choisissez votre protocole (16/8, 24h, personnalisé) et suivez votre jeûne en temps réel." },
+      "tracking": { "title": "Suivi Quotidien", "desc": "Enregistrez votre poids, niveau d'énergie et humeur chaque jour." },
+      "stats": { "title": "Statistiques & Graphiques", "desc": "Visualisez vos progrès avec des graphiques clairs." },
+      "journal": { "title": "Journal de Ressenti", "desc": "Notez vos expériences, émotions et observations." },
+      "notifs": { "title": "Notifications Intelligentes", "desc": "Rappels d'hydratation, alertes de fin de jeûne et encouragements personnalisés." },
+      "tips": { "title": "Conseils Santé Fiables", "desc": "Des conseils basés sur les bonnes pratiques médicales." }
+    },
+    "how": {
+      "tag": "Parcours utilisateur", "title1": "Démarrez en", "title2": "3 étapes",
+      "subtitle": "De l'inscription à votre premier jeûne, en moins de 2 minutes.",
+      "step1": { "title": "Créez votre compte", "desc": "Inscription rapide avec votre email. Renseignez quelques informations pour personnaliser votre expérience." },
+      "step2": { "title": "Choisissez votre objectif", "desc": "Santé, perte de poids, pratique spirituelle ou apprentissage — FastCare s'adapte à votre motivation." },
+      "step3": { "title": "Suivez vos progrès", "desc": "Lancez votre timer, notez votre ressenti et consultez vos statistiques pour rester motivé." }
+    },
+    "goalsSection": {
+      "tag": "Pour tout le monde", "title1": "Quel est", "title2": "votre objectif",
+      "subtitle": "FastCare accompagne chaque type de jeûneur, quelle que soit sa motivation.",
+      "health": { "title": "Santé & Vitalité", "desc": "Améliorez votre bien-être général et votre énergie grâce au jeûne régulier." },
+      "weight": { "title": "Perte de Poids", "desc": "Atteignez vos objectifs de poids de façon saine, durable et sans frustration." },
+      "spiritual": { "title": "Spirituel · Ramadan", "desc": "Pratiquez le jeûne pour des raisons religieuses avec un suivi adapté." },
+      "learning": { "title": "Apprentissage", "desc": "Découvrez le jeûne progressivement dans un cadre sécurisé, idéal pour les débutants." }
+    },
+    "cta": {
+      "title1": "Prêt à transformer", "title2": "votre santé ?",
+      "subtitle": "Rejoignez plus de 50 000 personnes qui font confiance à FastCare pour leur jeûne.",
+      "start": "Commencer gratuitement", "learn": "En savoir plus",
+      "check1": "Gratuit pour toujours", "check2": "Aucune carte requise", "check3": "Données protégées"
+    },
+    "footer": "© 2025 FastCare — Votre compagnon de jeûne intelligent · Projet universitaire"
+  }
+}

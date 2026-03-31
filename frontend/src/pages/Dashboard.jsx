@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
 
@@ -32,8 +33,8 @@ const Page = styled.div`
 `;
 
 const Content = styled.div`
-  max-width: 1100px; width: 100%; margin: 0 auto;
-  padding: 2.5rem 2rem;
+  max-width: 1280px; width: 100%; margin: 0 auto;
+  padding: 2.5rem 2.5rem;
   @media(max-width:768px){ padding: 1.75rem 1.25rem; }
   @media(max-width:480px){ padding: 1.25rem 1rem; }
 `;
@@ -309,12 +310,11 @@ const formatTime = (seconds) => {
 };
 
 /* ── helper temps ── */
-const getGreeting = () => {
+const getGreeting = (t) => {
   const h = new Date().getHours();
-  if (h < 6)  return 'Bonne nuit';
-  if (h < 12) return 'Bonjour';
-  if (h < 18) return 'Bon après-midi';
-  return 'Bonsoir';
+  if (h < 12) return t('dashboard.greetingMorning');
+  if (h < 18) return t('dashboard.greetingAfternoon');
+  return t('dashboard.greetingEvening');
 };
 
 const formatDate = (d) => new Date(d).toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
@@ -322,6 +322,7 @@ const formatDate = (d) => new Date(d).toLocaleDateString('fr-FR', { day:'numeric
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useTranslation();
   const { isRunning, isCompleted, fastingType, targetSeconds, hasSession, getElapsed } = useFasting();
   const [elapsed, setElapsed] = useState(() => getElapsed());
   const rafRef = useRef(null);
@@ -424,7 +425,7 @@ const Dashboard = () => {
         {/* ── Bonjour ── */}
         <Greeting>
           <GreetTitle>
-            {getGreeting()},{' '}
+            {getGreeting(t)},{' '}
             <span>{user?.prenom || user?.nom || 'Champion'} 👋</span>
           </GreetTitle>
           <GreetSub>
@@ -452,7 +453,7 @@ const Dashboard = () => {
           <HeroTop>
             <div>
               <HeroLabel>
-                {isCompleted ? 'Jeûne accompli ✓' : hasSession ? 'Jeûne en cours' : 'Aucun jeûne actif'}
+                {isCompleted ? t('dashboard.fastCompleted') : hasSession ? t('dashboard.fastInProgress') : t('dashboard.noFast')}
               </HeroLabel>
               <HeroTime>{hasSession || isCompleted ? formatTime(timeLeft) : '00:00:00'}</HeroTime>
               <HeroSub>
@@ -465,7 +466,7 @@ const Dashboard = () => {
             </div>
             <StatusBadge>
               <Dot style={{ background: isCompleted ? '#059669' : isRunning ? '#2ED1A2' : '#F59E0B' }} />
-              {isCompleted ? 'Terminé' : isRunning ? 'En cours' : hasSession ? 'En pause' : 'Prêt'}
+              {isCompleted ? t('dashboard.done') : isRunning ? t('dashboard.active') : hasSession ? t('dashboard.paused') : t('dashboard.ready')}
             </StatusBadge>
           </HeroTop>
           <ProgressBar><ProgressFill pct={isCompleted ? 100 : progress} /></ProgressBar>
@@ -475,17 +476,17 @@ const Dashboard = () => {
           </ProgressRow>
           <StartBtn onClick={() => navigate('/timer')}>
             <Play size={16} />
-            {isCompleted ? 'Démarrer un nouveau jeûne' : isRunning ? 'Voir mon jeûne' : hasSession ? 'Reprendre' : 'Démarrer mon jeûne'}
+            {isCompleted ? t('dashboard.newFast') : isRunning ? t('dashboard.seeFast') : hasSession ? t('dashboard.resumeFast') : t('dashboard.startFast')}
           </StartBtn>
         </HeroCard>
 
         {/* ── Raccourcis rapides ── */}
         <QuickGrid>
           {[
-            { label:'Ajouter un suivi', icon:Plus,      path:'/suivi',        bg:'rgba(42,125,225,0.1)',  color:'#2A7DE1', shadow:'rgba(42,125,225,0.2)' },
-            { label:'Mon journal',      icon:PenLine,   path:'/journal',      bg:'rgba(46,209,162,0.1)',  color:'#059669', shadow:'rgba(46,209,162,0.2)' },
-            { label:'Statistiques',     icon:BarChart2, path:'/statistiques', bg:'rgba(139,92,246,0.1)',  color:'#7C3AED', shadow:'rgba(139,92,246,0.2)' },
-            { label:'Conseils santé',   icon:Lightbulb, path:'/conseils',     bg:'rgba(245,158,11,0.1)',  color:'#D97706', shadow:'rgba(245,158,11,0.2)' },
+            { label: t('dashboard.shortcuts.addTracking'), icon:Plus,      path:'/suivi',        bg:'rgba(42,125,225,0.1)',  color:'#2A7DE1', shadow:'rgba(42,125,225,0.2)' },
+            { label: t('dashboard.shortcuts.myJournal'),  icon:PenLine,   path:'/journal',      bg:'rgba(46,209,162,0.1)',  color:'#059669', shadow:'rgba(46,209,162,0.2)' },
+            { label: t('dashboard.shortcuts.stats'),      icon:BarChart2, path:'/statistiques', bg:'rgba(139,92,246,0.1)',  color:'#7C3AED', shadow:'rgba(139,92,246,0.2)' },
+            { label: t('dashboard.shortcuts.tips'),       icon:Lightbulb, path:'/conseils',     bg:'rgba(245,158,11,0.1)',  color:'#D97706', shadow:'rgba(245,158,11,0.2)' },
           ].map(q => {
             const Icon = q.icon;
             return (
@@ -500,10 +501,10 @@ const Dashboard = () => {
         {/* ── Stats ── */}
         <StatsGrid>
           {[
-            { icon: Timer,      bg:'rgba(42,125,225,0.1)',  color:'#2A7DE1', value: totalFasts || '0',   label:'Jeûnes réalisés', trend: null, delay:'0.1s' },
-            { icon: Flame,      bg:'rgba(239,68,68,0.1)',   color:'#EF4444', value: `${totalHours}h`,     label:'Heures de jeûne', trend: null, delay:'0.15s' },
-            { icon: TrendingUp, bg:'rgba(46,209,162,0.1)',  color:'#059669', value: avgDuration,          label:'Durée moyenne',   trend: null, delay:'0.2s' },
-            { icon: Calendar,   bg:'rgba(245,158,11,0.1)',  color:'#D97706', value: `${streak}j`,         label:'Série actuelle',  trend: streak > 0, delay:'0.25s' },
+            { icon: Timer,      bg:'rgba(42,125,225,0.1)',  color:'#2A7DE1', value: totalFasts || '0',   label: t('dashboard.stats.completed'),  trend: null, delay:'0.1s' },
+            { icon: Flame,      bg:'rgba(239,68,68,0.1)',   color:'#EF4444', value: `${totalHours}h`,     label: t('dashboard.stats.totalHours'), trend: null, delay:'0.15s' },
+            { icon: TrendingUp, bg:'rgba(46,209,162,0.1)',  color:'#059669', value: avgDuration,          label: t('dashboard.stats.avgDuration'),trend: null, delay:'0.2s' },
+            { icon: Calendar,   bg:'rgba(245,158,11,0.1)',  color:'#D97706', value: `${streak}j`,         label: t('dashboard.stats.streak'),     trend: streak > 0, delay:'0.25s' },
           ].map((s, i) => {
             const Icon = s.icon;
             return (
@@ -523,8 +524,8 @@ const Dashboard = () => {
           {/* ── Historique ── */}
           <div>
             <SectionHead>
-              <SectionTitle>Derniers jeûnes</SectionTitle>
-              <SeeAll onClick={loadHistory}>↺ Actualiser</SeeAll>
+              <SectionTitle>{t('dashboard.history.title')}</SectionTitle>
+              <SeeAll onClick={loadHistory}>{t('dashboard.refresh')}</SeeAll>
             </SectionHead>
             {apiError && (
               <div style={{

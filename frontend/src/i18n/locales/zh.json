@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "dashboard": "仪表盘",
+    "fasting": "我的禁食",
+    "tracking": "日常追踪",
+    "stats": "统计",
+    "journal": "日记",
+    "tips": "健康建议",
+    "mySpace": "我的空间",
+    "learn": "学习",
+    "logout": "退出登录",
+    "notifications": "通知"
+  },
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "edit": "编辑",
+    "delete": "删除",
+    "back": "返回",
+    "loading": "加载中...",
+    "error": "发生错误",
+    "success": "保存成功！",
+    "today": "今天",
+    "start": "开始",
+    "stop": "停止",
+    "reset": "重置",
+    "confirm": "确认",
+    "close": "关闭",
+    "noData": "暂无数据",
+    "optional": "选填",
+    "hours": "小时",
+    "days": "天"
+  },
+  "auth": {
+    "login": {
+      "title": "登录",
+      "subtitle": "欢迎回到 FastCare",
+      "email": "电子邮件",
+      "password": "密码",
+      "submit": "登录",
+      "noAccount": "还没有账号？",
+      "register": "注册"
+    },
+    "register": {
+      "title": "创建我的账号",
+      "subtitle": "加入数千名关爱自己的人",
+      "firstName": "名",
+      "lastName": "姓",
+      "email": "电子邮件",
+      "password": "密码",
+      "phone": "手机号",
+      "birthDate": "出生日期",
+      "initialWeight": "初始体重（公斤）",
+      "submit": "创建账号",
+      "hasAccount": "已有账号？",
+      "login": "登录",
+      "optionalSection": "可选信息"
+    }
+  },
+  "dashboard": {
+    "greetingMorning": "早上好",
+    "greetingAfternoon": "下午好",
+    "greetingEvening": "晚上好",
+    "subtitle": "这是您的 FastCare 仪表盘",
+    "noFast": "没有进行中的禁食",
+    "fastInProgress": "禁食进行中",
+    "fastCompleted": "禁食已完成 ✓",
+    "startFast": "开始禁食",
+    "resumeFast": "继续",
+    "newFast": "开始新的禁食",
+    "seeFast": "查看我的禁食",
+    "active": "进行中",
+    "paused": "已暂停",
+    "ready": "准备中",
+    "done": "已完成",
+    "stats": {
+      "title": "我的统计",
+      "completed": "已完成禁食",
+      "totalHours": "总小时数",
+      "avgDuration": "平均时长",
+      "streak": "当前连续天数"
+    },
+    "shortcuts": {
+      "title": "快速访问",
+      "addTracking": "添加追踪",
+      "myJournal": "我的日记",
+      "stats": "统计",
+      "tips": "健康建议"
+    },
+    "history": {
+      "title": "最近记录",
+      "noHistory": "还没有完成的禁食",
+      "completed": "已完成",
+      "duration": "时长"
+    },
+    "tip": "今日小贴士",
+    "refresh": "↺ 刷新"
+  },
+  "timer": {
+    "title": "我的禁食",
+    "timeLeft": "剩余时间",
+    "elapsed": "已用时间",
+    "start": "开始",
+    "pause": "暂停",
+    "resume": "继续",
+    "reset": "重置",
+    "newFast": "新的禁食",
+    "customTitle": "选择我的方案",
+    "customSubtitle": "选择适合您的时长",
+    "confirmCustom": "确认此方案",
+    "celebration": {
+      "title": "🎉 禁食完成！",
+      "subtitle": "恭喜您，您完成了禁食！"
+    },
+    "infoTitle": "禁食期间",
+    "infos": {
+      "water": "定期补充水分",
+      "rest": "如有需要请休息",
+      "avoid": "避免剧烈运动",
+      "listen": "倾听身体的声音"
+    }
+  },
+  "tracking": {
+    "title": "日常追踪",
+    "subtitle": "记录您的体重、精力和情绪，追踪您的进步。",
+    "weight": "体重",
+    "weightUnit": "公斤",
+    "energy": "精力水平",
+    "mood": "情绪",
+    "save": "保存",
+    "saved": "已保存！",
+    "history": "历史记录",
+    "noHistory": "暂无记录",
+    "moods": {
+      "great": "非常好",
+      "good": "好",
+      "okay": "一般",
+      "tired": "疲惫",
+      "hard": "困难"
+    }
+  },
+  "journal": {
+    "title": "我的日记",
+    "subtitle": "记录您在禁食期间的感受和观察。",
+    "newEntry": "新建记录",
+    "placeholder": "今天感觉怎么样？写下您的想法...",
+    "date": "日期",
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "cancel": "取消",
+    "noEntries": "还没有记录，开始写吧！",
+    "deleteConfirm": "删除这条记录？"
+  },
+  "stats": {
+    "title": "统计",
+    "subtitle": "可视化您的进步。",
+    "totalFasts": "已完成禁食",
+    "totalHours": "总小时数",
+    "avgDuration": "平均时长",
+    "bestFast": "最佳禁食",
+    "fastingHistory": "禁食历史",
+    "weightEvolution": "体重变化",
+    "energyLevel": "精力水平",
+    "moodDistribution": "情绪分布",
+    "activityHeatmap": "过去30天活动",
+    "streakBanner": "🔥 连续 {{count}} 天！",
+    "noData": "暂无数据"
+  },
+  "tips": {
+    "title": "健康建议",
+    "subtitle": "支持您禁食的实用建议。",
+    "disclaimer": "这些建议仅供参考，不能替代医疗建议。",
+    "filters": {
+      "all": "全部",
+      "health": "健康",
+      "weight": "体重",
+      "spiritual": "精神",
+      "beginner": "初学者"
+    }
+  },
+  "mySpace": {
+    "title": "我的空间",
+    "subtitle": "管理您的个人资料和偏好。",
+    "profileSection": "个人信息",
+    "firstName": "名",
+    "lastName": "姓",
+    "email": "电子邮件",
+    "phone": "手机号",
+    "birthDate": "出生日期",
+    "initialWeight": "初始体重（公斤）",
+    "goal": "我的目标",
+    "changeGoal": "更改目标",
+    "save": "保存更改",
+    "saved": "个人资料已更新！",
+    "member": "FastCare 会员",
+    "memberSince": "加入时间",
+    "deleteAccount": "删除我的账号"
+  },
+  "goalSelection": {
+    "title": "您的目标是什么？",
+    "subtitle": "选择与您方向匹配的目标",
+    "continue": "继续",
+    "goals": {
+      "health": { "name": "健康与养生", "desc": "改善您的整体健康" },
+      "weight": { "name": "减重", "desc": "达到您的理想体重" },
+      "spiritual": { "name": "斋戒 / 四旬期", "desc": "精神与宗教禁食" },
+      "learning": { "name": "探索", "desc": "温和地了解禁食" }
+    }
+  },
+  "notifications": {
+    "title": "通知",
+    "noNotifications": "没有通知",
+    "markAllRead": "全部标为已读",
+    "new": "新"
+  },
+  "learn": {
+    "title": "学习禁食",
+    "subtitle": "视频教程和测验，学习如何禁食",
+    "videos": "视频",
+    "articles": "文章",
+    "quiz": "测验",
+    "startQuiz": "开始测验",
+    "nextQuestion": "下一题",
+    "seeResult": "查看我的成绩",
+    "score": "您的分数",
+    "tryAgain": "再试一次"
+  },
+  "home": {
+    "nav": { "features": "功能", "how": "使用方法", "goals": "目标", "mySpace": "我的空间", "login": "登录", "register": "注册" },
+    "hero": {
+      "badge": "新功能 · 斋月追踪已上线",
+      "title1": "更好地禁食。",
+      "title2": "更好地生活。",
+      "subtitle": "FastCare 一步一步陪伴您的禁食实践。智能计时器、日常追踪、个性化建议——您需要的一切，尽在一处。",
+      "start": "免费开始",
+      "learn": "了解更多",
+      "trust1": "完全免费", "trust2": "无需信用卡", "trust3": "数据安全",
+      "remaining": "剩余", "fastStatus": "禁食进行中", "hydration": "补水提醒", "streak": "+3 连续天数",
+      "weight": "体重", "energy": "精力", "days": "天数", "mood": "情绪"
+    },
+    "stats": { "users": "活跃用户", "fasts": "已完成禁食", "rating": "平均评分", "support": "全天候支持" },
+    "features": {
+      "tag": "功能", "title1": "您需要的一切", "title2": "都在这里",
+      "subtitle": "专为陪伴您每一步而设计的工具——从第一次禁食到专家级别。",
+      "timer": { "title": "智能计时器", "desc": "选择您的方案（16/8、24小时、自定义）并实时追踪您的禁食。" },
+      "tracking": { "title": "日常追踪", "desc": "每天记录您的体重、精力和情绪。了解禁食对身体的影响。" },
+      "stats": { "title": "统计与图表", "desc": "用清晰的图表可视化您的进步。发现趋势，庆祝每一个成就。" },
+      "journal": { "title": "感受日记", "desc": "记录您的经历、情绪和观察。您健康旅程的私人日记。" },
+      "notifs": { "title": "智能通知", "desc": "补水提醒、禁食结束提醒和个性化鼓励，助您保持动力。" },
+      "tips": { "title": "可靠的健康建议", "desc": "基于最佳医疗实践的建议。FastCare 为您提供信息和保护。" }
+    },
+    "how": {
+      "tag": "用户旅程", "title1": "3步", "title2": "轻松开始",
+      "subtitle": "从注册到第一次禁食，不到2分钟。",
+      "step1": { "title": "创建您的账号", "desc": "用电子邮件快速注册。填写一些信息以个性化您的体验。" },
+      "step2": { "title": "选择您的目标", "desc": "健康、减重、精神修行或学习——FastCare 适应您的动机。" },
+      "step3": { "title": "追踪您的进步", "desc": "启动计时器，记录您的感受，查看统计以长期保持动力。" }
+    },
+    "goalsSection": {
+      "tag": "适合所有人", "title1": "您的", "title2": "目标是什么",
+      "subtitle": "FastCare 支持每一种禁食者，无论其动机如何。",
+      "health": { "title": "健康与活力", "desc": "通过定期有指导的禁食改善您的整体健康和精力。" },
+      "weight": { "title": "减重", "desc": "以健康、可持续且无挫败感的方式达到您的体重目标。" },
+      "spiritual": { "title": "精神 · 斋月", "desc": "以宗教为目的实践禁食，配有适合斋月的追踪功能。" },
+      "learning": { "title": "学习", "desc": "在安全的环境中循序渐进地发现禁食，适合初学者。" }
+    },
+    "cta": {
+      "title1": "准备好改变", "title2": "您的健康了吗？",
+      "subtitle": "加入超过50,000名信任 FastCare 支持日常禁食的人。",
+      "start": "免费开始", "learn": "了解更多",
+      "check1": "永久免费", "check2": "无需信用卡", "check3": "数据受保护"
+    },
+    "footer": "© 2025 FastCare — 您的智能禁食伴侣 · 大学项目"
+  }
+}

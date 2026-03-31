@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "fasting": "Mein Fasten",
+    "tracking": "Tracking",
+    "stats": "Statistiken",
+    "journal": "Tagebuch",
+    "tips": "Tipps",
+    "mySpace": "Mein Bereich",
+    "learn": "Lernen",
+    "logout": "Abmelden",
+    "notifications": "Benachrichtigungen"
+  },
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "back": "Zurück",
+    "loading": "Wird geladen...",
+    "error": "Ein Fehler ist aufgetreten",
+    "success": "Erfolgreich gespeichert!",
+    "today": "Heute",
+    "start": "Starten",
+    "stop": "Stoppen",
+    "reset": "Zurücksetzen",
+    "confirm": "Bestätigen",
+    "close": "Schließen",
+    "noData": "Keine Daten verfügbar",
+    "optional": "opt.",
+    "hours": "h",
+    "days": "T"
+  },
+  "auth": {
+    "login": {
+      "title": "Anmelden",
+      "subtitle": "Willkommen zurück bei FastCare",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "submit": "Anmelden",
+      "noAccount": "Noch kein Konto?",
+      "register": "Registrieren"
+    },
+    "register": {
+      "title": "Mein Konto erstellen",
+      "subtitle": "Schließe dich Tausenden von Menschen an, die auf sich achten",
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "phone": "Telefon",
+      "birthDate": "Geburtsdatum",
+      "initialWeight": "Ausgangsgewicht (kg)",
+      "submit": "Mein Konto erstellen",
+      "hasAccount": "Bereits ein Konto?",
+      "login": "Anmelden",
+      "optionalSection": "Optionale Angaben"
+    }
+  },
+  "dashboard": {
+    "greetingMorning": "Guten Morgen",
+    "greetingAfternoon": "Guten Tag",
+    "greetingEvening": "Guten Abend",
+    "subtitle": "Hier ist dein FastCare-Dashboard",
+    "noFast": "Kein aktives Fasten",
+    "fastInProgress": "Fasten läuft",
+    "fastCompleted": "Fasten abgeschlossen ✓",
+    "startFast": "Mein Fasten starten",
+    "resumeFast": "Fortsetzen",
+    "newFast": "Neues Fasten starten",
+    "seeFast": "Mein Fasten ansehen",
+    "active": "Aktiv",
+    "paused": "Pausiert",
+    "ready": "Bereit",
+    "done": "Beendet",
+    "stats": {
+      "title": "Meine Statistiken",
+      "completed": "Abgeschlossene Fastentage",
+      "totalHours": "Gesamtstunden",
+      "avgDuration": "Durchschnittliche Dauer",
+      "streak": "Aktuelle Serie"
+    },
+    "shortcuts": {
+      "title": "Schnellzugriff",
+      "addTracking": "Tracking hinzufügen",
+      "myJournal": "Mein Tagebuch",
+      "stats": "Statistiken",
+      "tips": "Gesundheitstipps"
+    },
+    "history": {
+      "title": "Verlauf",
+      "noHistory": "Noch kein Fasten abgeschlossen",
+      "completed": "Abgeschlossen",
+      "duration": "Dauer"
+    },
+    "tip": "Tipp des Tages",
+    "refresh": "↺ Aktualisieren"
+  },
+  "timer": {
+    "title": "Mein Fasten",
+    "timeLeft": "Verbleibende Zeit",
+    "elapsed": "Vergangen",
+    "start": "Starten",
+    "pause": "Pause",
+    "resume": "Fortsetzen",
+    "reset": "Zurücksetzen",
+    "newFast": "Neues Fasten",
+    "customTitle": "Mein Protokoll wählen",
+    "customSubtitle": "Wähle die Dauer, die zu dir passt",
+    "confirmCustom": "Dieses Protokoll bestätigen",
+    "celebration": {
+      "title": "🎉 Fasten abgeschlossen!",
+      "subtitle": "Herzlichen Glückwunsch, du hast dein Fasten erfolgreich abgeschlossen!"
+    },
+    "infoTitle": "Während deines Fastens",
+    "infos": {
+      "water": "Trinke regelmäßig Wasser",
+      "rest": "Raste wenn nötig",
+      "avoid": "Vermeide intensive Anstrengungen",
+      "listen": "Höre auf deinen Körper"
+    }
+  },
+  "tracking": {
+    "title": "Tägliches Tracking",
+    "subtitle": "Erfasse dein Gewicht, Energie und Stimmung, um deinen Fortschritt zu verfolgen.",
+    "weight": "Gewicht",
+    "weightUnit": "kg",
+    "energy": "Energieniveau",
+    "mood": "Stimmung",
+    "save": "Speichern",
+    "saved": "Gespeichert!",
+    "history": "Verlauf",
+    "noHistory": "Noch keine Einträge",
+    "moods": {
+      "great": "Sehr gut",
+      "good": "Gut",
+      "okay": "Mittelmäßig",
+      "tired": "Müde",
+      "hard": "Schwierig"
+    }
+  },
+  "journal": {
+    "title": "Mein Tagebuch",
+    "subtitle": "Notiere deine Empfindungen und Beobachtungen während des Fastens.",
+    "newEntry": "Neuer Eintrag",
+    "placeholder": "Wie fühlst du dich heute? Notiere deine Empfindungen...",
+    "date": "Datum",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "cancel": "Abbrechen",
+    "noEntries": "Noch keine Einträge. Fange an zu schreiben!",
+    "deleteConfirm": "Diesen Eintrag löschen?"
+  },
+  "stats": {
+    "title": "Statistiken",
+    "subtitle": "Visualisiere deinen Fortschritt im Laufe der Zeit.",
+    "totalFasts": "Abgeschlossene Fastentage",
+    "totalHours": "Gesamtstunden",
+    "avgDuration": "Durchschnittliche Dauer",
+    "bestFast": "Bestes Fasten",
+    "fastingHistory": "Fastendauern",
+    "weightEvolution": "Gewichtsentwicklung",
+    "energyLevel": "Energieniveau",
+    "moodDistribution": "Stimmungsverteilung",
+    "activityHeatmap": "Aktivität der letzten 30 Tage",
+    "streakBanner": "🔥 Serie von {{count}} aufeinanderfolgenden Tagen!",
+    "noData": "Noch keine Daten"
+  },
+  "tips": {
+    "title": "Gesundheitstipps",
+    "subtitle": "Praktische Tipps, um dein Fasten zu begleiten.",
+    "disclaimer": "Diese Tipps sind informativ und ersetzen keinen medizinischen Rat.",
+    "filters": {
+      "all": "Alle",
+      "health": "Gesundheit",
+      "weight": "Gewicht",
+      "spiritual": "Spirituell",
+      "beginner": "Anfänger"
+    }
+  },
+  "mySpace": {
+    "title": "Mein Bereich",
+    "subtitle": "Verwalte dein Profil und deine Einstellungen.",
+    "profileSection": "Persönliche Informationen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "birthDate": "Geburtsdatum",
+    "initialWeight": "Ausgangsgewicht (kg)",
+    "goal": "Mein Ziel",
+    "changeGoal": "Ziel ändern",
+    "save": "Änderungen speichern",
+    "saved": "Profil aktualisiert!",
+    "member": "FastCare-Mitglied",
+    "memberSince": "Mitglied seit",
+    "deleteAccount": "Mein Konto löschen"
+  },
+  "goalSelection": {
+    "title": "Was ist dein Ziel?",
+    "subtitle": "Wähle das Ziel, das deinem Ansatz entspricht",
+    "continue": "Weiter",
+    "goals": {
+      "health": { "name": "Gesundheit & Wohlbefinden", "desc": "Deine allgemeine Gesundheit verbessern" },
+      "weight": { "name": "Gewichtsabnahme", "desc": "Dein Idealgewicht erreichen" },
+      "spiritual": { "name": "Ramadan / Fastenzeit", "desc": "Spirituelles und religiöses Fasten" },
+      "learning": { "name": "Entdeckung", "desc": "Das Fasten schrittweise erlernen" }
+    }
+  },
+  "notifications": {
+    "title": "Benachrichtigungen",
+    "noNotifications": "Keine Benachrichtigungen",
+    "markAllRead": "Alle als gelesen markieren",
+    "new": "Neu"
+  },
+  "learn": {
+    "title": "Fasten lernen",
+    "subtitle": "Video-Tutorials und Quizze, um das Fasten zu erlernen",
+    "videos": "Videos",
+    "articles": "Artikel",
+    "quiz": "Quiz",
+    "startQuiz": "Quiz starten",
+    "nextQuestion": "Nächste Frage",
+    "seeResult": "Mein Ergebnis ansehen",
+    "score": "Dein Ergebnis",
+    "tryAgain": "Nochmal versuchen"
+  },
+  "home": {
+    "nav": { "features": "Funktionen", "how": "So funktioniert's", "goals": "Ziele", "mySpace": "Mein Bereich", "login": "Anmelden", "register": "Registrieren" },
+    "hero": {
+      "badge": "Neu · Ramadan-Tracking verfügbar",
+      "title1": "Besser fasten.",
+      "title2": "Besser leben.",
+      "subtitle": "FastCare begleitet dich Schritt für Schritt beim Fasten. Intelligenter Timer, tägliches Tracking, personalisierte Tipps — alles, was du brauchst, an einem Ort.",
+      "start": "Kostenlos starten",
+      "learn": "Mehr erfahren",
+      "trust1": "100% kostenlos", "trust2": "Ohne Karte", "trust3": "Sichere Daten",
+      "remaining": "verbleibend", "fastStatus": "Fasten läuft", "hydration": "Hydration erinnert", "streak": "+3 aufeinanderfolgende Tage",
+      "weight": "Gewicht", "energy": "Energie", "days": "Tage", "mood": "Stimmung"
+    },
+    "stats": { "users": "Aktive Nutzer", "fasts": "Abgeschlossene Fasten", "rating": "Durchschnittsbewertung", "support": "Support verfügbar" },
+    "features": {
+      "tag": "Funktionen", "title1": "Alles was du brauchst", "title2": "um erfolgreich zu sein",
+      "subtitle": "Tools, die dich auf jedem Schritt begleiten — vom ersten Fasten bis zum Experten.",
+      "timer": { "title": "Intelligenter Timer", "desc": "Wähle dein Protokoll (16/8, 24h, individuell) und verfolge dein Fasten in Echtzeit." },
+      "tracking": { "title": "Tägliches Tracking", "desc": "Erfasse Gewicht, Energielevel und Stimmung jeden Tag." },
+      "stats": { "title": "Statistiken & Diagramme", "desc": "Visualisiere deinen Fortschritt mit klaren Diagrammen." },
+      "journal": { "title": "Gefühls-Tagebuch", "desc": "Notiere deine Erfahrungen, Emotionen und Beobachtungen." },
+      "notifs": { "title": "Intelligente Benachrichtigungen", "desc": "Hydrations-Erinnerungen, Fasten-Ende-Alarme und persönliche Motivation." },
+      "tips": { "title": "Zuverlässige Gesundheitstipps", "desc": "Tipps basierend auf medizinischen Best Practices." }
+    },
+    "how": {
+      "tag": "Nutzerreise", "title1": "Starte in", "title2": "3 Schritten",
+      "subtitle": "Von der Registrierung bis zum ersten Fasten in unter 2 Minuten.",
+      "step1": { "title": "Konto erstellen", "desc": "Schnelle Registrierung mit deiner E-Mail. Trage ein paar Infos für eine persönliche Erfahrung ein." },
+      "step2": { "title": "Ziel wählen", "desc": "Gesundheit, Gewichtsverlust, spirituelle Praxis oder Lernen — FastCare passt sich deiner Motivation an." },
+      "step3": { "title": "Fortschritt verfolgen", "desc": "Timer starten, Gefühle notieren und Statistiken einsehen, um motiviert zu bleiben." }
+    },
+    "goalsSection": {
+      "tag": "Für alle", "title1": "Was ist", "title2": "dein Ziel",
+      "subtitle": "FastCare begleitet jeden Faster, egal welche Motivation.",
+      "health": { "title": "Gesundheit & Vitalität", "desc": "Verbessere dein allgemeines Wohlbefinden und deine Energie." },
+      "weight": { "title": "Gewichtsverlust", "desc": "Erreiche deine Gewichtsziele auf gesunde, nachhaltige Weise." },
+      "spiritual": { "title": "Spirituell · Ramadan", "desc": "Faste aus religiösen Gründen mit angepasstem Ramadan-Tracking." },
+      "learning": { "title": "Lernen", "desc": "Entdecke das Fasten schrittweise in sicherer Umgebung, ideal für Anfänger." }
+    },
+    "cta": {
+      "title1": "Bereit, deine Gesundheit", "title2": "zu transformieren?",
+      "subtitle": "Schließe dich über 50.000 Menschen an, die FastCare für ihr tägliches Fasten vertrauen.",
+      "start": "Kostenlos starten", "learn": "Mehr erfahren",
+      "check1": "Für immer kostenlos", "check2": "Keine Karte nötig", "check3": "Daten geschützt"
+    },
+    "footer": "© 2025 FastCare — Dein intelligenter Fasten-Begleiter · Universitätsprojekt"
+  }
+}

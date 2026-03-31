@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled, { keyframes } from 'styled-components';
 import {
   User, Mail, Phone, Calendar, Weight,
@@ -67,9 +68,9 @@ const IconBtn = styled.button`
 `;
 
 const Content = styled.main`
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
@@ -390,6 +391,7 @@ const getFullName = (p, n) => [p, n].filter(Boolean).join(' ') || n || 'Utilisat
 const MonEspace = () => {
   const navigate = useNavigate();
   const { user, logout, updateUser } = useAuth();
+  const { t } = useTranslation();
 
   const [editing, setEditing]   = useState(false);
   const [saving, setSaving]     = useState(false);
@@ -516,7 +518,7 @@ const MonEspace = () => {
           </InfoGrid>
 
           {error   && <ErrorMsg>{error}</ErrorMsg>}
-          {success && <SuccessMsg><CheckCircle size={15} /> Profil mis à jour avec succès !</SuccessMsg>}
+          {success && <SuccessMsg><CheckCircle size={15} /> {t('mySpace.saved')}</SuccessMsg>}
         </Card>
 
         {/* Objectif */}

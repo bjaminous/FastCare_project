@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "dashboard": "Dasbor",
+    "fasting": "Puasa Saya",
+    "tracking": "Pelacakan",
+    "stats": "Statistik",
+    "journal": "Jurnal",
+    "tips": "Tips",
+    "mySpace": "Ruang Saya",
+    "learn": "Belajar",
+    "logout": "Keluar",
+    "notifications": "Notifikasi"
+  },
+  "common": {
+    "save": "Simpan",
+    "cancel": "Batal",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "back": "Kembali",
+    "loading": "Memuat...",
+    "error": "Terjadi kesalahan",
+    "success": "Berhasil disimpan!",
+    "today": "Hari ini",
+    "start": "Mulai",
+    "stop": "Berhenti",
+    "reset": "Atur Ulang",
+    "confirm": "Konfirmasi",
+    "close": "Tutup",
+    "noData": "Tidak ada data tersedia",
+    "optional": "opt.",
+    "hours": "j",
+    "days": "h"
+  },
+  "auth": {
+    "login": {
+      "title": "Masuk",
+      "subtitle": "Selamat datang kembali di FastCare",
+      "email": "Email",
+      "password": "Kata Sandi",
+      "submit": "Masuk",
+      "noAccount": "Belum punya akun?",
+      "register": "Daftar"
+    },
+    "register": {
+      "title": "Buat Akun Saya",
+      "subtitle": "Bergabunglah dengan ribuan orang yang peduli pada diri mereka",
+      "firstName": "Nama Depan",
+      "lastName": "Nama Belakang",
+      "email": "Email",
+      "password": "Kata Sandi",
+      "phone": "Telepon",
+      "birthDate": "Tanggal Lahir",
+      "initialWeight": "Berat Awal (kg)",
+      "submit": "Buat Akun Saya",
+      "hasAccount": "Sudah punya akun?",
+      "login": "Masuk",
+      "optionalSection": "Informasi opsional"
+    }
+  },
+  "dashboard": {
+    "greetingMorning": "Selamat Pagi",
+    "greetingAfternoon": "Selamat Siang",
+    "greetingEvening": "Selamat Malam",
+    "subtitle": "Ini adalah dasbor FastCare Anda",
+    "noFast": "Tidak ada puasa aktif",
+    "fastInProgress": "Puasa sedang berlangsung",
+    "fastCompleted": "Puasa selesai ✓",
+    "startFast": "Mulai Puasa Saya",
+    "resumeFast": "Lanjutkan",
+    "newFast": "Mulai Puasa Baru",
+    "seeFast": "Lihat Puasa Saya",
+    "active": "Berlangsung",
+    "paused": "Dijeda",
+    "ready": "Siap",
+    "done": "Selesai",
+    "stats": {
+      "title": "Statistik Saya",
+      "completed": "Puasa Selesai",
+      "totalHours": "Total Jam",
+      "avgDuration": "Durasi Rata-rata",
+      "streak": "Rangkaian Saat Ini"
+    },
+    "shortcuts": {
+      "title": "Akses Cepat",
+      "addTracking": "Tambah Pelacakan",
+      "myJournal": "Jurnal Saya",
+      "stats": "Statistik",
+      "tips": "Tips Kesehatan"
+    },
+    "history": {
+      "title": "Riwayat Terkini",
+      "noHistory": "Belum ada puasa yang diselesaikan",
+      "completed": "Selesai",
+      "duration": "Durasi"
+    },
+    "tip": "Tips Hari Ini",
+    "refresh": "↺ Segarkan"
+  },
+  "timer": {
+    "title": "Puasa Saya",
+    "timeLeft": "Sisa Waktu",
+    "elapsed": "Waktu Berlalu",
+    "start": "Mulai",
+    "pause": "Jeda",
+    "resume": "Lanjutkan",
+    "reset": "Atur Ulang",
+    "newFast": "Puasa Baru",
+    "customTitle": "Pilih Protokol Saya",
+    "customSubtitle": "Pilih durasi yang sesuai untuk Anda",
+    "confirmCustom": "Konfirmasi protokol ini",
+    "celebration": {
+      "title": "🎉 Puasa Selesai!",
+      "subtitle": "Selamat, Anda berhasil menyelesaikan puasa!"
+    },
+    "infoTitle": "Selama Puasa Anda",
+    "infos": {
+      "water": "Minum air secara teratur",
+      "rest": "Istirahatlah jika perlu",
+      "avoid": "Hindari aktivitas berat",
+      "listen": "Dengarkan tubuh Anda"
+    }
+  },
+  "tracking": {
+    "title": "Pelacakan Harian",
+    "subtitle": "Catat berat badan, energi, dan suasana hati Anda untuk memantau kemajuan.",
+    "weight": "Berat Badan",
+    "weightUnit": "kg",
+    "energy": "Tingkat Energi",
+    "mood": "Suasana Hati",
+    "save": "Simpan",
+    "saved": "Tersimpan!",
+    "history": "Riwayat",
+    "noHistory": "Belum ada entri",
+    "moods": {
+      "great": "Sangat Baik",
+      "good": "Baik",
+      "okay": "Biasa",
+      "tired": "Lelah",
+      "hard": "Sulit"
+    }
+  },
+  "journal": {
+    "title": "Jurnal Saya",
+    "subtitle": "Catat perasaan dan observasi Anda selama puasa.",
+    "newEntry": "Entri Baru",
+    "placeholder": "Bagaimana perasaan Anda hari ini? Catat perasaan Anda...",
+    "date": "Tanggal",
+    "save": "Simpan",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "cancel": "Batal",
+    "noEntries": "Belum ada entri. Mulailah menulis!",
+    "deleteConfirm": "Hapus entri ini?"
+  },
+  "stats": {
+    "title": "Statistik",
+    "subtitle": "Visualisasikan kemajuan Anda dari waktu ke waktu.",
+    "totalFasts": "Puasa Selesai",
+    "totalHours": "Total Jam",
+    "avgDuration": "Durasi Rata-rata",
+    "bestFast": "Puasa Terbaik",
+    "fastingHistory": "Durasi Puasa",
+    "weightEvolution": "Perkembangan Berat Badan",
+    "energyLevel": "Tingkat Energi",
+    "moodDistribution": "Distribusi Suasana Hati",
+    "activityHeatmap": "Aktivitas 30 Hari Terakhir",
+    "streakBanner": "🔥 Rangkaian {{count}} hari berturut-turut!",
+    "noData": "Belum ada data"
+  },
+  "tips": {
+    "title": "Tips Kesehatan",
+    "subtitle": "Tips praktis untuk mendampingi puasa Anda.",
+    "disclaimer": "Tips ini bersifat informatif dan tidak menggantikan saran medis.",
+    "filters": {
+      "all": "Semua",
+      "health": "Kesehatan",
+      "weight": "Berat Badan",
+      "spiritual": "Spiritual",
+      "beginner": "Pemula"
+    }
+  },
+  "mySpace": {
+    "title": "Ruang Saya",
+    "subtitle": "Kelola profil dan preferensi Anda.",
+    "profileSection": "Informasi Pribadi",
+    "firstName": "Nama Depan",
+    "lastName": "Nama Belakang",
+    "email": "Email",
+    "phone": "Telepon",
+    "birthDate": "Tanggal Lahir",
+    "initialWeight": "Berat Awal (kg)",
+    "goal": "Tujuan Saya",
+    "changeGoal": "Ganti Tujuan",
+    "save": "Simpan Perubahan",
+    "saved": "Profil diperbarui!",
+    "member": "Anggota FastCare",
+    "memberSince": "Anggota sejak",
+    "deleteAccount": "Hapus Akun Saya"
+  },
+  "goalSelection": {
+    "title": "Apa tujuan Anda?",
+    "subtitle": "Pilih tujuan yang sesuai dengan pendekatan Anda",
+    "continue": "Lanjutkan",
+    "goals": {
+      "health": { "name": "Kesehatan & Kesejahteraan", "desc": "Meningkatkan kesehatan umum Anda" },
+      "weight": { "name": "Penurunan Berat Badan", "desc": "Mencapai berat ideal Anda" },
+      "spiritual": { "name": "Ramadan / Puasa Keagamaan", "desc": "Puasa spiritual dan keagamaan" },
+      "learning": { "name": "Penemuan", "desc": "Belajar berpuasa secara bertahap" }
+    }
+  },
+  "notifications": {
+    "title": "Notifikasi",
+    "noNotifications": "Tidak ada notifikasi",
+    "markAllRead": "Tandai semua sudah dibaca",
+    "new": "Baru"
+  },
+  "learn": {
+    "title": "Belajar Berpuasa",
+    "subtitle": "Tutorial video dan kuis untuk belajar berpuasa",
+    "videos": "Video",
+    "articles": "Artikel",
+    "quiz": "Kuis",
+    "startQuiz": "Mulai Kuis",
+    "nextQuestion": "Pertanyaan Berikutnya",
+    "seeResult": "Lihat Hasil Saya",
+    "score": "Skor Anda",
+    "tryAgain": "Coba Lagi"
+  },
+  "home": {
+    "nav": { "features": "Fitur", "how": "Cara Kerja", "goals": "Tujuan", "mySpace": "Ruang Saya", "login": "Masuk", "register": "Daftar" },
+    "hero": {
+      "badge": "Baru · Pelacakan Ramadan tersedia",
+      "title1": "Puasa lebih baik.",
+      "title2": "Hidup lebih baik.",
+      "subtitle": "FastCare menemani Anda langkah demi langkah dalam praktik puasa. Timer cerdas, pelacakan harian, saran personal — semua yang Anda butuhkan, di satu tempat.",
+      "start": "Mulai Gratis",
+      "learn": "Pelajari lebih lanjut",
+      "trust1": "100% gratis", "trust2": "Tanpa kartu", "trust3": "Data aman",
+      "remaining": "tersisa", "fastStatus": "Puasa berlangsung", "hydration": "Pengingat hidrasi", "streak": "+3 hari berturut-turut",
+      "weight": "Berat", "energy": "Energi", "days": "Hari", "mood": "Suasana hati"
+    },
+    "stats": { "users": "Pengguna aktif", "fasts": "Puasa selesai", "rating": "Rating rata-rata", "support": "Dukungan tersedia" },
+    "features": {
+      "tag": "Fitur", "title1": "Semua yang Anda butuhkan", "title2": "untuk berhasil",
+      "subtitle": "Alat yang dirancang untuk menemani Anda di setiap tahap — dari puasa pertama hingga tingkat ahli.",
+      "timer": { "title": "Timer Cerdas", "desc": "Pilih protokol Anda (16/8, 24 jam, kustom) dan pantau puasa Anda secara real-time." },
+      "tracking": { "title": "Pelacakan Harian", "desc": "Catat berat badan, level energi, dan suasana hati Anda setiap hari." },
+      "stats": { "title": "Statistik & Grafik", "desc": "Visualisasikan kemajuan Anda dengan grafik yang jelas." },
+      "journal": { "title": "Jurnal Perasaan", "desc": "Catat pengalaman, emosi, dan observasi Anda." },
+      "notifs": { "title": "Notifikasi Cerdas", "desc": "Pengingat hidrasi, peringatan akhir puasa, dan motivasi personal." },
+      "tips": { "title": "Tips Kesehatan Terpercaya", "desc": "Tips berdasarkan praktik medis terbaik." }
+    },
+    "how": {
+      "tag": "Perjalanan pengguna", "title1": "Mulai dalam", "title2": "3 langkah",
+      "subtitle": "Dari pendaftaran hingga puasa pertama Anda, dalam kurang dari 2 menit.",
+      "step1": { "title": "Buat akun Anda", "desc": "Daftar cepat dengan email Anda. Isi beberapa informasi untuk mempersonalisasi pengalaman Anda." },
+      "step2": { "title": "Pilih tujuan Anda", "desc": "Kesehatan, penurunan berat badan, praktik spiritual, atau pembelajaran — FastCare menyesuaikan motivasi Anda." },
+      "step3": { "title": "Pantau kemajuan Anda", "desc": "Mulai timer, catat perasaan Anda, dan periksa statistik Anda." }
+    },
+    "goalsSection": {
+      "tag": "Untuk semua orang", "title1": "Apa", "title2": "tujuan Anda",
+      "subtitle": "FastCare mendukung semua jenis pelaku puasa, apapun motivasi mereka.",
+      "health": { "title": "Kesehatan & Vitalitas", "desc": "Tingkatkan kesejahteraan umum dan energi Anda melalui puasa teratur." },
+      "weight": { "title": "Penurunan Berat Badan", "desc": "Capai tujuan berat badan Anda dengan cara yang sehat dan berkelanjutan." },
+      "spiritual": { "title": "Spiritual · Ramadan", "desc": "Praktikkan puasa untuk alasan agama dengan pelacakan yang disesuaikan untuk Ramadan." },
+      "learning": { "title": "Pembelajaran", "desc": "Temukan puasa secara bertahap di lingkungan yang aman, ideal untuk pemula." }
+    },
+    "cta": {
+      "title1": "Siap mengubah", "title2": "kesehatan Anda?",
+      "subtitle": "Bergabunglah dengan lebih dari 50.000 orang yang mempercayai FastCare untuk puasa harian mereka.",
+      "start": "Mulai Gratis", "learn": "Pelajari lebih lanjut",
+      "check1": "Gratis selamanya", "check2": "Tanpa kartu", "check3": "Data terlindungi"
+    },
+    "footer": "© 2025 FastCare — Pendamping puasa cerdas Anda · Proyek universitas"
+  }
+}

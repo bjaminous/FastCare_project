@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff, UserPlus } from 'lucide-react';
+import FastCareLogo from '../components/Logo';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Card from '../components/ui/Card';
@@ -155,9 +157,10 @@ const Footer = styled.div`
 const Register = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
+  const { t } = useTranslation();
   const [form, setForm] = useState({
     prenom: '', nom: '', email: '', motDePasse: '',
-    telephone: '', dateNaissance: '', poidsInitial: ''
+    telephone: '', dateNaissance: '', poidsInitial: '', taille: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -190,9 +193,9 @@ const Register = () => {
   return (
     <RegisterContainer>
       <RegisterCard>
-        <Logo>FastCare</Logo>
-        <Title>Créer mon compte</Title>
-        <Subtitle>Rejoignez des milliers de personnes qui prennent soin d'eux</Subtitle>
+        <Logo><FastCareLogo visibleWidth={180} /></Logo>
+        <Title>{t('auth.register.title')}</Title>
+        <Subtitle>{t('auth.register.subtitle')}</Subtitle>
 
         {error && <ErrorBox>{error}</ErrorBox>}
 
@@ -201,12 +204,12 @@ const Register = () => {
           {/* Prénom + Nom */}
           <Row>
             <InputGroup>
-              <Label htmlFor="prenom">Prénom</Label>
+              <Label htmlFor="prenom">{t('auth.register.firstName')}</Label>
               <Input id="prenom" name="prenom" type="text" placeholder="Jean"
                 value={form.prenom} onChange={handleChange} fullWidth />
             </InputGroup>
             <InputGroup>
-              <Label htmlFor="nom">Nom <span style={{color:'#ef4444'}}>*</span></Label>
+              <Label htmlFor="nom">{t('auth.register.lastName')} <span style={{color:'#ef4444'}}>*</span></Label>
               <Input id="nom" name="nom" type="text" placeholder="Dupont"
                 value={form.nom} onChange={handleChange} required fullWidth />
             </InputGroup>
@@ -214,14 +217,14 @@ const Register = () => {
 
           {/* Email */}
           <InputGroup>
-            <Label htmlFor="email">Email <span style={{color:'#ef4444'}}>*</span></Label>
+            <Label htmlFor="email">{t('auth.register.email')} <span style={{color:'#ef4444'}}>*</span></Label>
             <Input id="email" name="email" type="email" placeholder="jean.dupont@email.com"
               value={form.email} onChange={handleChange} required fullWidth />
           </InputGroup>
 
           {/* Mot de passe */}
           <InputGroup>
-            <Label htmlFor="motDePasse">Mot de passe <span style={{color:'#ef4444'}}>*</span></Label>
+            <Label htmlFor="motDePasse">{t('auth.register.password')} <span style={{color:'#ef4444'}}>*</span></Label>
             <PasswordContainer>
               <Input id="motDePasse" name="motDePasse"
                 type={showPassword ? 'text' : 'password'}
@@ -233,38 +236,46 @@ const Register = () => {
             </PasswordContainer>
           </InputGroup>
 
-          <Divider><span>Informations optionnelles</span></Divider>
+          <Divider><span>{t('auth.register.optionalSection')}</span></Divider>
 
           {/* Téléphone + Date de naissance */}
           <Row>
             <InputGroup>
-              <Label htmlFor="telephone">Téléphone <Optional>(opt.)</Optional></Label>
+              <Label htmlFor="telephone">{t('auth.register.phone')} <Optional>(opt.)</Optional></Label>
               <Input id="telephone" name="telephone" type="tel" placeholder="+33 6 00 00 00 00"
                 value={form.telephone} onChange={handleChange} fullWidth />
             </InputGroup>
             <InputGroup>
-              <Label htmlFor="dateNaissance">Date de naissance <Optional>(opt.)</Optional></Label>
+              <Label htmlFor="dateNaissance">{t('auth.register.birthDate')} <Optional>(opt.)</Optional></Label>
               <Input id="dateNaissance" name="dateNaissance" type="date"
                 value={form.dateNaissance} onChange={handleChange} fullWidth />
             </InputGroup>
           </Row>
 
-          {/* Poids initial */}
-          <InputGroup>
-            <Label htmlFor="poidsInitial">Poids initial (kg) <Optional>(opt.)</Optional></Label>
-            <Input id="poidsInitial" name="poidsInitial" type="number"
-              placeholder="70" min="20" step="0.1"
-              value={form.poidsInitial} onChange={handleChange} fullWidth />
-          </InputGroup>
+          {/* Poids + Taille */}
+          <Row>
+            <InputGroup>
+              <Label htmlFor="poidsInitial">{t('auth.register.initialWeight')} <Optional>(opt.)</Optional></Label>
+              <Input id="poidsInitial" name="poidsInitial" type="number"
+                placeholder="70 kg" min="20" step="0.1"
+                value={form.poidsInitial} onChange={handleChange} fullWidth />
+            </InputGroup>
+            <InputGroup>
+              <Label htmlFor="taille">Taille <Optional>(opt.)</Optional></Label>
+              <Input id="taille" name="taille" type="number"
+                placeholder="170 cm" min="50" max="250" step="1"
+                value={form.taille} onChange={handleChange} fullWidth />
+            </InputGroup>
+          </Row>
 
           <Button type="submit" variant="primary" size="large" disabled={isLoading} fullWidth>
-            {isLoading ? 'Création du compte...' : "Créer mon compte"}
+            {isLoading ? t('common.loading') : t('auth.register.submit')}
             {!isLoading && <UserPlus size={20} />}
           </Button>
         </Form>
 
         <Footer>
-          Déjà un compte ? <Link to="/login" style={{ color: '#2A7DE1', fontWeight: 600 }}>Se connecter</Link>
+          {t('auth.register.hasAccount')} <Link to="/login" style={{ color: '#2A7DE1', fontWeight: 600 }}>{t('auth.register.login')}</Link>
         </Footer>
       </RegisterCard>
     </RegisterContainer>

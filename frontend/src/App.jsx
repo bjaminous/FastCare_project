@@ -10,9 +10,12 @@ const SC_CUSTOM_PROPS = new Set([
   'variant','selected','size','light','positive','gradient',
 ]);
 const shouldForwardProp = (prop) => !SC_CUSTOM_PROPS.has(prop);
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n/index.js';
 import { AuthProvider } from './context/AuthContext';
 import { FastingProvider } from './context/FastingContext';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -29,9 +32,14 @@ import ConseilsSante from './pages/ConseilsSante';
 import Statistiques from './pages/Statistiques';
 import Apprendre from './pages/Apprendre';
 import Welcome from './pages/Welcome';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminConseils from './pages/admin/AdminConseils';
+import AdminNotifs from './pages/admin/AdminNotifs';
 
 function App() {
   return (
+    <I18nextProvider i18n={i18n}>
     <StyleSheetManager shouldForwardProp={shouldForwardProp}>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
@@ -80,6 +88,12 @@ function App() {
               <PrivateRoute><Apprendre /></PrivateRoute>
             } />
 
+            {/* Pages admin */}
+            <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+            <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
+            <Route path="/admin/conseils" element={<AdminRoute><AdminConseils /></AdminRoute>} />
+            <Route path="/admin/notifications" element={<AdminRoute><AdminNotifs /></AdminRoute>} />
+
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
@@ -88,6 +102,7 @@ function App() {
       </AuthProvider>
     </ThemeProvider>
     </StyleSheetManager>
+    </I18nextProvider>
   );
 }
 

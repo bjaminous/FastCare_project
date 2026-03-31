@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "dashboard": "Panel de control",
+    "fasting": "Mi ayuno",
+    "tracking": "Seguimiento",
+    "stats": "Estadísticas",
+    "journal": "Diario",
+    "tips": "Consejos",
+    "mySpace": "Mi espacio",
+    "learn": "Aprender",
+    "logout": "Cerrar sesión",
+    "notifications": "Notificaciones"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "back": "Atrás",
+    "loading": "Cargando...",
+    "error": "Se ha producido un error",
+    "success": "¡Guardado correctamente!",
+    "today": "Hoy",
+    "start": "Iniciar",
+    "stop": "Detener",
+    "reset": "Restablecer",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "noData": "No hay datos disponibles",
+    "optional": "opc.",
+    "hours": "h",
+    "days": "d"
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar sesión",
+      "subtitle": "Bienvenido de nuevo a FastCare",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Iniciar sesión",
+      "noAccount": "¿Aún no tienes cuenta?",
+      "register": "Registrarse"
+    },
+    "register": {
+      "title": "Crear mi cuenta",
+      "subtitle": "Únete a miles de personas que cuidan de sí mismas",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "phone": "Teléfono",
+      "birthDate": "Fecha de nacimiento",
+      "initialWeight": "Peso inicial (kg)",
+      "submit": "Crear mi cuenta",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "login": "Iniciar sesión",
+      "optionalSection": "Información opcional"
+    }
+  },
+  "dashboard": {
+    "greetingMorning": "Buenos días",
+    "greetingAfternoon": "Buenas tardes",
+    "greetingEvening": "Buenas noches",
+    "subtitle": "Aquí está tu panel de control de FastCare",
+    "noFast": "Ningún ayuno activo",
+    "fastInProgress": "Ayuno en curso",
+    "fastCompleted": "Ayuno completado ✓",
+    "startFast": "Iniciar mi ayuno",
+    "resumeFast": "Reanudar",
+    "newFast": "Iniciar un nuevo ayuno",
+    "seeFast": "Ver mi ayuno",
+    "active": "En curso",
+    "paused": "En pausa",
+    "ready": "Listo",
+    "done": "Terminado",
+    "stats": {
+      "title": "Mis estadísticas",
+      "completed": "Ayunos completados",
+      "totalHours": "Horas totales",
+      "avgDuration": "Duración media",
+      "streak": "Racha actual"
+    },
+    "shortcuts": {
+      "title": "Acceso rápido",
+      "addTracking": "Agregar seguimiento",
+      "myJournal": "Mi diario",
+      "stats": "Estadísticas",
+      "tips": "Consejos de salud"
+    },
+    "history": {
+      "title": "Historial reciente",
+      "noHistory": "Ningún ayuno completado por ahora",
+      "completed": "Terminado",
+      "duration": "Duración"
+    },
+    "tip": "Consejo del día",
+    "refresh": "↺ Actualizar"
+  },
+  "timer": {
+    "title": "Mi ayuno",
+    "timeLeft": "Tiempo restante",
+    "elapsed": "Transcurrido",
+    "start": "Iniciar",
+    "pause": "Pausa",
+    "resume": "Reanudar",
+    "reset": "Restablecer",
+    "newFast": "Nuevo ayuno",
+    "customTitle": "Elegir mi protocolo",
+    "customSubtitle": "Selecciona la duración que se adapte a ti",
+    "confirmCustom": "Confirmar este protocolo",
+    "celebration": {
+      "title": "🎉 ¡Ayuno completado!",
+      "subtitle": "¡Felicitaciones, has completado tu ayuno con éxito!"
+    },
+    "infoTitle": "Durante tu ayuno",
+    "infos": {
+      "water": "Bebe agua regularmente",
+      "rest": "Descansa si es necesario",
+      "avoid": "Evita los esfuerzos intensos",
+      "listen": "Escucha a tu cuerpo"
+    }
+  },
+  "tracking": {
+    "title": "Seguimiento Diario",
+    "subtitle": "Registra tu peso, energía y estado de ánimo para seguir tu progreso.",
+    "weight": "Peso",
+    "weightUnit": "kg",
+    "energy": "Nivel de energía",
+    "mood": "Estado de ánimo",
+    "save": "Guardar",
+    "saved": "¡Guardado!",
+    "history": "Historial",
+    "noHistory": "Ninguna entrada por ahora",
+    "moods": {
+      "great": "Muy bien",
+      "good": "Bien",
+      "okay": "Regular",
+      "tired": "Cansado",
+      "hard": "Difícil"
+    }
+  },
+  "journal": {
+    "title": "Mi Diario",
+    "subtitle": "Anota tus sensaciones y observaciones durante tu ayuno.",
+    "newEntry": "Nueva entrada",
+    "placeholder": "¿Cómo te sientes hoy? Anota tus sensaciones...",
+    "date": "Fecha",
+    "save": "Guardar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "noEntries": "Ninguna entrada por ahora. ¡Empieza a escribir!",
+    "deleteConfirm": "¿Eliminar esta entrada?"
+  },
+  "stats": {
+    "title": "Estadísticas",
+    "subtitle": "Visualiza tu progreso a lo largo del tiempo.",
+    "totalFasts": "Ayunos completados",
+    "totalHours": "Horas totales",
+    "avgDuration": "Duración media",
+    "bestFast": "Mejor ayuno",
+    "fastingHistory": "Duraciones de los ayunos",
+    "weightEvolution": "Evolución del peso",
+    "energyLevel": "Nivel de energía",
+    "moodDistribution": "Distribución del estado de ánimo",
+    "activityHeatmap": "Actividad de los últimos 30 días",
+    "streakBanner": "🔥 ¡Racha de {{count}} días consecutivos!",
+    "noData": "Aún no hay datos"
+  },
+  "tips": {
+    "title": "Consejos de Salud",
+    "subtitle": "Consejos prácticos para acompañar tu ayuno.",
+    "disclaimer": "Estos consejos son informativos y no reemplazan el consejo médico.",
+    "filters": {
+      "all": "Todos",
+      "health": "Salud",
+      "weight": "Peso",
+      "spiritual": "Espiritual",
+      "beginner": "Principiante"
+    }
+  },
+  "mySpace": {
+    "title": "Mi Espacio",
+    "subtitle": "Gestiona tu perfil y preferencias.",
+    "profileSection": "Información personal",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "birthDate": "Fecha de nacimiento",
+    "initialWeight": "Peso inicial (kg)",
+    "goal": "Mi objetivo",
+    "changeGoal": "Cambiar objetivo",
+    "save": "Guardar cambios",
+    "saved": "¡Perfil actualizado!",
+    "member": "Miembro de FastCare",
+    "memberSince": "Miembro desde",
+    "deleteAccount": "Eliminar mi cuenta"
+  },
+  "goalSelection": {
+    "title": "¿Cuál es tu objetivo?",
+    "subtitle": "Elige el objetivo que corresponde a tu enfoque",
+    "continue": "Continuar",
+    "goals": {
+      "health": { "name": "Salud y Bienestar", "desc": "Mejorar tu salud general" },
+      "weight": { "name": "Pérdida de peso", "desc": "Alcanzar tu peso ideal" },
+      "spiritual": { "name": "Ramadán / Cuaresma", "desc": "Ayuno espiritual y religioso" },
+      "learning": { "name": "Descubrimiento", "desc": "Aprender el ayuno gradualmente" }
+    }
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "noNotifications": "Sin notificaciones",
+    "markAllRead": "Marcar todo como leído",
+    "new": "Nuevo"
+  },
+  "learn": {
+    "title": "Aprender el Ayuno",
+    "subtitle": "Tutoriales en vídeo y cuestionarios para aprender a ayunar",
+    "videos": "Vídeos",
+    "articles": "Artículos",
+    "quiz": "Cuestionario",
+    "startQuiz": "Comenzar el cuestionario",
+    "nextQuestion": "Siguiente pregunta",
+    "seeResult": "Ver mi resultado",
+    "score": "Tu puntuación",
+    "tryAgain": "Intentar de nuevo"
+  },
+  "home": {
+    "nav": { "features": "Funcionalidades", "how": "Cómo funciona", "goals": "Objetivos", "mySpace": "Mi espacio", "login": "Iniciar sesión", "register": "Registrarse" },
+    "hero": {
+      "badge": "Nuevo · Seguimiento del Ramadán disponible",
+      "title1": "Ayuna mejor.",
+      "title2": "Vive mejor.",
+      "subtitle": "FastCare te acompaña paso a paso en tu práctica del ayuno. Temporizador inteligente, seguimiento diario, consejos personalizados — todo lo que necesitas, en un solo lugar.",
+      "start": "Empezar gratis",
+      "learn": "Saber más",
+      "trust1": "100% gratis", "trust2": "Sin tarjeta", "trust3": "Datos seguros",
+      "remaining": "restante", "fastStatus": "Ayuno en curso", "hydration": "Hidratación recordada", "streak": "+3 días consecutivos",
+      "weight": "Peso", "energy": "Energía", "days": "Días", "mood": "Humor"
+    },
+    "stats": { "users": "Usuarios activos", "fasts": "Ayunos completados", "rating": "Nota media", "support": "Soporte disponible" },
+    "features": {
+      "tag": "Funcionalidades", "title1": "Todo lo que necesitas", "title2": "para tener éxito",
+      "subtitle": "Herramientas diseñadas para acompañarte en cada etapa — desde el primer ayuno hasta el nivel experto.",
+      "timer": { "title": "Temporizador Inteligente", "desc": "Elige tu protocolo (16/8, 24h, personalizado) y sigue tu ayuno en tiempo real." },
+      "tracking": { "title": "Seguimiento Diario", "desc": "Registra tu peso, nivel de energía y humor cada día." },
+      "stats": { "title": "Estadísticas y Gráficos", "desc": "Visualiza tu progreso con gráficos claros." },
+      "journal": { "title": "Diario de Sensaciones", "desc": "Anota tus experiencias, emociones y observaciones." },
+      "notifs": { "title": "Notificaciones Inteligentes", "desc": "Recordatorios de hidratación, alertas de fin de ayuno y ánimos personalizados." },
+      "tips": { "title": "Consejos de Salud Fiables", "desc": "Consejos basados en buenas prácticas médicas." }
+    },
+    "how": {
+      "tag": "Recorrido del usuario", "title1": "Empieza en", "title2": "3 pasos",
+      "subtitle": "Desde el registro hasta tu primer ayuno, en menos de 2 minutos.",
+      "step1": { "title": "Crea tu cuenta", "desc": "Registro rápido con tu email. Rellena algunos datos para personalizar tu experiencia." },
+      "step2": { "title": "Elige tu objetivo", "desc": "Salud, pérdida de peso, práctica espiritual o aprendizaje — FastCare se adapta a tu motivación." },
+      "step3": { "title": "Sigue tu progreso", "desc": "Inicia tu temporizador, anota tus sensaciones y consulta tus estadísticas." }
+    },
+    "goalsSection": {
+      "tag": "Para todos", "title1": "¿Cuál es", "title2": "tu objetivo",
+      "subtitle": "FastCare acompaña a todo tipo de ayunadores, sea cual sea su motivación.",
+      "health": { "title": "Salud y Vitalidad", "desc": "Mejora tu bienestar general y tu energía gracias al ayuno regular." },
+      "weight": { "title": "Pérdida de Peso", "desc": "Alcanza tus objetivos de peso de forma sana, duradera y sin frustración." },
+      "spiritual": { "title": "Espiritual · Ramadán", "desc": "Practica el ayuno por razones religiosas con un seguimiento adaptado." },
+      "learning": { "title": "Aprendizaje", "desc": "Descubre el ayuno progresivamente en un entorno seguro, ideal para principiantes." }
+    },
+    "cta": {
+      "title1": "¿Listo para transformar", "title2": "tu salud?",
+      "subtitle": "Únete a más de 50.000 personas que confían en FastCare para su ayuno diario.",
+      "start": "Empezar gratis", "learn": "Saber más",
+      "check1": "Gratis para siempre", "check2": "Sin tarjeta", "check3": "Datos protegidos"
+    },
+    "footer": "© 2025 FastCare — Tu compañero inteligente de ayuno · Proyecto universitario"
+  }
+}

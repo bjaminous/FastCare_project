@@ -1,0 +1,276 @@
+{
+  "nav": {
+    "dashboard": "Gösterge Paneli",
+    "fasting": "Orucum",
+    "tracking": "Takip",
+    "stats": "İstatistikler",
+    "journal": "Günlük",
+    "tips": "İpuçları",
+    "mySpace": "Alanım",
+    "learn": "Öğren",
+    "logout": "Çıkış Yap",
+    "notifications": "Bildirimler"
+  },
+  "common": {
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "back": "Geri",
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "success": "Başarıyla kaydedildi!",
+    "today": "Bugün",
+    "start": "Başlat",
+    "stop": "Durdur",
+    "reset": "Sıfırla",
+    "confirm": "Onayla",
+    "close": "Kapat",
+    "noData": "Mevcut veri yok",
+    "optional": "isteğe bağlı",
+    "hours": "s",
+    "days": "g"
+  },
+  "auth": {
+    "login": {
+      "title": "Giriş Yap",
+      "subtitle": "FastCare'e tekrar hoş geldin",
+      "email": "E-posta",
+      "password": "Şifre",
+      "submit": "Giriş Yap",
+      "noAccount": "Henüz hesabın yok mu?",
+      "register": "Kayıt Ol"
+    },
+    "register": {
+      "title": "Hesabımı Oluştur",
+      "subtitle": "Kendine özen gösteren binlerce kişiye katıl",
+      "firstName": "Ad",
+      "lastName": "Soyad",
+      "email": "E-posta",
+      "password": "Şifre",
+      "phone": "Telefon",
+      "birthDate": "Doğum Tarihi",
+      "initialWeight": "Başlangıç Ağırlığı (kg)",
+      "submit": "Hesabımı Oluştur",
+      "hasAccount": "Zaten hesabın var mı?",
+      "login": "Giriş Yap",
+      "optionalSection": "İsteğe bağlı bilgiler"
+    }
+  },
+  "dashboard": {
+    "greetingMorning": "Günaydın",
+    "greetingAfternoon": "İyi günler",
+    "greetingEvening": "İyi akşamlar",
+    "subtitle": "FastCare gösterge paneliniz burada",
+    "noFast": "Aktif oruç yok",
+    "fastInProgress": "Oruç devam ediyor",
+    "fastCompleted": "Oruç tamamlandı ✓",
+    "startFast": "Orucumu Başlat",
+    "resumeFast": "Devam Et",
+    "newFast": "Yeni Oruç Başlat",
+    "seeFast": "Orucumu Gör",
+    "active": "Devam Ediyor",
+    "paused": "Duraklatıldı",
+    "ready": "Hazır",
+    "done": "Tamamlandı",
+    "stats": {
+      "title": "İstatistiklerim",
+      "completed": "Tamamlanan Oruçlar",
+      "totalHours": "Toplam Saat",
+      "avgDuration": "Ortalama Süre",
+      "streak": "Mevcut Seri"
+    },
+    "shortcuts": {
+      "title": "Hızlı Erişim",
+      "addTracking": "Takip Ekle",
+      "myJournal": "Günlüğüm",
+      "stats": "İstatistikler",
+      "tips": "Sağlık İpuçları"
+    },
+    "history": {
+      "title": "Son Geçmiş",
+      "noHistory": "Henüz tamamlanan oruç yok",
+      "completed": "Tamamlandı",
+      "duration": "Süre"
+    },
+    "tip": "Günün İpucu",
+    "refresh": "↺ Yenile"
+  },
+  "timer": {
+    "title": "Orucum",
+    "timeLeft": "Kalan Süre",
+    "elapsed": "Geçen Süre",
+    "start": "Başlat",
+    "pause": "Duraklat",
+    "resume": "Devam Et",
+    "reset": "Sıfırla",
+    "newFast": "Yeni Oruç",
+    "customTitle": "Protokolümü Seç",
+    "customSubtitle": "Sana uygun süreyi seç",
+    "confirmCustom": "Bu protokolü onayla",
+    "celebration": {
+      "title": "🎉 Oruç Tamamlandı!",
+      "subtitle": "Tebrikler, orucunu başarıyla tamamladın!"
+    },
+    "infoTitle": "Oruç Süresince",
+    "infos": {
+      "water": "Düzenli olarak su iç",
+      "rest": "Gerekirse dinlen",
+      "avoid": "Yoğun egzersizden kaçın",
+      "listen": "Vücudunu dinle"
+    }
+  },
+  "tracking": {
+    "title": "Günlük Takip",
+    "subtitle": "İlerlemenizi takip etmek için ağırlık, enerji ve ruh halinizi kaydedin.",
+    "weight": "Ağırlık",
+    "weightUnit": "kg",
+    "energy": "Enerji Düzeyi",
+    "mood": "Ruh Hali",
+    "save": "Kaydet",
+    "saved": "Kaydedildi!",
+    "history": "Geçmiş",
+    "noHistory": "Henüz kayıt yok",
+    "moods": {
+      "great": "Çok İyi",
+      "good": "İyi",
+      "okay": "Orta",
+      "tired": "Yorgun",
+      "hard": "Zor"
+    }
+  },
+  "journal": {
+    "title": "Günlüğüm",
+    "subtitle": "Oruç sırasında hislerinizi ve gözlemlerinizi not edin.",
+    "newEntry": "Yeni Kayıt",
+    "placeholder": "Bugün nasıl hissediyorsunuz? Hislerinizi not edin...",
+    "date": "Tarih",
+    "save": "Kaydet",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "cancel": "İptal",
+    "noEntries": "Henüz kayıt yok. Yazmaya başlayın!",
+    "deleteConfirm": "Bu kaydı sil?"
+  },
+  "stats": {
+    "title": "İstatistikler",
+    "subtitle": "Zaman içindeki ilerlemenizi görselleştirin.",
+    "totalFasts": "Tamamlanan Oruçlar",
+    "totalHours": "Toplam Saat",
+    "avgDuration": "Ortalama Süre",
+    "bestFast": "En İyi Oruç",
+    "fastingHistory": "Oruç Süreleri",
+    "weightEvolution": "Kilo Gelişimi",
+    "energyLevel": "Enerji Düzeyi",
+    "moodDistribution": "Ruh Hali Dağılımı",
+    "activityHeatmap": "Son 30 Günlük Aktivite",
+    "streakBanner": "🔥 {{count}} ardışık gün serisi!",
+    "noData": "Henüz veri yok"
+  },
+  "tips": {
+    "title": "Sağlık İpuçları",
+    "subtitle": "Orucunuzu desteklemek için pratik ipuçları.",
+    "disclaimer": "Bu ipuçları bilgilendirme amaçlıdır ve tıbbi tavsiyenin yerini tutmaz.",
+    "filters": {
+      "all": "Tümü",
+      "health": "Sağlık",
+      "weight": "Kilo",
+      "spiritual": "Manevi",
+      "beginner": "Başlangıç"
+    }
+  },
+  "mySpace": {
+    "title": "Alanım",
+    "subtitle": "Profilinizi ve tercihlerinizi yönetin.",
+    "profileSection": "Kişisel Bilgiler",
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "birthDate": "Doğum Tarihi",
+    "initialWeight": "Başlangıç Ağırlığı (kg)",
+    "goal": "Hedefim",
+    "changeGoal": "Hedefi Değiştir",
+    "save": "Değişiklikleri Kaydet",
+    "saved": "Profil güncellendi!",
+    "member": "FastCare Üyesi",
+    "memberSince": "Üyelik Tarihi",
+    "deleteAccount": "Hesabımı Sil"
+  },
+  "goalSelection": {
+    "title": "Hedefiniz nedir?",
+    "subtitle": "Yaklaşımınıza uygun hedefi seçin",
+    "continue": "Devam Et",
+    "goals": {
+      "health": { "name": "Sağlık ve Esenlik", "desc": "Genel sağlığınızı geliştirin" },
+      "weight": { "name": "Kilo Verme", "desc": "İdeal kilonuza ulaşın" },
+      "spiritual": { "name": "Ramazan / Oruç", "desc": "Manevi ve dini oruç" },
+      "learning": { "name": "Keşif", "desc": "Orucu adım adım öğrenin" }
+    }
+  },
+  "notifications": {
+    "title": "Bildirimler",
+    "noNotifications": "Bildirim yok",
+    "markAllRead": "Tümünü okundu işaretle",
+    "new": "Yeni"
+  },
+  "learn": {
+    "title": "Orucu Öğren",
+    "subtitle": "Oruç tutmayı öğrenmek için video eğitimleri ve testler",
+    "videos": "Videolar",
+    "articles": "Makaleler",
+    "quiz": "Test",
+    "startQuiz": "Testi Başlat",
+    "nextQuestion": "Sonraki Soru",
+    "seeResult": "Sonucumu Gör",
+    "score": "Puanın",
+    "tryAgain": "Tekrar Dene"
+  },
+  "home": {
+    "nav": { "features": "Özellikler", "how": "Nasıl Çalışır", "goals": "Hedefler", "mySpace": "Alanım", "login": "Giriş Yap", "register": "Kayıt Ol" },
+    "hero": {
+      "badge": "Yeni · Ramazan Takibi mevcut",
+      "title1": "Daha iyi oruç tut.",
+      "title2": "Daha iyi yaşa.",
+      "subtitle": "FastCare sizi oruç uygulamanızda adım adım destekler. Akıllı zamanlayıcı, günlük takip, kişiselleştirilmiş ipuçları — ihtiyacınız olan her şey tek bir yerde.",
+      "start": "Ücretsiz Başla",
+      "learn": "Daha Fazla Bil",
+      "trust1": "100% ücretsiz", "trust2": "Kart gerekmez", "trust3": "Güvenli veri",
+      "remaining": "kalan", "fastStatus": "Oruç devam ediyor", "hydration": "Hidrasyon hatırlatması", "streak": "+3 ardışık gün",
+      "weight": "Kilo", "energy": "Enerji", "days": "Günler", "mood": "Ruh hali"
+    },
+    "stats": { "users": "Aktif kullanıcı", "fasts": "Tamamlanan oruç", "rating": "Ortalama puan", "support": "Destek mevcut" },
+    "features": {
+      "tag": "Özellikler", "title1": "Başarmak için", "title2": "ihtiyacınız olan her şey",
+      "subtitle": "Her adımda sizi desteklemek için tasarlanmış araçlar — ilk oruçtan uzmana kadar.",
+      "timer": { "title": "Akıllı Zamanlayıcı", "desc": "Protokolünüzü seçin (16/8, 24s, özel) ve orucunuzu gerçek zamanlı takip edin." },
+      "tracking": { "title": "Günlük Takip", "desc": "Kilo, enerji seviyesi ve ruh halinizi her gün kaydedin." },
+      "stats": { "title": "İstatistikler ve Grafikler", "desc": "İlerlemenizi net grafiklerle görselleştirin." },
+      "journal": { "title": "Duygu Günlüğü", "desc": "Deneyimlerinizi, duygularınızı ve gözlemlerinizi not edin." },
+      "notifs": { "title": "Akıllı Bildirimler", "desc": "Hidrasyon hatırlatmaları, oruç bitiş uyarıları ve kişisel motivasyon." },
+      "tips": { "title": "Güvenilir Sağlık İpuçları", "desc": "Tıbbi en iyi uygulamalara dayalı ipuçları." }
+    },
+    "how": {
+      "tag": "Kullanıcı yolculuğu", "title1": "3 adımda", "title2": "başlayın",
+      "subtitle": "Kayıttan ilk orucunuza 2 dakikadan az sürede ulaşın.",
+      "step1": { "title": "Hesabınızı oluşturun", "desc": "E-postanızla hızlı kayıt. Deneyiminizi kişiselleştirmek için birkaç bilgi girin." },
+      "step2": { "title": "Hedefinizi seçin", "desc": "Sağlık, kilo kaybı, manevi pratik veya öğrenme — FastCare motivasyonunuza uyum sağlar." },
+      "step3": { "title": "İlerlemenizi takip edin", "desc": "Zamanlayıcınızı başlatın, hislerinizi not edin ve istatistiklerinizi kontrol edin." }
+    },
+    "goalsSection": {
+      "tag": "Herkes için", "title1": "Hedefiniz", "title2": "nedir",
+      "subtitle": "FastCare her türlü oruç tutanı destekler.",
+      "health": { "title": "Sağlık & Canlılık", "desc": "Düzenli oruç sayesinde genel refahınızı ve enerjinizi artırın." },
+      "weight": { "title": "Kilo Kaybı", "desc": "Kilo hedeflerinize sağlıklı ve sürdürülebilir şekilde ulaşın." },
+      "spiritual": { "title": "Manevi · Ramazan", "desc": "Ramazan ritmine uyarlanmış takiple dini amaçlı oruç tutun." },
+      "learning": { "title": "Öğrenme", "desc": "Başlayanlar için ideal, güvenli ortamda oruca adım adım başlayın." }
+    },
+    "cta": {
+      "title1": "Sağlığınızı dönüştürmeye", "title2": "hazır mısınız?",
+      "subtitle": "FastCare'e güvenen 50.000'den fazla kişiye katılın.",
+      "start": "Ücretsiz Başla", "learn": "Daha Fazla Bil",
+      "check1": "Sonsuza kadar ücretsiz", "check2": "Kart gerekmez", "check3": "Veriler korunur"
+    },
+    "footer": "© 2025 FastCare — Akıllı oruç arkadaşınız · Üniversite projesi"
+  }
+}
