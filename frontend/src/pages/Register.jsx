@@ -160,7 +160,7 @@ const Register = () => {
   const { t } = useTranslation();
   const [form, setForm] = useState({
     prenom: '', nom: '', email: '', motDePasse: '',
-    telephone: '', dateNaissance: '', poidsInitial: ''
+    telephone: '', dateNaissance: '', poidsInitial: '', taille: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -252,13 +252,21 @@ const Register = () => {
             </InputGroup>
           </Row>
 
-          {/* Poids initial */}
-          <InputGroup>
-            <Label htmlFor="poidsInitial">{t('auth.register.initialWeight')} <Optional>(opt.)</Optional></Label>
-            <Input id="poidsInitial" name="poidsInitial" type="number"
-              placeholder="70" min="20" step="0.1"
-              value={form.poidsInitial} onChange={handleChange} fullWidth />
-          </InputGroup>
+          {/* Poids + Taille */}
+          <Row>
+            <InputGroup>
+              <Label htmlFor="poidsInitial">{t('auth.register.initialWeight')} <Optional>(opt.)</Optional></Label>
+              <Input id="poidsInitial" name="poidsInitial" type="number"
+                placeholder="70 kg" min="20" step="0.1"
+                value={form.poidsInitial} onChange={handleChange} fullWidth />
+            </InputGroup>
+            <InputGroup>
+              <Label htmlFor="taille">Taille <Optional>(opt.)</Optional></Label>
+              <Input id="taille" name="taille" type="number"
+                placeholder="170 cm" min="50" max="250" step="1"
+                value={form.taille} onChange={handleChange} fullWidth />
+            </InputGroup>
+          </Row>
 
           <Button type="submit" variant="primary" size="large" disabled={isLoading} fullWidth>
             {isLoading ? t('common.loading') : t('auth.register.submit')}

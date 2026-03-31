@@ -4,16 +4,32 @@ import styled from 'styled-components';
 import { Globe } from 'lucide-react';
 
 const LANGUAGES = [
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
-  { code: 'en', label: 'English',  flag: '🇬🇧' },
-  { code: 'ar', label: 'العربية',  flag: '🇸🇦' },
-  { code: 'es', label: 'Español',  flag: '🇪🇸' },
-  { code: 'pt', label: 'Português',flag: '🇵🇹' },
-  { code: 'de', label: 'Deutsch',  flag: '🇩🇪' },
-  { code: 'tr', label: 'Türkçe',   flag: '🇹🇷' },
-  { code: 'id', label: 'Indonesia',flag: '🇮🇩' },
-  { code: 'zh', label: '中文',      flag: '🇨🇳' },
+  { code: 'fr', label: 'Français',  country: 'fr' },
+  { code: 'en', label: 'English',   country: 'gb' },
+  { code: 'ar', label: 'العربية',   country: 'sa' },
+  { code: 'es', label: 'Español',   country: 'es' },
+  { code: 'pt', label: 'Português', country: 'pt' },
+  { code: 'de', label: 'Deutsch',   country: 'de' },
+  { code: 'tr', label: 'Türkçe',    country: 'tr' },
+  { code: 'id', label: 'Indonesia', country: 'id' },
+  { code: 'zh', label: '中文',       country: 'cn' },
 ];
+
+// Tailles valides sur flagcdn.com : 20x15, 24x18, 32x24, 40x30, 48x36
+const FlagImg = ({ country, large = false }) => {
+  const w = large ? 24 : 20;
+  const h = large ? 18 : 15;
+  return (
+    <img
+      src={`https://flagcdn.com/${w}x${h}/${country}.png`}
+      srcSet={`https://flagcdn.com/${w * 2}x${h * 2}/${country}.png 2x`}
+      width={w}
+      height={h}
+      alt={country}
+      style={{ borderRadius: 2, display: 'block', flexShrink: 0 }}
+    />
+  );
+};
 
 const Wrapper = styled.div`position: relative; flex-shrink: 0;`;
 
@@ -26,7 +42,7 @@ const Trigger = styled.button`
   &:hover { background: rgba(42,125,225,0.07); border-color: #2A7DE1; }
 `;
 
-const Flag = styled.span`font-size: 1rem;`;
+const Flag = styled.span`display: flex; align-items: center;`;
 
 const Dropdown = styled.div`
   position: absolute; top: calc(100% + 8px); right: 0;
@@ -79,14 +95,14 @@ const LanguageSwitcher = () => {
     <Wrapper ref={ref}>
       <Trigger onClick={() => setOpen(o => !o)}>
         <Globe size={14} />
-        <Flag>{current.flag}</Flag>
+        <Flag><FlagImg country={current.country} /></Flag>
         <span>{current.code.toUpperCase()}</span>
       </Trigger>
       {open && (
         <Dropdown>
           {LANGUAGES.map(l => (
             <LangItem key={l.code} $active={l.code === i18n.language} onClick={() => handleSelect(l.code)}>
-              <span style={{ fontSize: '1.1rem' }}>{l.flag}</span>
+              <FlagImg country={l.country} large />
               <span>{l.label}</span>
             </LangItem>
           ))}

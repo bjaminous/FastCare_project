@@ -30,12 +30,13 @@ export const AuthProvider = ({ children }) => {
     return res.data;
   }, []);
 
-  const register = useCallback(async ({ prenom, nom, email, motDePasse, telephone, dateNaissance, poidsInitial }) => {
+  const register = useCallback(async ({ prenom, nom, email, motDePasse, telephone, dateNaissance, poidsInitial, taille }) => {
     const body = { nom, email, motDePasse };
     if (prenom)        body.prenom        = prenom;
     if (telephone)     body.telephone     = telephone;
     if (dateNaissance) body.dateNaissance = dateNaissance;
     if (poidsInitial)  body.poidsInitial  = Number(poidsInitial);
+    if (taille)        body.taille        = Number(taille);
     const res = await axios.post(`${API}/auth/register`, body);
     saveSession(res.data.user, res.data.token);
     // Notification de bienvenue

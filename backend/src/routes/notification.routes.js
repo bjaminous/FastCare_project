@@ -4,6 +4,7 @@ const auth = require("../middlewares/auth.middleware");
 const ctrl = require("../controllers/notification.controller");
 
 router.post("/", auth, ctrl.create);
+router.post("/water-reminder", auth, ctrl.waterReminder);
 router.get("/history", auth, ctrl.getHistory);
 router.get("/unread", auth, ctrl.getUnread);
 router.post("/mark-all-read", auth, ctrl.markAllRead);

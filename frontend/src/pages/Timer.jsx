@@ -188,13 +188,15 @@ const Timer = () => {
 
   const sendHydraNotif = useCallback(async (hour) => {
     try {
-      await axios.post(`${API}/notifications`, {
-        type: 'HYDRATATION',
-        message: `💧 ${hour}h de jeûne — Pensez à boire de l'eau pour rester hydraté(e) !`,
-        dateEnvoi: new Date(),
-      }, authHeader());
+      // Appel au nouvel endpoint dédié : crée la notif in-app ET envoie l'email
+      const res = await axios.post(`${API}/notifications/water-reminder`, { hour }, authHeader());
+      const conseil = res.data?.conseil || "Buvez un grand verre d'eau pour rester bien hydraté(e).";
+      // Notification système navigateur
       if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('FastCare 💧', { body: `${hour}h de jeûne — Pensez à boire de l'eau !`, icon: '/favicon.ico' });
+        new Notification('FastCare 💧', {
+          body: `${hour}h de jeûne — ${conseil}`,
+          icon: '/favicon.ico',
+        });
       }
     } catch { /* silencieux */ }
   }, []);

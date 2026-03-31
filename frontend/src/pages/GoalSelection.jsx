@@ -387,14 +387,6 @@ const GoalSelection = () => {
                   <ChoiceDesc>40 jours de jeûne · Mercredi des Cendres au Vendredi Saint · Accompagnement chrétien</ChoiceDesc>
                 </ChoiceText>
               </ChoiceBtn>
-              <ChoiceBtn accent="#2ED1A2" hoverBg="rgba(46,209,162,0.04)"
-                onClick={() => handleSpiritualChoice('both')}>
-                <ChoiceEmoji>🕊️</ChoiceEmoji>
-                <ChoiceText>
-                  <ChoiceTitle>Je pratique les deux</ChoiceTitle>
-                  <ChoiceDesc>Ou je souhaite voir les deux approches pour choisir la mienne</ChoiceDesc>
-                </ChoiceText>
-              </ChoiceBtn>
             </ChoiceGrid>
           </ModalBox>
         </Overlay>

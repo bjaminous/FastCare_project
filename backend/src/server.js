@@ -3,7 +3,7 @@ const app = require("./app");
 const sequelize = require("./config/database");
 
 // Importer les modèles pour enregistrer les associations avant sync
-require("./models");
+const { User } = require("./models");
 
 const PORT = process.env.PORT || 5000;
 
@@ -14,6 +14,27 @@ sequelize
     await sequelize.query("ALTER TABLE `Utilisateur` MODIFY COLUMN `id` INT NOT NULL AUTO_INCREMENT");
     await sequelize.query("DELETE FROM `Utilisateur` WHERE `id` = 0");
     await sequelize.query("ALTER TABLE `Utilisateur` AUTO_INCREMENT = 1000");
+
+    // Ajoute les colonnes manquantes si elles n'existent pas encore
+    await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `taille` INT NULL").catch(() => {});
+    await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `role` ENUM('user','admin') NOT NULL DEFAULT 'user'").catch(() => {});
+    await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `banni` TINYINT(1) NOT NULL DEFAULT 0").catch(() => {});
+
+    // Crée le compte admin par défaut s'il n'existe pas
+    const adminEmail = process.env.ADMIN_EMAIL || 'fastcare@admin.com';
+    const adminPass  = process.env.ADMIN_PASS  || 'Admin2026';
+    const existing   = await User.scope('withPassword').findOne({ where: { email: adminEmail } });
+    if (!existing) {
+      await User.create({
+        prenom: 'Admin',
+        nom: 'FastCare',
+        email: adminEmail,
+        motDePasse: adminPass,
+        role: 'admin',
+      });
+      console.log(`👑 Compte admin créé : ${adminEmail}`);
+    }
+
     console.log("✅ Base de données réparée et synchronisée");
     app.listen(PORT, () =>
       console.log(`🚀 Serveur lancé sur le port ${PORT}`)

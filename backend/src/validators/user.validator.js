@@ -29,6 +29,13 @@ function validateRegister(body) {
         }
     }
 
+    if (body.taille !== undefined && body.taille !== null) {
+        const t = Number(body.taille);
+        if (isNaN(t) || t < 50 || t > 250) {
+            errors.push("La taille doit être comprise entre 50 et 250 cm");
+        }
+    }
+
     return { valid: errors.length === 0, errors };
 }
 
@@ -53,6 +60,13 @@ function validateUpdate(body) {
     if (body.poidsInitial !== undefined && body.poidsInitial !== null) {
         if (typeof body.poidsInitial !== "number" || body.poidsInitial <= 0) {
             errors.push("Le poids doit être un nombre positif");
+        }
+    }
+
+    if (body.taille !== undefined && body.taille !== null) {
+        const t = Number(body.taille);
+        if (isNaN(t) || t < 50 || t > 250) {
+            errors.push("La taille doit être comprise entre 50 et 250 cm");
         }
     }
 
