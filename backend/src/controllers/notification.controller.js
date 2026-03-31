@@ -58,7 +58,9 @@ exports.create = async (req, res) => {
 
 exports.getHistory = async (req, res) => {
   const list = await Notification.findAll({
-    where: { utilisateur_id: req.user.id }
+    where: { utilisateur_id: req.user.id },
+    order: [['dateEnvoi', 'DESC']],
+    limit: 100,
   });
   res.json(list);
 };

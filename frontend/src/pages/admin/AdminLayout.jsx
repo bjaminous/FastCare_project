@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { LayoutDashboard, Users, BookOpen, Bell, LogOut, Shield } from 'lucide-react';
+import { LayoutDashboard, Users, BookOpen, Bell, LogOut, Shield, Home } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const NAV = [
@@ -132,6 +132,9 @@ const AdminLayout = ({ children, title }) => {
         </Nav>
 
         <SidebarBottom>
+          <LogoutBtn onClick={() => navigate('/')} style={{ marginBottom: '0.25rem', color: 'rgba(255,255,255,0.4)' }}>
+            <Home size={16} /> Retour à l'accueil
+          </LogoutBtn>
           <LogoutBtn onClick={handleLogout}>
             <LogOut size={16} /> Déconnexion
           </LogoutBtn>
@@ -142,6 +145,18 @@ const AdminLayout = ({ children, title }) => {
         <TopBar>
           <PageTitle>{title}</PageTitle>
           <UserInfo>
+            <button onClick={() => navigate('/')} style={{
+              display:'flex', alignItems:'center', gap:'0.35rem',
+              background:'none', border:'1.5px solid rgba(42,125,225,0.18)',
+              color:'#64748b', fontSize:'0.78rem', fontWeight:700,
+              padding:'0.35rem 0.75rem', borderRadius:'9px', cursor:'pointer',
+              transition:'all 0.18s',
+            }}
+            onMouseOver={e => { e.currentTarget.style.borderColor='#2A7DE1'; e.currentTarget.style.color='#2A7DE1'; }}
+            onMouseOut={e => { e.currentTarget.style.borderColor='rgba(42,125,225,0.18)'; e.currentTarget.style.color='#64748b'; }}
+            >
+              <Home size={13} /> Accueil
+            </button>
             <Avatar>{initials}</Avatar>
             {user?.prenom || user?.nom}
           </UserInfo>

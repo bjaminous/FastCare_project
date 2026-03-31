@@ -4,7 +4,7 @@ import NotificationBell from './NotificationBell';
 import LanguageSwitcher from './LanguageSwitcher';
 import FastCareLogo from './Logo';
 import styled, { keyframes, css } from 'styled-components';
-import { Timer, LayoutDashboard, User, LogOut, ChevronDown, TrendingUp, BookOpen, Lightbulb, BarChart2, GraduationCap } from 'lucide-react';
+import { Timer, LayoutDashboard, User, LogOut, ChevronDown, TrendingUp, BookOpen, Lightbulb, BarChart2, GraduationCap, Home, Bell } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
@@ -26,6 +26,16 @@ const Nav = styled.nav`
 const LogoWrap = styled.div`
   cursor: pointer; flex-shrink: 0;
   position: relative; z-index: 201;
+`;
+
+const HomeBtn = styled.button`
+  display: flex; align-items: center; gap: 0.35rem;
+  background: none; border: 1.5px solid rgba(42,125,225,0.18);
+  color: #64748b; font-size: 0.78rem; font-weight: 700;
+  padding: 0.35rem 0.75rem; border-radius: 9px; cursor: pointer;
+  transition: all 0.18s; flex-shrink: 0;
+  &:hover { border-color: #2A7DE1; color: #2A7DE1; background: rgba(42,125,225,0.05); }
+  @media(max-width:480px) { display: none; }
 `;
 
 const Links = styled.div`
@@ -121,10 +131,10 @@ const AppNav = () => {
   ];
 
   const MOBILE_LINKS = [
-    { path: '/dashboard',    label: t('nav.dashboard'), icon: LayoutDashboard },
-    { path: '/timer',        label: t('nav.fasting'),   icon: Timer },
-    { path: '/suivi',        label: t('nav.tracking'),  icon: TrendingUp },
-    { path: '/statistiques', label: t('nav.stats'),     icon: BarChart2 },
+    { path: '/dashboard',         label: t('nav.dashboard'), icon: LayoutDashboard },
+    { path: '/timer',             label: t('nav.fasting'),   icon: Timer },
+    { path: '/mes-notifications', label: 'Notifs',           icon: Bell },
+    { path: '/statistiques',      label: t('nav.stats'),     icon: BarChart2 },
   ];
 
   useEffect(() => {
@@ -140,7 +150,10 @@ const AppNav = () => {
   return (
     <>
       <Nav>
-        <LogoWrap onClick={() => navigate('/dashboard')}><FastCareLogo visibleWidth={160} /></LogoWrap>
+        <div style={{ display:'flex', alignItems:'center', gap:'0.75rem' }}>
+          <HomeBtn onClick={() => navigate('/')}><Home size={13} /> Accueil</HomeBtn>
+          <LogoWrap onClick={() => navigate('/dashboard')}><FastCareLogo visibleWidth={160} /></LogoWrap>
+        </div>
 
         <Links>
           {LINKS.map(({ path, label, icon: Icon }) => (
@@ -179,7 +192,13 @@ const AppNav = () => {
                 <DropItem onClick={() => { navigate('/mon-espace'); setOpen(false); }}>
                   <User size={15} /> {t('nav.mySpace')}
                 </DropItem>
+                <DropItem onClick={() => { navigate('/mes-notifications'); setOpen(false); }}>
+                  <Bell size={15} /> Mes notifications
+                </DropItem>
                 <DropDivider />
+                <DropItem onClick={() => { navigate('/'); setOpen(false); }}>
+                  <Home size={15} /> Accueil
+                </DropItem>
                 <DropItem danger onClick={handleLogout}>
                   <LogOut size={15} /> {t('nav.logout')}
                 </DropItem>

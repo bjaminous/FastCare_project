@@ -1,12 +1,34 @@
 const { User, Jeune, ConseilSante, Notification, ActivityLog } = require("../models");
 const { Op } = require("sequelize");
+const { sendBroadcastEmail } = require("../services/email.service");
 
 // ── Utilisateurs ──────────────────────────────────────────────────────────────
 
 exports.getUsers = async (req, res, next) => {
   try {
     const users = await User.findAll({ order: [['dateInscription', 'DESC']] });
-    res.json({ success: true, users });
+
+    // Récupère la dernière connexion de chaque utilisateur depuis ActivityLog
+    const lastLogins = await ActivityLog.findAll({
+      where: { type: 'LOGIN', utilisateur_id: { [Op.not]: null } },
+      attributes: ['utilisateur_id', 'createdAt'],
+      order: [['createdAt', 'DESC']],
+    });
+
+    // Map userId → dernière date de connexion
+    const lastLoginMap = {};
+    for (const log of lastLogins) {
+      if (!lastLoginMap[log.utilisateur_id]) {
+        lastLoginMap[log.utilisateur_id] = log.createdAt;
+      }
+    }
+
+    const usersWithLogin = users.map(u => ({
+      ...u.toJSON(),
+      dernierConnexion: lastLoginMap[u.id] || null,
+    }));
+
+    res.json({ success: true, users: usersWithLogin });
   } catch (e) { next(e); }
 };
 
@@ -15,8 +37,18 @@ exports.deleteUser = async (req, res, next) => {
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ success: false, message: "Utilisateur introuvable" });
     if (user.role === 'admin') return res.status(403).json({ success: false, message: "Impossible de supprimer un admin" });
-    await user.destroy();
+    // Soft delete : on marque comme supprimé sans effacer la ligne
+    await user.update({ supprime: true, dateSuppression: new Date() });
     res.json({ success: true, message: "Utilisateur supprimé" });
+  } catch (e) { next(e); }
+};
+
+exports.restoreUser = async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (!user) return res.status(404).json({ success: false, message: "Utilisateur introuvable" });
+    await user.update({ supprime: false, dateSuppression: null });
+    res.json({ success: true, message: "Utilisateur restauré" });
   } catch (e) { next(e); }
 };
 
@@ -91,11 +123,18 @@ exports.broadcastNotif = async (req, res, next) => {
     const { message, type = 'INFO' } = req.body;
     if (!message) return res.status(400).json({ success: false, message: "message requis" });
 
-    const users = await User.findAll({ attributes: ['id'] });
+    const users = await User.findAll({ attributes: ['id', 'email', 'prenom', 'nom'] });
     const now = new Date();
     await Notification.bulkCreate(
       users.map(u => ({ utilisateur_id: u.id, type, message, dateEnvoi: now, lue: false }))
     );
+
+    // Emails en arrière-plan (non-bloquant)
+    users.forEach(u => {
+      if (u.email) {
+        sendBroadcastEmail({ prenom: u.prenom, nom: u.nom, email: u.email, message, type }).catch(() => {});
+      }
+    });
 
     res.json({ success: true, message: `Notification envoyée à ${users.length} utilisateurs` });
   } catch (e) { next(e); }

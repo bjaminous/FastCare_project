@@ -163,6 +163,16 @@ const Login = () => {
   return (
     <LoginContainer>
       <LoginCard>
+        <div style={{ display:'flex', justifyContent:'flex-start', marginBottom:'0.5rem' }}>
+          <button onClick={() => navigate('/')} style={{
+            display:'flex', alignItems:'center', gap:'0.4rem',
+            background:'none', border:'1.5px solid rgba(42,125,225,0.2)',
+            color:'#2A7DE1', fontSize:'0.85rem', fontWeight:700,
+            cursor:'pointer', padding:'0.4rem 0.85rem', borderRadius:'10px',
+          }}>
+            ← Accueil
+          </button>
+        </div>
         <Logo><FastCareLogo visibleWidth={180} /></Logo>
         <Title>{t('auth.login.title')}</Title>
         <Subtitle>{t('auth.login.subtitle')}</Subtitle>

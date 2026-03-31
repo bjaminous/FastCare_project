@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
-import { Bell, CheckCheck, Zap, Trophy, Info, Heart, Droplets } from 'lucide-react';
+import { Bell, CheckCheck, Zap, Trophy, Info, Heart, Droplets, ArrowRight } from 'lucide-react';
 
 const API = 'http://localhost:5000/api';
 const authH = () => ({ headers: { Authorization: `Bearer ${localStorage.getItem('fc_token')}` } });
@@ -82,6 +83,17 @@ const Empty = styled.div`
   color:#94a3b8;font-size:0.85rem;font-weight:600;
   .e{font-size:1.75rem;margin-bottom:0.5rem;}
 `;
+const PanelFoot = styled.div`
+  padding:0.75rem 1.25rem;
+  border-top:1px solid rgba(42,125,225,0.06);
+`;
+const SeeAllBtn = styled.button`
+  display:flex;align-items:center;justify-content:center;gap:0.4rem;
+  width:100%;background:none;border:1.5px solid rgba(42,125,225,0.15);
+  color:#2A7DE1;font-size:0.8rem;font-weight:700;
+  padding:0.5rem;border-radius:10px;cursor:pointer;transition:all 0.15s;
+  &:hover{background:rgba(42,125,225,0.06);}
+`;
 
 const ICONS = {
   JEUNE_COMPLETE: { icon: Trophy,   bg:'rgba(245,158,11,0.1)',  color:'#D97706' },
@@ -104,6 +116,7 @@ const timeAgo = (d) => {
 };
 
 export default function NotificationBell() {
+  const navigate              = useNavigate();
   const [notifs, setNotifs]   = useState([]);
   const [open,   setOpen]     = useState(false);
   const panelRef              = useRef(null);
@@ -187,6 +200,11 @@ export default function NotificationBell() {
               })
             )}
           </List>
+          <PanelFoot>
+            <SeeAllBtn onClick={() => { setOpen(false); navigate('/mes-notifications'); }}>
+              Voir tout l'historique <ArrowRight size={13} />
+            </SeeAllBtn>
+          </PanelFoot>
         </Panel>
       )}
     </Wrap>

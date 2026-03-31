@@ -32,6 +32,7 @@ import ConseilsSante from './pages/ConseilsSante';
 import Statistiques from './pages/Statistiques';
 import Apprendre from './pages/Apprendre';
 import Welcome from './pages/Welcome';
+import MesNotifications from './pages/MesNotifications';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminConseils from './pages/admin/AdminConseils';
@@ -86,6 +87,9 @@ function App() {
             } />
             <Route path="/apprendre" element={
               <PrivateRoute><Apprendre /></PrivateRoute>
+            } />
+            <Route path="/mes-notifications" element={
+              <PrivateRoute><MesNotifications /></PrivateRoute>
             } />
 
             {/* Pages admin */}

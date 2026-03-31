@@ -4,6 +4,7 @@ import {
   ArrowLeft, Heart, Scale, Moon, Brain, ArrowRight,
   Sparkles, Clock, Shield, Star, Users, Zap, Flame,
 } from 'lucide-react';
+import FastCareLogo from '../components/Logo';
 
 /* ─── Animations ─── */
 const fadeInUp = keyframes`
@@ -30,12 +31,6 @@ const TopBar = styled.nav`
   border-bottom: 1px solid rgba(42,125,225,0.08);
   padding: 0 2rem; height: 68px;
   display: flex; align-items: center; justify-content: space-between;
-`;
-const Logo = styled.div`
-  font-size: 1.45rem; font-weight: 900;
-  background: linear-gradient(135deg,#2A7DE1,#2ED1A2);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  letter-spacing: -0.03em; cursor: pointer;
 `;
 const BackBtn = styled.button`
   display: flex; align-items: center; gap: 0.45rem;
@@ -471,7 +466,9 @@ const GoalDetail = () => {
         <BackBtn onClick={() => navigate(id === 'spiritual' ? '/goal-selection?modal=spiritual' : '/goal-selection')}>
           <ArrowLeft size={15} /> Retour
         </BackBtn>
-        <Logo onClick={() => navigate('/')}>FastCare</Logo>
+        <div onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+          <FastCareLogo visibleWidth={130} />
+        </div>
         <div style={{ width: 100 }} />
       </TopBar>
 

@@ -119,9 +119,6 @@ async function sendWelcomeEmail({ prenom, nom, email }) {
   try {
     const transporter = createTransporter();
 
-    // Vérification connexion SMTP avant envoi
-    await transporter.verify();
-
     await transporter.sendMail({
       // Gmail exige que le from corresponde exactement à EMAIL_USER
       from:    `"FastCare" <${process.env.EMAIL_USER}>`,
@@ -231,4 +228,98 @@ async function sendWaterReminderEmail({ prenom, nom, email, hour, conseil }) {
   }
 }
 
-module.exports = { sendWelcomeEmail, sendWaterReminderEmail };
+/**
+ * Envoie un email de notification broadcast à un utilisateur.
+ * Appelé en arrière-plan pour chaque destinataire.
+ */
+async function sendBroadcastEmail({ prenom, nom, email, message, type = 'INFO' }) {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) return;
+
+  const displayName = prenom || nom || 'cher utilisateur';
+
+  const typeColors = {
+    INFO:      { color: '#2A7DE1', bg: 'rgba(42,125,225,0.08)', emoji: 'ℹ️', label: 'Information' },
+    CONSEIL:   { color: '#059669', bg: 'rgba(46,209,162,0.08)', emoji: '💡', label: 'Conseil Santé' },
+    ALERTE:    { color: '#DC2626', bg: 'rgba(239,68,68,0.08)',   emoji: '⚠️', label: 'Alerte' },
+    BIENVENUE: { color: '#D97706', bg: 'rgba(245,158,11,0.08)', emoji: '👋', label: 'Message' },
+  };
+  const meta = typeColors[type] || typeColors.INFO;
+
+  const html = `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#F8FAFF;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F8FAFF;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="100%" cellpadding="0" cellspacing="0" style="max-width:540px;">
+
+        <tr><td align="center" style="padding-bottom:20px;">
+          <span style="font-size:1.8rem;font-weight:900;color:#2A7DE1;letter-spacing:-0.03em;">FastCare</span>
+        </td></tr>
+
+        <tr><td style="background:#fff;border-radius:24px;padding:36px 32px;box-shadow:0 4px 20px rgba(0,0,0,0.07);">
+
+          <p style="font-size:2.8rem;text-align:center;margin:0 0 12px;">${meta.emoji}</p>
+
+          <div style="display:inline-block;background:${meta.bg};color:${meta.color};
+                      border-radius:9999px;padding:4px 16px;font-size:0.75rem;font-weight:700;
+                      letter-spacing:0.05em;text-transform:uppercase;margin:0 auto 16px;
+                      display:block;text-align:center;">
+            ${meta.label}
+          </div>
+
+          <p style="color:#374151;font-size:0.95rem;line-height:1.75;margin:0 0 8px;">
+            Bonjour <strong>${displayName}</strong>,
+          </p>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin:16px 0 24px;">
+            <tr>
+              <td style="background:${meta.bg};border-left:4px solid ${meta.color};
+                         border-radius:0 12px 12px 0;padding:16px 20px;">
+                <p style="font-size:0.97rem;color:#1e293b;line-height:1.7;margin:0;font-weight:500;">
+                  ${message}
+                </p>
+              </td>
+            </tr>
+          </table>
+
+          <p style="text-align:center;margin:0;">
+            <a href="${process.env.APP_URL || 'http://localhost:5173'}"
+               style="display:inline-block;background:linear-gradient(135deg,#2A7DE1,#2ED1A2);
+                      color:#fff;font-weight:800;font-size:0.92rem;
+                      padding:12px 28px;border-radius:12px;text-decoration:none;">
+              Ouvrir FastCare →
+            </a>
+          </p>
+
+        </td></tr>
+
+        <tr><td style="padding:20px 0 0;text-align:center;">
+          <p style="font-size:0.75rem;color:#94a3b8;margin:0;line-height:1.6;">
+            Message envoyé par l'équipe FastCare · Vous recevez ce message car vous êtes inscrit(e) sur FastCare.
+          </p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
+  try {
+    const transporter = createTransporter();
+    await transporter.verify();
+    await transporter.sendMail({
+      from:    `"FastCare" <${process.env.EMAIL_USER}>`,
+      to:      email,
+      subject: `${meta.emoji} FastCare — ${meta.label}`,
+      html,
+    });
+    console.log(`[FastCare] Email broadcast envoyé à ${email}`);
+  } catch (err) {
+    console.error(`[FastCare] Échec email broadcast à ${email} :`, err.message);
+  }
+}
+
+module.exports = { sendWelcomeEmail, sendWaterReminderEmail, sendBroadcastEmail };

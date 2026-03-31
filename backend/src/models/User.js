@@ -79,6 +79,15 @@ const User = sequelize.define(
       allowNull: false,
       defaultValue: false,
     },
+    supprime: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    dateSuppression: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
     dateInscription: {
       type: DataTypes.DATEONLY,
       allowNull: false,

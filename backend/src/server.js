@@ -4,6 +4,7 @@ const sequelize = require("./config/database");
 
 // Importer les modèles pour enregistrer les associations avant sync
 const { User } = require("./models");
+const { startWaterReminderCron } = require("./services/waterReminder.cron");
 
 const PORT = process.env.PORT || 5000;
 
@@ -17,6 +18,13 @@ sequelize
     await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `taille` INT NULL").catch(() => {});
     await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `role` ENUM('user','admin') NOT NULL DEFAULT 'user'").catch(() => {});
     await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `banni` TINYINT(1) NOT NULL DEFAULT 0").catch(() => {});
+
+    // Colonne pour tracker les tranches de rappels hydratation déjà envoyées
+    await sequelize.query("ALTER TABLE `Jeunes` ADD COLUMN IF NOT EXISTS `rappelsEnvoyes` TEXT NULL DEFAULT NULL").catch(() => {});
+
+    // Colonnes soft-delete pour les utilisateurs supprimés
+    await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `supprime` TINYINT(1) NOT NULL DEFAULT 0").catch(() => {});
+    await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `dateSuppression` DATETIME NULL DEFAULT NULL").catch(() => {});
 
     // Crée le compte admin par défaut s'il n'existe pas
     const adminEmail = process.env.ADMIN_EMAIL || 'fastcare@admin.com';
@@ -34,9 +42,10 @@ sequelize
     }
 
     console.log("✅ Base de données réparée et synchronisée");
-    app.listen(PORT, () =>
-      console.log(`🚀 Serveur lancé sur le port ${PORT}`)
-    );
+    app.listen(PORT, () => {
+      console.log(`🚀 Serveur lancé sur le port ${PORT}`);
+      startWaterReminderCron();
+    });
   })
   .catch((err) => {
     console.error("❌ Erreur de connexion à la base de données :", err.message);

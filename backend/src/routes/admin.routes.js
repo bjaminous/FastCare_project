@@ -9,6 +9,7 @@ router.use(auth, requireAdmin);
 router.get("/users",                    ctrl.getUsers);
 router.delete("/users/:id",             ctrl.deleteUser);
 router.put("/users/:id/ban",            ctrl.toggleBan);
+router.put("/users/:id/restore",        ctrl.restoreUser);
 router.get("/stats",                    ctrl.getStats);
 router.get("/conseils",                 ctrl.getConseils);
 router.post("/conseils",                ctrl.createConseil);

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { useAuth } from '../context/AuthContext';
 import { CheckCircle, ArrowRight, Edit3, Heart, Scale, Brain } from 'lucide-react';
+import FastCareLogo from '../components/Logo';
 
 /* ─── Animations ─────────────────────────────────────────────────────────────── */
 const fadeInUp = keyframes`
@@ -67,11 +68,8 @@ const Card = styled.div`
   animation: ${fadeInUp} 0.5s ease both;
   @media (max-width: 480px) { padding: 2rem 1.5rem; border-radius: 24px; }
 `;
-const Logo = styled.div`
-  font-size: 1.15rem; font-weight: 900;
-  background: linear-gradient(135deg, #2A7DE1, #2ED1A2);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  letter-spacing: -0.02em; margin-bottom: 1.5rem;
+const LogoWrap = styled.div`
+  display: flex; justify-content: center; margin-bottom: 1.5rem;
 `;
 const EmojiBox = styled.div`
   font-size: 4rem; margin-bottom: 1.25rem;
@@ -268,7 +266,7 @@ const Welcome = () => {
           $color={p.color} $dur={p.dur} $delay={p.delay} $round={p.round} />
       ))}
       <Card>
-        <Logo>FastCare</Logo>
+        <LogoWrap><FastCareLogo visibleWidth={130} /></LogoWrap>
         <EmojiBox>🎉</EmojiBox>
         <Title>
           Bonjour{prenom ? <>, <span>{prenom}</span></> : ''} !<br />
@@ -289,7 +287,7 @@ const Welcome = () => {
     <Page>
       <Orb className="a" /><Orb className="b" />
       <Card>
-        <Logo>FastCare</Logo>
+        <LogoWrap><FastCareLogo visibleWidth={130} /></LogoWrap>
         <EmojiBox style={{ fontSize: '3rem', animation: 'none' }}>🧾</EmojiBox>
         <Title style={{ fontSize: 'clamp(1.4rem,4vw,1.9rem)' }}>
           D'après vos informations
@@ -348,7 +346,7 @@ const Welcome = () => {
     <Page>
       <Orb className="a" /><Orb className="b" />
       <Card>
-        <Logo>FastCare</Logo>
+        <LogoWrap><FastCareLogo visibleWidth={130} /></LogoWrap>
         <div style={{ fontSize: '2.2rem', marginBottom: '0.75rem' }}>✨</div>
         <Title style={{ fontSize: 'clamp(1.35rem,4vw,1.8rem)', marginBottom: '0.5rem' }}>
           Notre recommandation<br />pour <span>{prenom || 'vous'}</span>
