@@ -10,25 +10,10 @@ const PORT = process.env.PORT || 5000;
 sequelize
   .sync()
   .then(async () => {
-    // Répare id AUTO_INCREMENT cassé par d'anciens sync alter:true
-    await sequelize.query("ALTER TABLE `Utilisateur` MODIFY COLUMN `id` INT NOT NULL AUTO_INCREMENT");
-    await sequelize.query("DELETE FROM `Utilisateur` WHERE `id` = 0");
-    await sequelize.query("ALTER TABLE `Utilisateur` AUTO_INCREMENT = 1000");
+    // Les IDs sont maintenant gérés par UUID côté backend (Sequelize).
+    // Les tables sont créées via import SQL ou sync() automatique.
 
-    // Crée la table ActivityLog si elle n'existe pas
-    await sequelize.query(`
-      CREATE TABLE IF NOT EXISTS \`ActivityLog\` (
-        \`id\`             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        \`utilisateur_id\` INT NULL,
-        \`email\`          VARCHAR(150) NULL,
-        \`type\`           ENUM('LOGIN','LOGOUT','LOGIN_FAILED','PASSWORD_RESET') NOT NULL,
-        \`ip\`             VARCHAR(60) NULL,
-        \`details\`        VARCHAR(255) NULL,
-        \`createdAt\`      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-    `).catch(() => {});
-
-    // Ajoute les colonnes manquantes si elles n'existent pas encore
+    // Ajoute les colonnes manquantes si elles n'existent pas encore (au cas où sync() n'alter pas)
     await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `taille` INT NULL").catch(() => {});
     await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `role` ENUM('user','admin') NOT NULL DEFAULT 'user'").catch(() => {});
     await sequelize.query("ALTER TABLE `Utilisateur` ADD COLUMN IF NOT EXISTS `banni` TINYINT(1) NOT NULL DEFAULT 0").catch(() => {});

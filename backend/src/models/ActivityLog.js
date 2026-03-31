@@ -2,8 +2,15 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
 const ActivityLog = sequelize.define("ActivityLog", {
-  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-  utilisateur_id: { type: DataTypes.INTEGER, allowNull: true },
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
+  },
+  utilisateur_id: {
+    type: DataTypes.UUID,
+    allowNull: true
+  },
   email:     { type: DataTypes.STRING(150), allowNull: true },
   type: {
     type: DataTypes.ENUM('LOGIN', 'LOGOUT', 'LOGIN_FAILED', 'PASSWORD_RESET'),
